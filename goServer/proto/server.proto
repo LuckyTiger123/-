@@ -1,0 +1,23 @@
+syntax = "proto3";
+package proto;
+
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+// server test
+message ServerRequest {
+    string info = 1;
+}
+
+message ServerResponse {
+    string result = 1;
+}
+
+service ScheduleService {
+    rpc ServerTest (ServerRequest) returns (ServerResponse) {
+        option (google.api.http) = {
+            post: "/serverTest"
+            body: "*"
+        };
+    }
+}
