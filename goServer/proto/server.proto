@@ -4,19 +4,174 @@ package proto;
 import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
-// server test
-message ServerRequest {
-    string info = 1;
+// Game info for index.
+message GameIndexRequest {
+    int32 pageSize = 1;
+    int32 page = 2;
 }
 
-message ServerResponse {
+message GameIndexResponse {
     string result = 1;
 }
 
+// Resource info for index
+message ResourceIndexRequest {
+    int32 pageSize = 1;
+    int32 page = 2;
+}
+
+message ResourceIndexResponse {
+    string result = 1;
+}
+
+// Global search
+message GlobalSearchRequest {
+    string keyword = 1;
+}
+
+message GlobalSearchResponse {
+    string gameResult = 1;
+    string resourceResult = 2;
+}
+
+// Game search
+message Filter {
+    string type = 1;
+    string value = 2;
+
+}
+
+message GameSearchRequest {
+    repeated Filter filter = 1;
+    string keyword = 2;
+}
+
+message GameSearchResponse {
+    string result = 1;
+}
+
+// News search
+message NewsSearchRequest {
+    string keyword = 1;
+}
+
+message NewsSearchResponse {
+    string result = 1;
+}
+
+// Raiders search
+message RaidersSearchRequest {
+    string keyword = 1;
+}
+
+message RaidersSearchResponse {
+    string result = 1;
+}
+
+// Video search
+message VideoSearchRequest {
+    string keyword = 1;
+}
+
+message VideoSearchResponse {
+    string result = 1;
+}
+
+// Game news
+message GameNewsGetRequest {
+    string gameName = 1;
+}
+
+message GameNewsGetResponse {
+    string result = 1;
+}
+
+// Game raiders
+message GameRaidersGetRequest {
+    string gameName = 1;
+}
+
+message GameRaidersGetResponse {
+    string result = 1;
+}
+
+// Game video
+message GameVideoGetRequest {
+    string gameName = 1;
+}
+
+message GameVideoGetResponse {
+    string result = 1;
+}
+
+// Server
 service ScheduleService {
-    rpc ServerTest (ServerRequest) returns (ServerResponse) {
+    rpc GameIndex (GameIndexRequest) returns (GameIndexResponse) {
         option (google.api.http) = {
-            post: "/serverTest"
+            post: "/game/index"
+            body: "*"
+        };
+    }
+
+    rpc ResourceIndex (ResourceIndexRequest) returns (ResourceIndexResponse) {
+        option (google.api.http) = {
+            post: "/resource/index"
+            body: "*"
+        };
+    }
+
+    rpc GlobalSearch (GlobalSearchRequest) returns (GlobalSearchResponse) {
+        option (google.api.http) = {
+            post: "/global"
+            body: "*"
+        };
+    }
+
+    rpc GameSearch (GameSearchRequest) returns (GameSearchResponse) {
+        option (google.api.http) = {
+            post: "/game"
+            body: "*"
+        };
+    }
+
+    rpc NewsSearch (NewsSearchRequest) returns (NewsSearchResponse) {
+        option (google.api.http) = {
+            post: "/news"
+            body: "*"
+        };
+    }
+
+    rpc RaidersSearch (RaidersSearchRequest) returns (RaidersSearchResponse) {
+        option (google.api.http) = {
+            post: "/raiders"
+            body: "*"
+        };
+    }
+
+    rpc VideoSearch (VideoSearchRequest) returns (VideoSearchResponse) {
+        option (google.api.http) = {
+            post: "/video"
+            body: "*"
+        };
+    }
+
+    rpc GameNewsGet (GameNewsGetRequest) returns (GameNewsGetResponse) {
+        option (google.api.http) = {
+            post: "/game/news"
+            body: "*"
+        };
+    }
+
+    rpc GameRaidersGetGet (GameRaidersGetRequest) returns (GameRaidersGetResponse) {
+        option (google.api.http) = {
+            post: "/game/raiders"
+            body: "*"
+        };
+    }
+
+    rpc GameVideoGet (GameVideoGetRequest) returns (GameVideoGetResponse) {
+        option (google.api.http) = {
+            post: "/game/video"
             body: "*"
         };
     }

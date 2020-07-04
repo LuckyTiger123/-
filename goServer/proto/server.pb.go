@@ -26,77 +26,848 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-// server test
-type ServerRequest struct {
-	Info                 string   `protobuf:"bytes,1,opt,name=info,proto3" json:"info,omitempty"`
+// Game info for index.
+type GameIndexRequest struct {
+	PageSize             int32    `protobuf:"varint,1,opt,name=pageSize,proto3" json:"pageSize,omitempty"`
+	Page                 int32    `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ServerRequest) Reset()         { *m = ServerRequest{} }
-func (m *ServerRequest) String() string { return proto.CompactTextString(m) }
-func (*ServerRequest) ProtoMessage()    {}
-func (*ServerRequest) Descriptor() ([]byte, []int) {
+func (m *GameIndexRequest) Reset()         { *m = GameIndexRequest{} }
+func (m *GameIndexRequest) String() string { return proto.CompactTextString(m) }
+func (*GameIndexRequest) ProtoMessage()    {}
+func (*GameIndexRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ad098daeda4239f7, []int{0}
 }
-func (m *ServerRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ServerRequest.Unmarshal(m, b)
+func (m *GameIndexRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameIndexRequest.Unmarshal(m, b)
 }
-func (m *ServerRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ServerRequest.Marshal(b, m, deterministic)
+func (m *GameIndexRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameIndexRequest.Marshal(b, m, deterministic)
 }
-func (m *ServerRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ServerRequest.Merge(m, src)
+func (m *GameIndexRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameIndexRequest.Merge(m, src)
 }
-func (m *ServerRequest) XXX_Size() int {
-	return xxx_messageInfo_ServerRequest.Size(m)
+func (m *GameIndexRequest) XXX_Size() int {
+	return xxx_messageInfo_GameIndexRequest.Size(m)
 }
-func (m *ServerRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ServerRequest.DiscardUnknown(m)
+func (m *GameIndexRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameIndexRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ServerRequest proto.InternalMessageInfo
+var xxx_messageInfo_GameIndexRequest proto.InternalMessageInfo
 
-func (m *ServerRequest) GetInfo() string {
+func (m *GameIndexRequest) GetPageSize() int32 {
 	if m != nil {
-		return m.Info
+		return m.PageSize
 	}
-	return ""
+	return 0
 }
 
-type ServerResponse struct {
+func (m *GameIndexRequest) GetPage() int32 {
+	if m != nil {
+		return m.Page
+	}
+	return 0
+}
+
+type GameIndexResponse struct {
 	Result               string   `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ServerResponse) Reset()         { *m = ServerResponse{} }
-func (m *ServerResponse) String() string { return proto.CompactTextString(m) }
-func (*ServerResponse) ProtoMessage()    {}
-func (*ServerResponse) Descriptor() ([]byte, []int) {
+func (m *GameIndexResponse) Reset()         { *m = GameIndexResponse{} }
+func (m *GameIndexResponse) String() string { return proto.CompactTextString(m) }
+func (*GameIndexResponse) ProtoMessage()    {}
+func (*GameIndexResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ad098daeda4239f7, []int{1}
 }
-func (m *ServerResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ServerResponse.Unmarshal(m, b)
+func (m *GameIndexResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameIndexResponse.Unmarshal(m, b)
 }
-func (m *ServerResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ServerResponse.Marshal(b, m, deterministic)
+func (m *GameIndexResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameIndexResponse.Marshal(b, m, deterministic)
 }
-func (m *ServerResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ServerResponse.Merge(m, src)
+func (m *GameIndexResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameIndexResponse.Merge(m, src)
 }
-func (m *ServerResponse) XXX_Size() int {
-	return xxx_messageInfo_ServerResponse.Size(m)
+func (m *GameIndexResponse) XXX_Size() int {
+	return xxx_messageInfo_GameIndexResponse.Size(m)
 }
-func (m *ServerResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_ServerResponse.DiscardUnknown(m)
+func (m *GameIndexResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameIndexResponse.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ServerResponse proto.InternalMessageInfo
+var xxx_messageInfo_GameIndexResponse proto.InternalMessageInfo
 
-func (m *ServerResponse) GetResult() string {
+func (m *GameIndexResponse) GetResult() string {
+	if m != nil {
+		return m.Result
+	}
+	return ""
+}
+
+// Resource info for index
+type ResourceIndexRequest struct {
+	PageSize             int32    `protobuf:"varint,1,opt,name=pageSize,proto3" json:"pageSize,omitempty"`
+	Page                 int32    `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ResourceIndexRequest) Reset()         { *m = ResourceIndexRequest{} }
+func (m *ResourceIndexRequest) String() string { return proto.CompactTextString(m) }
+func (*ResourceIndexRequest) ProtoMessage()    {}
+func (*ResourceIndexRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{2}
+}
+func (m *ResourceIndexRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ResourceIndexRequest.Unmarshal(m, b)
+}
+func (m *ResourceIndexRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ResourceIndexRequest.Marshal(b, m, deterministic)
+}
+func (m *ResourceIndexRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResourceIndexRequest.Merge(m, src)
+}
+func (m *ResourceIndexRequest) XXX_Size() int {
+	return xxx_messageInfo_ResourceIndexRequest.Size(m)
+}
+func (m *ResourceIndexRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResourceIndexRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ResourceIndexRequest proto.InternalMessageInfo
+
+func (m *ResourceIndexRequest) GetPageSize() int32 {
+	if m != nil {
+		return m.PageSize
+	}
+	return 0
+}
+
+func (m *ResourceIndexRequest) GetPage() int32 {
+	if m != nil {
+		return m.Page
+	}
+	return 0
+}
+
+type ResourceIndexResponse struct {
+	Result               string   `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ResourceIndexResponse) Reset()         { *m = ResourceIndexResponse{} }
+func (m *ResourceIndexResponse) String() string { return proto.CompactTextString(m) }
+func (*ResourceIndexResponse) ProtoMessage()    {}
+func (*ResourceIndexResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{3}
+}
+func (m *ResourceIndexResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ResourceIndexResponse.Unmarshal(m, b)
+}
+func (m *ResourceIndexResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ResourceIndexResponse.Marshal(b, m, deterministic)
+}
+func (m *ResourceIndexResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResourceIndexResponse.Merge(m, src)
+}
+func (m *ResourceIndexResponse) XXX_Size() int {
+	return xxx_messageInfo_ResourceIndexResponse.Size(m)
+}
+func (m *ResourceIndexResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResourceIndexResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ResourceIndexResponse proto.InternalMessageInfo
+
+func (m *ResourceIndexResponse) GetResult() string {
+	if m != nil {
+		return m.Result
+	}
+	return ""
+}
+
+// Global search
+type GlobalSearchRequest struct {
+	Keyword              string   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GlobalSearchRequest) Reset()         { *m = GlobalSearchRequest{} }
+func (m *GlobalSearchRequest) String() string { return proto.CompactTextString(m) }
+func (*GlobalSearchRequest) ProtoMessage()    {}
+func (*GlobalSearchRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{4}
+}
+func (m *GlobalSearchRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GlobalSearchRequest.Unmarshal(m, b)
+}
+func (m *GlobalSearchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GlobalSearchRequest.Marshal(b, m, deterministic)
+}
+func (m *GlobalSearchRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GlobalSearchRequest.Merge(m, src)
+}
+func (m *GlobalSearchRequest) XXX_Size() int {
+	return xxx_messageInfo_GlobalSearchRequest.Size(m)
+}
+func (m *GlobalSearchRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GlobalSearchRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GlobalSearchRequest proto.InternalMessageInfo
+
+func (m *GlobalSearchRequest) GetKeyword() string {
+	if m != nil {
+		return m.Keyword
+	}
+	return ""
+}
+
+type GlobalSearchResponse struct {
+	GameResult           string   `protobuf:"bytes,1,opt,name=gameResult,proto3" json:"gameResult,omitempty"`
+	ResourceResult       string   `protobuf:"bytes,2,opt,name=resourceResult,proto3" json:"resourceResult,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GlobalSearchResponse) Reset()         { *m = GlobalSearchResponse{} }
+func (m *GlobalSearchResponse) String() string { return proto.CompactTextString(m) }
+func (*GlobalSearchResponse) ProtoMessage()    {}
+func (*GlobalSearchResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{5}
+}
+func (m *GlobalSearchResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GlobalSearchResponse.Unmarshal(m, b)
+}
+func (m *GlobalSearchResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GlobalSearchResponse.Marshal(b, m, deterministic)
+}
+func (m *GlobalSearchResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GlobalSearchResponse.Merge(m, src)
+}
+func (m *GlobalSearchResponse) XXX_Size() int {
+	return xxx_messageInfo_GlobalSearchResponse.Size(m)
+}
+func (m *GlobalSearchResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GlobalSearchResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GlobalSearchResponse proto.InternalMessageInfo
+
+func (m *GlobalSearchResponse) GetGameResult() string {
+	if m != nil {
+		return m.GameResult
+	}
+	return ""
+}
+
+func (m *GlobalSearchResponse) GetResourceResult() string {
+	if m != nil {
+		return m.ResourceResult
+	}
+	return ""
+}
+
+// Game search
+type Filter struct {
+	Type                 string   `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`
+	Value                string   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Filter) Reset()         { *m = Filter{} }
+func (m *Filter) String() string { return proto.CompactTextString(m) }
+func (*Filter) ProtoMessage()    {}
+func (*Filter) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{6}
+}
+func (m *Filter) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Filter.Unmarshal(m, b)
+}
+func (m *Filter) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Filter.Marshal(b, m, deterministic)
+}
+func (m *Filter) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Filter.Merge(m, src)
+}
+func (m *Filter) XXX_Size() int {
+	return xxx_messageInfo_Filter.Size(m)
+}
+func (m *Filter) XXX_DiscardUnknown() {
+	xxx_messageInfo_Filter.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Filter proto.InternalMessageInfo
+
+func (m *Filter) GetType() string {
+	if m != nil {
+		return m.Type
+	}
+	return ""
+}
+
+func (m *Filter) GetValue() string {
+	if m != nil {
+		return m.Value
+	}
+	return ""
+}
+
+type GameSearchRequest struct {
+	Filter               []*Filter `protobuf:"bytes,1,rep,name=filter,proto3" json:"filter,omitempty"`
+	Keyword              string    `protobuf:"bytes,2,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *GameSearchRequest) Reset()         { *m = GameSearchRequest{} }
+func (m *GameSearchRequest) String() string { return proto.CompactTextString(m) }
+func (*GameSearchRequest) ProtoMessage()    {}
+func (*GameSearchRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{7}
+}
+func (m *GameSearchRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameSearchRequest.Unmarshal(m, b)
+}
+func (m *GameSearchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameSearchRequest.Marshal(b, m, deterministic)
+}
+func (m *GameSearchRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameSearchRequest.Merge(m, src)
+}
+func (m *GameSearchRequest) XXX_Size() int {
+	return xxx_messageInfo_GameSearchRequest.Size(m)
+}
+func (m *GameSearchRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameSearchRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GameSearchRequest proto.InternalMessageInfo
+
+func (m *GameSearchRequest) GetFilter() []*Filter {
+	if m != nil {
+		return m.Filter
+	}
+	return nil
+}
+
+func (m *GameSearchRequest) GetKeyword() string {
+	if m != nil {
+		return m.Keyword
+	}
+	return ""
+}
+
+type GameSearchResponse struct {
+	Result               string   `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GameSearchResponse) Reset()         { *m = GameSearchResponse{} }
+func (m *GameSearchResponse) String() string { return proto.CompactTextString(m) }
+func (*GameSearchResponse) ProtoMessage()    {}
+func (*GameSearchResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{8}
+}
+func (m *GameSearchResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameSearchResponse.Unmarshal(m, b)
+}
+func (m *GameSearchResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameSearchResponse.Marshal(b, m, deterministic)
+}
+func (m *GameSearchResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameSearchResponse.Merge(m, src)
+}
+func (m *GameSearchResponse) XXX_Size() int {
+	return xxx_messageInfo_GameSearchResponse.Size(m)
+}
+func (m *GameSearchResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameSearchResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GameSearchResponse proto.InternalMessageInfo
+
+func (m *GameSearchResponse) GetResult() string {
+	if m != nil {
+		return m.Result
+	}
+	return ""
+}
+
+// News search
+type NewsSearchRequest struct {
+	Keyword              string   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *NewsSearchRequest) Reset()         { *m = NewsSearchRequest{} }
+func (m *NewsSearchRequest) String() string { return proto.CompactTextString(m) }
+func (*NewsSearchRequest) ProtoMessage()    {}
+func (*NewsSearchRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{9}
+}
+func (m *NewsSearchRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_NewsSearchRequest.Unmarshal(m, b)
+}
+func (m *NewsSearchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_NewsSearchRequest.Marshal(b, m, deterministic)
+}
+func (m *NewsSearchRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NewsSearchRequest.Merge(m, src)
+}
+func (m *NewsSearchRequest) XXX_Size() int {
+	return xxx_messageInfo_NewsSearchRequest.Size(m)
+}
+func (m *NewsSearchRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_NewsSearchRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_NewsSearchRequest proto.InternalMessageInfo
+
+func (m *NewsSearchRequest) GetKeyword() string {
+	if m != nil {
+		return m.Keyword
+	}
+	return ""
+}
+
+type NewsSearchResponse struct {
+	Result               string   `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *NewsSearchResponse) Reset()         { *m = NewsSearchResponse{} }
+func (m *NewsSearchResponse) String() string { return proto.CompactTextString(m) }
+func (*NewsSearchResponse) ProtoMessage()    {}
+func (*NewsSearchResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{10}
+}
+func (m *NewsSearchResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_NewsSearchResponse.Unmarshal(m, b)
+}
+func (m *NewsSearchResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_NewsSearchResponse.Marshal(b, m, deterministic)
+}
+func (m *NewsSearchResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NewsSearchResponse.Merge(m, src)
+}
+func (m *NewsSearchResponse) XXX_Size() int {
+	return xxx_messageInfo_NewsSearchResponse.Size(m)
+}
+func (m *NewsSearchResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_NewsSearchResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_NewsSearchResponse proto.InternalMessageInfo
+
+func (m *NewsSearchResponse) GetResult() string {
+	if m != nil {
+		return m.Result
+	}
+	return ""
+}
+
+// Raiders search
+type RaidersSearchRequest struct {
+	Keyword              string   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RaidersSearchRequest) Reset()         { *m = RaidersSearchRequest{} }
+func (m *RaidersSearchRequest) String() string { return proto.CompactTextString(m) }
+func (*RaidersSearchRequest) ProtoMessage()    {}
+func (*RaidersSearchRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{11}
+}
+func (m *RaidersSearchRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RaidersSearchRequest.Unmarshal(m, b)
+}
+func (m *RaidersSearchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RaidersSearchRequest.Marshal(b, m, deterministic)
+}
+func (m *RaidersSearchRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RaidersSearchRequest.Merge(m, src)
+}
+func (m *RaidersSearchRequest) XXX_Size() int {
+	return xxx_messageInfo_RaidersSearchRequest.Size(m)
+}
+func (m *RaidersSearchRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_RaidersSearchRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RaidersSearchRequest proto.InternalMessageInfo
+
+func (m *RaidersSearchRequest) GetKeyword() string {
+	if m != nil {
+		return m.Keyword
+	}
+	return ""
+}
+
+type RaidersSearchResponse struct {
+	Result               string   `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RaidersSearchResponse) Reset()         { *m = RaidersSearchResponse{} }
+func (m *RaidersSearchResponse) String() string { return proto.CompactTextString(m) }
+func (*RaidersSearchResponse) ProtoMessage()    {}
+func (*RaidersSearchResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{12}
+}
+func (m *RaidersSearchResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RaidersSearchResponse.Unmarshal(m, b)
+}
+func (m *RaidersSearchResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RaidersSearchResponse.Marshal(b, m, deterministic)
+}
+func (m *RaidersSearchResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RaidersSearchResponse.Merge(m, src)
+}
+func (m *RaidersSearchResponse) XXX_Size() int {
+	return xxx_messageInfo_RaidersSearchResponse.Size(m)
+}
+func (m *RaidersSearchResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_RaidersSearchResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RaidersSearchResponse proto.InternalMessageInfo
+
+func (m *RaidersSearchResponse) GetResult() string {
+	if m != nil {
+		return m.Result
+	}
+	return ""
+}
+
+// Video search
+type VideoSearchRequest struct {
+	Keyword              string   `protobuf:"bytes,1,opt,name=keyword,proto3" json:"keyword,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *VideoSearchRequest) Reset()         { *m = VideoSearchRequest{} }
+func (m *VideoSearchRequest) String() string { return proto.CompactTextString(m) }
+func (*VideoSearchRequest) ProtoMessage()    {}
+func (*VideoSearchRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{13}
+}
+func (m *VideoSearchRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_VideoSearchRequest.Unmarshal(m, b)
+}
+func (m *VideoSearchRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_VideoSearchRequest.Marshal(b, m, deterministic)
+}
+func (m *VideoSearchRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VideoSearchRequest.Merge(m, src)
+}
+func (m *VideoSearchRequest) XXX_Size() int {
+	return xxx_messageInfo_VideoSearchRequest.Size(m)
+}
+func (m *VideoSearchRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_VideoSearchRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_VideoSearchRequest proto.InternalMessageInfo
+
+func (m *VideoSearchRequest) GetKeyword() string {
+	if m != nil {
+		return m.Keyword
+	}
+	return ""
+}
+
+type VideoSearchResponse struct {
+	Result               string   `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *VideoSearchResponse) Reset()         { *m = VideoSearchResponse{} }
+func (m *VideoSearchResponse) String() string { return proto.CompactTextString(m) }
+func (*VideoSearchResponse) ProtoMessage()    {}
+func (*VideoSearchResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{14}
+}
+func (m *VideoSearchResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_VideoSearchResponse.Unmarshal(m, b)
+}
+func (m *VideoSearchResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_VideoSearchResponse.Marshal(b, m, deterministic)
+}
+func (m *VideoSearchResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_VideoSearchResponse.Merge(m, src)
+}
+func (m *VideoSearchResponse) XXX_Size() int {
+	return xxx_messageInfo_VideoSearchResponse.Size(m)
+}
+func (m *VideoSearchResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_VideoSearchResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_VideoSearchResponse proto.InternalMessageInfo
+
+func (m *VideoSearchResponse) GetResult() string {
+	if m != nil {
+		return m.Result
+	}
+	return ""
+}
+
+// Game news
+type GameNewsGetRequest struct {
+	GameName             string   `protobuf:"bytes,1,opt,name=gameName,proto3" json:"gameName,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GameNewsGetRequest) Reset()         { *m = GameNewsGetRequest{} }
+func (m *GameNewsGetRequest) String() string { return proto.CompactTextString(m) }
+func (*GameNewsGetRequest) ProtoMessage()    {}
+func (*GameNewsGetRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{15}
+}
+func (m *GameNewsGetRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameNewsGetRequest.Unmarshal(m, b)
+}
+func (m *GameNewsGetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameNewsGetRequest.Marshal(b, m, deterministic)
+}
+func (m *GameNewsGetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameNewsGetRequest.Merge(m, src)
+}
+func (m *GameNewsGetRequest) XXX_Size() int {
+	return xxx_messageInfo_GameNewsGetRequest.Size(m)
+}
+func (m *GameNewsGetRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameNewsGetRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GameNewsGetRequest proto.InternalMessageInfo
+
+func (m *GameNewsGetRequest) GetGameName() string {
+	if m != nil {
+		return m.GameName
+	}
+	return ""
+}
+
+type GameNewsGetResponse struct {
+	Result               string   `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GameNewsGetResponse) Reset()         { *m = GameNewsGetResponse{} }
+func (m *GameNewsGetResponse) String() string { return proto.CompactTextString(m) }
+func (*GameNewsGetResponse) ProtoMessage()    {}
+func (*GameNewsGetResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{16}
+}
+func (m *GameNewsGetResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameNewsGetResponse.Unmarshal(m, b)
+}
+func (m *GameNewsGetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameNewsGetResponse.Marshal(b, m, deterministic)
+}
+func (m *GameNewsGetResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameNewsGetResponse.Merge(m, src)
+}
+func (m *GameNewsGetResponse) XXX_Size() int {
+	return xxx_messageInfo_GameNewsGetResponse.Size(m)
+}
+func (m *GameNewsGetResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameNewsGetResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GameNewsGetResponse proto.InternalMessageInfo
+
+func (m *GameNewsGetResponse) GetResult() string {
+	if m != nil {
+		return m.Result
+	}
+	return ""
+}
+
+// Game raiders
+type GameRaidersGetRequest struct {
+	GameName             string   `protobuf:"bytes,1,opt,name=gameName,proto3" json:"gameName,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GameRaidersGetRequest) Reset()         { *m = GameRaidersGetRequest{} }
+func (m *GameRaidersGetRequest) String() string { return proto.CompactTextString(m) }
+func (*GameRaidersGetRequest) ProtoMessage()    {}
+func (*GameRaidersGetRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{17}
+}
+func (m *GameRaidersGetRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameRaidersGetRequest.Unmarshal(m, b)
+}
+func (m *GameRaidersGetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameRaidersGetRequest.Marshal(b, m, deterministic)
+}
+func (m *GameRaidersGetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameRaidersGetRequest.Merge(m, src)
+}
+func (m *GameRaidersGetRequest) XXX_Size() int {
+	return xxx_messageInfo_GameRaidersGetRequest.Size(m)
+}
+func (m *GameRaidersGetRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameRaidersGetRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GameRaidersGetRequest proto.InternalMessageInfo
+
+func (m *GameRaidersGetRequest) GetGameName() string {
+	if m != nil {
+		return m.GameName
+	}
+	return ""
+}
+
+type GameRaidersGetResponse struct {
+	Result               string   `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GameRaidersGetResponse) Reset()         { *m = GameRaidersGetResponse{} }
+func (m *GameRaidersGetResponse) String() string { return proto.CompactTextString(m) }
+func (*GameRaidersGetResponse) ProtoMessage()    {}
+func (*GameRaidersGetResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{18}
+}
+func (m *GameRaidersGetResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameRaidersGetResponse.Unmarshal(m, b)
+}
+func (m *GameRaidersGetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameRaidersGetResponse.Marshal(b, m, deterministic)
+}
+func (m *GameRaidersGetResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameRaidersGetResponse.Merge(m, src)
+}
+func (m *GameRaidersGetResponse) XXX_Size() int {
+	return xxx_messageInfo_GameRaidersGetResponse.Size(m)
+}
+func (m *GameRaidersGetResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameRaidersGetResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GameRaidersGetResponse proto.InternalMessageInfo
+
+func (m *GameRaidersGetResponse) GetResult() string {
+	if m != nil {
+		return m.Result
+	}
+	return ""
+}
+
+// Game video
+type GameVideoGetRequest struct {
+	GameName             string   `protobuf:"bytes,1,opt,name=gameName,proto3" json:"gameName,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GameVideoGetRequest) Reset()         { *m = GameVideoGetRequest{} }
+func (m *GameVideoGetRequest) String() string { return proto.CompactTextString(m) }
+func (*GameVideoGetRequest) ProtoMessage()    {}
+func (*GameVideoGetRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{19}
+}
+func (m *GameVideoGetRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameVideoGetRequest.Unmarshal(m, b)
+}
+func (m *GameVideoGetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameVideoGetRequest.Marshal(b, m, deterministic)
+}
+func (m *GameVideoGetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameVideoGetRequest.Merge(m, src)
+}
+func (m *GameVideoGetRequest) XXX_Size() int {
+	return xxx_messageInfo_GameVideoGetRequest.Size(m)
+}
+func (m *GameVideoGetRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameVideoGetRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GameVideoGetRequest proto.InternalMessageInfo
+
+func (m *GameVideoGetRequest) GetGameName() string {
+	if m != nil {
+		return m.GameName
+	}
+	return ""
+}
+
+type GameVideoGetResponse struct {
+	Result               string   `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GameVideoGetResponse) Reset()         { *m = GameVideoGetResponse{} }
+func (m *GameVideoGetResponse) String() string { return proto.CompactTextString(m) }
+func (*GameVideoGetResponse) ProtoMessage()    {}
+func (*GameVideoGetResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ad098daeda4239f7, []int{20}
+}
+func (m *GameVideoGetResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameVideoGetResponse.Unmarshal(m, b)
+}
+func (m *GameVideoGetResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameVideoGetResponse.Marshal(b, m, deterministic)
+}
+func (m *GameVideoGetResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameVideoGetResponse.Merge(m, src)
+}
+func (m *GameVideoGetResponse) XXX_Size() int {
+	return xxx_messageInfo_GameVideoGetResponse.Size(m)
+}
+func (m *GameVideoGetResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameVideoGetResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GameVideoGetResponse proto.InternalMessageInfo
+
+func (m *GameVideoGetResponse) GetResult() string {
 	if m != nil {
 		return m.Result
 	}
@@ -104,28 +875,77 @@ func (m *ServerResponse) GetResult() string {
 }
 
 func init() {
-	proto.RegisterType((*ServerRequest)(nil), "proto.ServerRequest")
-	proto.RegisterType((*ServerResponse)(nil), "proto.ServerResponse")
+	proto.RegisterType((*GameIndexRequest)(nil), "proto.GameIndexRequest")
+	proto.RegisterType((*GameIndexResponse)(nil), "proto.GameIndexResponse")
+	proto.RegisterType((*ResourceIndexRequest)(nil), "proto.ResourceIndexRequest")
+	proto.RegisterType((*ResourceIndexResponse)(nil), "proto.ResourceIndexResponse")
+	proto.RegisterType((*GlobalSearchRequest)(nil), "proto.GlobalSearchRequest")
+	proto.RegisterType((*GlobalSearchResponse)(nil), "proto.GlobalSearchResponse")
+	proto.RegisterType((*Filter)(nil), "proto.Filter")
+	proto.RegisterType((*GameSearchRequest)(nil), "proto.GameSearchRequest")
+	proto.RegisterType((*GameSearchResponse)(nil), "proto.GameSearchResponse")
+	proto.RegisterType((*NewsSearchRequest)(nil), "proto.NewsSearchRequest")
+	proto.RegisterType((*NewsSearchResponse)(nil), "proto.NewsSearchResponse")
+	proto.RegisterType((*RaidersSearchRequest)(nil), "proto.RaidersSearchRequest")
+	proto.RegisterType((*RaidersSearchResponse)(nil), "proto.RaidersSearchResponse")
+	proto.RegisterType((*VideoSearchRequest)(nil), "proto.VideoSearchRequest")
+	proto.RegisterType((*VideoSearchResponse)(nil), "proto.VideoSearchResponse")
+	proto.RegisterType((*GameNewsGetRequest)(nil), "proto.GameNewsGetRequest")
+	proto.RegisterType((*GameNewsGetResponse)(nil), "proto.GameNewsGetResponse")
+	proto.RegisterType((*GameRaidersGetRequest)(nil), "proto.GameRaidersGetRequest")
+	proto.RegisterType((*GameRaidersGetResponse)(nil), "proto.GameRaidersGetResponse")
+	proto.RegisterType((*GameVideoGetRequest)(nil), "proto.GameVideoGetRequest")
+	proto.RegisterType((*GameVideoGetResponse)(nil), "proto.GameVideoGetResponse")
 }
 
 func init() { proto.RegisterFile("server.proto", fileDescriptor_ad098daeda4239f7) }
 
 var fileDescriptor_ad098daeda4239f7 = []byte{
-	// 209 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x29, 0x4e, 0x2d, 0x2a,
-	0x4b, 0x2d, 0xd2, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x05, 0x53, 0x52, 0x32, 0xe9, 0xf9,
-	0xf9, 0xe9, 0x39, 0xa9, 0xfa, 0x89, 0x05, 0x99, 0xfa, 0x89, 0x79, 0x79, 0xf9, 0x25, 0x89, 0x25,
-	0x99, 0xf9, 0x79, 0xc5, 0x10, 0x45, 0x52, 0x3a, 0x60, 0x2a, 0x59, 0x37, 0x3d, 0x35, 0x4f, 0xb7,
-	0xb8, 0x3c, 0x31, 0x3d, 0x3d, 0xb5, 0x48, 0x3f, 0xbf, 0x00, 0xac, 0x02, 0x53, 0xb5, 0x92, 0x32,
-	0x17, 0x6f, 0x30, 0xd8, 0x8a, 0xa0, 0xd4, 0xc2, 0xd2, 0xd4, 0xe2, 0x12, 0x21, 0x21, 0x2e, 0x96,
-	0xcc, 0xbc, 0xb4, 0x7c, 0x09, 0x46, 0x05, 0x46, 0x0d, 0xce, 0x20, 0x30, 0x5b, 0x49, 0x83, 0x8b,
-	0x0f, 0xa6, 0xa8, 0xb8, 0x20, 0x3f, 0xaf, 0x38, 0x55, 0x48, 0x8c, 0x8b, 0xad, 0x28, 0xb5, 0xb8,
-	0x34, 0xa7, 0x04, 0xaa, 0x0e, 0xca, 0x33, 0x4a, 0xe1, 0xe2, 0x0f, 0x4e, 0xce, 0x48, 0x4d, 0x29,
-	0xcd, 0x49, 0x05, 0xe9, 0xc8, 0x4c, 0x4e, 0x15, 0x0a, 0xe4, 0xe2, 0x82, 0x68, 0x0e, 0x01, 0x19,
-	0x2f, 0x02, 0xb1, 0x57, 0x0f, 0xc5, 0x52, 0x29, 0x51, 0x34, 0x51, 0x88, 0x2d, 0x4a, 0x62, 0x4d,
-	0x97, 0x9f, 0x4c, 0x66, 0x12, 0x50, 0xe2, 0xd6, 0x2f, 0x86, 0x9b, 0x60, 0xc5, 0xa8, 0x95, 0xc4,
-	0x06, 0x56, 0x6d, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x1e, 0xe0, 0x17, 0x4e, 0x1e, 0x01, 0x00,
-	0x00,
+	// 700 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x94, 0xcf, 0x6e, 0xd3, 0x4e,
+	0x10, 0xc7, 0x95, 0xfc, 0x7e, 0x49, 0xdb, 0x49, 0x42, 0xdb, 0x6d, 0x5a, 0x82, 0x5b, 0x50, 0xb5,
+	0x12, 0xa8, 0x82, 0x26, 0x2e, 0xed, 0x8d, 0x23, 0x87, 0x56, 0x5c, 0x7a, 0x70, 0x50, 0x39, 0x20,
+	0x51, 0xb9, 0xc9, 0xd4, 0x35, 0x38, 0xde, 0xb0, 0x76, 0x12, 0xca, 0x91, 0x57, 0xe0, 0x75, 0x78,
+	0x0b, 0x5e, 0x81, 0x07, 0x41, 0xfb, 0xc7, 0xf1, 0xfa, 0x0f, 0x38, 0x12, 0x27, 0x7b, 0x3d, 0xb3,
+	0x9f, 0xef, 0xce, 0x78, 0xbf, 0x03, 0xed, 0x08, 0xf9, 0x1c, 0xf9, 0x60, 0xca, 0x59, 0xcc, 0x48,
+	0x43, 0x3e, 0xac, 0x03, 0x8f, 0x31, 0x2f, 0x40, 0xdb, 0x9d, 0xfa, 0xb6, 0x1b, 0x86, 0x2c, 0x76,
+	0x63, 0x9f, 0x85, 0x91, 0x4a, 0xb2, 0x8e, 0xe5, 0x63, 0xd4, 0xf7, 0x30, 0xec, 0x47, 0x0b, 0xd7,
+	0xf3, 0x90, 0xdb, 0x6c, 0x2a, 0x33, 0x8a, 0xd9, 0xf4, 0x35, 0x6c, 0x5d, 0xb8, 0x13, 0x7c, 0x13,
+	0x8e, 0xf1, 0x8b, 0x83, 0x9f, 0x67, 0x18, 0xc5, 0xc4, 0x82, 0xf5, 0xa9, 0xeb, 0xe1, 0xd0, 0xff,
+	0x8a, 0xbd, 0xda, 0x61, 0xed, 0xa8, 0xe1, 0x2c, 0xd7, 0x84, 0xc0, 0xff, 0xe2, 0xbd, 0x57, 0x97,
+	0xdf, 0xe5, 0x3b, 0x7d, 0x01, 0xdb, 0x06, 0x23, 0x9a, 0xb2, 0x30, 0x42, 0xb2, 0x07, 0x4d, 0x8e,
+	0xd1, 0x2c, 0x88, 0x25, 0x62, 0xc3, 0xd1, 0x2b, 0x7a, 0x0e, 0x5d, 0x07, 0x23, 0x36, 0xe3, 0xa3,
+	0x7f, 0x13, 0xb5, 0x61, 0x37, 0xc7, 0xa9, 0x10, 0xb6, 0x61, 0xe7, 0x22, 0x60, 0x37, 0x6e, 0x30,
+	0x44, 0x97, 0x8f, 0xee, 0x12, 0xdd, 0x1e, 0xac, 0x7d, 0xc2, 0xfb, 0x05, 0xe3, 0x63, 0x9d, 0x9f,
+	0x2c, 0xe9, 0x07, 0xe8, 0x66, 0x37, 0x68, 0x81, 0x27, 0x00, 0x9e, 0x3b, 0x41, 0xc7, 0x14, 0x31,
+	0xbe, 0x90, 0x67, 0xf0, 0x80, 0xeb, 0x93, 0xe9, 0x9c, 0xba, 0xcc, 0xc9, 0x7d, 0xa5, 0xa7, 0xd0,
+	0x3c, 0xf7, 0x83, 0x18, 0xb9, 0xa8, 0x2f, 0xbe, 0x9f, 0xa2, 0x66, 0xc9, 0x77, 0xd2, 0x85, 0xc6,
+	0xdc, 0x0d, 0x66, 0xa8, 0x37, 0xab, 0x05, 0x7d, 0xab, 0x5a, 0x9d, 0x2d, 0xe1, 0x29, 0x34, 0x6f,
+	0x25, 0xa8, 0x57, 0x3b, 0xfc, 0xef, 0xa8, 0x75, 0xda, 0x51, 0xff, 0x76, 0xa0, 0xe8, 0x8e, 0x0e,
+	0x9a, 0x95, 0xd6, 0xb3, 0x95, 0x1e, 0x03, 0x31, 0xa9, 0x15, 0x8d, 0xec, 0xc3, 0xf6, 0x25, 0x2e,
+	0xa2, 0x55, 0xdb, 0x78, 0x0c, 0xc4, 0x4c, 0xaf, 0x80, 0x9f, 0x40, 0xd7, 0x71, 0xfd, 0x31, 0xf2,
+	0x95, 0xf9, 0xe2, 0x22, 0x64, 0x77, 0x54, 0x48, 0x0c, 0x80, 0x5c, 0xf9, 0x63, 0x64, 0xab, 0x0a,
+	0xf4, 0x61, 0x27, 0x93, 0x5f, 0x59, 0x81, 0x6c, 0xa6, 0xa8, 0xf9, 0x02, 0x63, 0xe3, 0x7a, 0x8b,
+	0x2b, 0x72, 0xe9, 0x4e, 0x92, 0xdf, 0xbc, 0x5c, 0x0b, 0x81, 0xcc, 0x8e, 0x0a, 0x81, 0x33, 0xd8,
+	0x15, 0xe9, 0xba, 0xe8, 0x15, 0x35, 0x4e, 0x60, 0x2f, 0xbf, 0xa9, 0x42, 0xe6, 0xa5, 0x3a, 0x95,
+	0x2c, 0x7d, 0x45, 0x91, 0x01, 0x74, 0xb3, 0x5b, 0xfe, 0x2e, 0x71, 0xfa, 0x63, 0x0d, 0x36, 0x87,
+	0xa3, 0x3b, 0x1c, 0xcf, 0x02, 0x1c, 0x22, 0x9f, 0xfb, 0x23, 0x24, 0x57, 0xb0, 0xb1, 0x1c, 0x26,
+	0xe4, 0xa1, 0xbe, 0xc9, 0xf9, 0x11, 0x65, 0xf5, 0x8a, 0x01, 0xa5, 0x45, 0xf7, 0xbe, 0xfd, 0xfc,
+	0xf5, 0xbd, 0xbe, 0x45, 0x5b, 0xb6, 0x38, 0x96, 0xed, 0x8b, 0xe0, 0xab, 0xda, 0x73, 0x72, 0x0b,
+	0x9d, 0xcc, 0xbc, 0x20, 0xfb, 0x1a, 0x51, 0x36, 0x8d, 0xac, 0x83, 0xf2, 0xa0, 0xd6, 0xb0, 0xa4,
+	0x46, 0x97, 0x6e, 0xda, 0x89, 0xa5, 0x53, 0x9d, 0xf7, 0xd0, 0x36, 0xa7, 0x06, 0xb1, 0x92, 0x93,
+	0x16, 0x67, 0x8f, 0xb5, 0x5f, 0x1a, 0xd3, 0x22, 0x44, 0x8a, 0xb4, 0xe9, 0x9a, 0xed, 0xc9, 0xb0,
+	0x80, 0x0f, 0x01, 0x52, 0xa3, 0x12, 0xb3, 0x09, 0x59, 0xf0, 0xa3, 0x92, 0x88, 0xc6, 0x6e, 0x49,
+	0x2c, 0xd0, 0x86, 0xec, 0x8f, 0x86, 0xa6, 0x06, 0x5d, 0x42, 0x0b, 0x16, 0x5f, 0x42, 0x8b, 0x6e,
+	0x36, 0xa0, 0x21, 0x2e, 0x22, 0x01, 0xbd, 0x86, 0x4e, 0xc6, 0x95, 0x69, 0xbb, 0x4b, 0xdc, 0x9d,
+	0xb6, 0xbb, 0xcc, 0xc8, 0x74, 0x47, 0xd2, 0x3b, 0x74, 0xdd, 0xe6, 0x2a, 0x2e, 0x04, 0xde, 0x41,
+	0xcb, 0x70, 0x25, 0x49, 0x0e, 0x57, 0x74, 0xb6, 0x65, 0x95, 0x85, 0x34, 0x7a, 0x5b, 0xa2, 0x5b,
+	0xb4, 0x69, 0xcf, 0x45, 0x54, 0xfd, 0xc0, 0x96, 0xe1, 0x46, 0x62, 0xb6, 0x32, 0xeb, 0xe9, 0x25,
+	0xb8, 0xc4, 0xbc, 0x74, 0x57, 0x82, 0x37, 0x29, 0xa8, 0x6b, 0x98, 0xb4, 0xe5, 0xa3, 0x9a, 0xdf,
+	0xa9, 0x0d, 0x85, 0xc4, 0x81, 0xc1, 0x29, 0xb8, 0xda, 0x7a, 0xfc, 0x87, 0xa8, 0x16, 0xea, 0x49,
+	0x21, 0x42, 0x3b, 0x4a, 0xc8, 0xe8, 0xd0, 0x35, 0xb4, 0x4d, 0x37, 0x12, 0xf3, 0xb8, 0x39, 0x57,
+	0xa7, 0x37, 0xb1, 0xc4, 0xbe, 0x79, 0x4b, 0x25, 0x9d, 0xba, 0x69, 0xca, 0x3d, 0x67, 0xbf, 0x03,
+	0x00, 0x00, 0xff, 0xff, 0x47, 0x6f, 0x32, 0xb0, 0xa5, 0x08, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -140,7 +960,16 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ScheduleServiceClient interface {
-	ServerTest(ctx context.Context, in *ServerRequest, opts ...grpc.CallOption) (*ServerResponse, error)
+	GameIndex(ctx context.Context, in *GameIndexRequest, opts ...grpc.CallOption) (*GameIndexResponse, error)
+	ResourceIndex(ctx context.Context, in *ResourceIndexRequest, opts ...grpc.CallOption) (*ResourceIndexResponse, error)
+	GlobalSearch(ctx context.Context, in *GlobalSearchRequest, opts ...grpc.CallOption) (*GlobalSearchResponse, error)
+	GameSearch(ctx context.Context, in *GameSearchRequest, opts ...grpc.CallOption) (*GameSearchResponse, error)
+	NewsSearch(ctx context.Context, in *NewsSearchRequest, opts ...grpc.CallOption) (*NewsSearchResponse, error)
+	RaidersSearch(ctx context.Context, in *RaidersSearchRequest, opts ...grpc.CallOption) (*RaidersSearchResponse, error)
+	VideoSearch(ctx context.Context, in *VideoSearchRequest, opts ...grpc.CallOption) (*VideoSearchResponse, error)
+	GameNewsGet(ctx context.Context, in *GameNewsGetRequest, opts ...grpc.CallOption) (*GameNewsGetResponse, error)
+	GameRaidersGetGet(ctx context.Context, in *GameRaidersGetRequest, opts ...grpc.CallOption) (*GameRaidersGetResponse, error)
+	GameVideoGet(ctx context.Context, in *GameVideoGetRequest, opts ...grpc.CallOption) (*GameVideoGetResponse, error)
 }
 
 type scheduleServiceClient struct {
@@ -151,9 +980,90 @@ func NewScheduleServiceClient(cc *grpc.ClientConn) ScheduleServiceClient {
 	return &scheduleServiceClient{cc}
 }
 
-func (c *scheduleServiceClient) ServerTest(ctx context.Context, in *ServerRequest, opts ...grpc.CallOption) (*ServerResponse, error) {
-	out := new(ServerResponse)
-	err := c.cc.Invoke(ctx, "/proto.ScheduleService/ServerTest", in, out, opts...)
+func (c *scheduleServiceClient) GameIndex(ctx context.Context, in *GameIndexRequest, opts ...grpc.CallOption) (*GameIndexResponse, error) {
+	out := new(GameIndexResponse)
+	err := c.cc.Invoke(ctx, "/proto.ScheduleService/GameIndex", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleServiceClient) ResourceIndex(ctx context.Context, in *ResourceIndexRequest, opts ...grpc.CallOption) (*ResourceIndexResponse, error) {
+	out := new(ResourceIndexResponse)
+	err := c.cc.Invoke(ctx, "/proto.ScheduleService/ResourceIndex", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleServiceClient) GlobalSearch(ctx context.Context, in *GlobalSearchRequest, opts ...grpc.CallOption) (*GlobalSearchResponse, error) {
+	out := new(GlobalSearchResponse)
+	err := c.cc.Invoke(ctx, "/proto.ScheduleService/GlobalSearch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleServiceClient) GameSearch(ctx context.Context, in *GameSearchRequest, opts ...grpc.CallOption) (*GameSearchResponse, error) {
+	out := new(GameSearchResponse)
+	err := c.cc.Invoke(ctx, "/proto.ScheduleService/GameSearch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleServiceClient) NewsSearch(ctx context.Context, in *NewsSearchRequest, opts ...grpc.CallOption) (*NewsSearchResponse, error) {
+	out := new(NewsSearchResponse)
+	err := c.cc.Invoke(ctx, "/proto.ScheduleService/NewsSearch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleServiceClient) RaidersSearch(ctx context.Context, in *RaidersSearchRequest, opts ...grpc.CallOption) (*RaidersSearchResponse, error) {
+	out := new(RaidersSearchResponse)
+	err := c.cc.Invoke(ctx, "/proto.ScheduleService/RaidersSearch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleServiceClient) VideoSearch(ctx context.Context, in *VideoSearchRequest, opts ...grpc.CallOption) (*VideoSearchResponse, error) {
+	out := new(VideoSearchResponse)
+	err := c.cc.Invoke(ctx, "/proto.ScheduleService/VideoSearch", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleServiceClient) GameNewsGet(ctx context.Context, in *GameNewsGetRequest, opts ...grpc.CallOption) (*GameNewsGetResponse, error) {
+	out := new(GameNewsGetResponse)
+	err := c.cc.Invoke(ctx, "/proto.ScheduleService/GameNewsGet", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleServiceClient) GameRaidersGetGet(ctx context.Context, in *GameRaidersGetRequest, opts ...grpc.CallOption) (*GameRaidersGetResponse, error) {
+	out := new(GameRaidersGetResponse)
+	err := c.cc.Invoke(ctx, "/proto.ScheduleService/GameRaidersGetGet", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleServiceClient) GameVideoGet(ctx context.Context, in *GameVideoGetRequest, opts ...grpc.CallOption) (*GameVideoGetResponse, error) {
+	out := new(GameVideoGetResponse)
+	err := c.cc.Invoke(ctx, "/proto.ScheduleService/GameVideoGet", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -162,35 +1072,233 @@ func (c *scheduleServiceClient) ServerTest(ctx context.Context, in *ServerReques
 
 // ScheduleServiceServer is the server API for ScheduleService service.
 type ScheduleServiceServer interface {
-	ServerTest(context.Context, *ServerRequest) (*ServerResponse, error)
+	GameIndex(context.Context, *GameIndexRequest) (*GameIndexResponse, error)
+	ResourceIndex(context.Context, *ResourceIndexRequest) (*ResourceIndexResponse, error)
+	GlobalSearch(context.Context, *GlobalSearchRequest) (*GlobalSearchResponse, error)
+	GameSearch(context.Context, *GameSearchRequest) (*GameSearchResponse, error)
+	NewsSearch(context.Context, *NewsSearchRequest) (*NewsSearchResponse, error)
+	RaidersSearch(context.Context, *RaidersSearchRequest) (*RaidersSearchResponse, error)
+	VideoSearch(context.Context, *VideoSearchRequest) (*VideoSearchResponse, error)
+	GameNewsGet(context.Context, *GameNewsGetRequest) (*GameNewsGetResponse, error)
+	GameRaidersGetGet(context.Context, *GameRaidersGetRequest) (*GameRaidersGetResponse, error)
+	GameVideoGet(context.Context, *GameVideoGetRequest) (*GameVideoGetResponse, error)
 }
 
 // UnimplementedScheduleServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedScheduleServiceServer struct {
 }
 
-func (*UnimplementedScheduleServiceServer) ServerTest(ctx context.Context, req *ServerRequest) (*ServerResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ServerTest not implemented")
+func (*UnimplementedScheduleServiceServer) GameIndex(ctx context.Context, req *GameIndexRequest) (*GameIndexResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GameIndex not implemented")
+}
+func (*UnimplementedScheduleServiceServer) ResourceIndex(ctx context.Context, req *ResourceIndexRequest) (*ResourceIndexResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResourceIndex not implemented")
+}
+func (*UnimplementedScheduleServiceServer) GlobalSearch(ctx context.Context, req *GlobalSearchRequest) (*GlobalSearchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GlobalSearch not implemented")
+}
+func (*UnimplementedScheduleServiceServer) GameSearch(ctx context.Context, req *GameSearchRequest) (*GameSearchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GameSearch not implemented")
+}
+func (*UnimplementedScheduleServiceServer) NewsSearch(ctx context.Context, req *NewsSearchRequest) (*NewsSearchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NewsSearch not implemented")
+}
+func (*UnimplementedScheduleServiceServer) RaidersSearch(ctx context.Context, req *RaidersSearchRequest) (*RaidersSearchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RaidersSearch not implemented")
+}
+func (*UnimplementedScheduleServiceServer) VideoSearch(ctx context.Context, req *VideoSearchRequest) (*VideoSearchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VideoSearch not implemented")
+}
+func (*UnimplementedScheduleServiceServer) GameNewsGet(ctx context.Context, req *GameNewsGetRequest) (*GameNewsGetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GameNewsGet not implemented")
+}
+func (*UnimplementedScheduleServiceServer) GameRaidersGetGet(ctx context.Context, req *GameRaidersGetRequest) (*GameRaidersGetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GameRaidersGetGet not implemented")
+}
+func (*UnimplementedScheduleServiceServer) GameVideoGet(ctx context.Context, req *GameVideoGetRequest) (*GameVideoGetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GameVideoGet not implemented")
 }
 
 func RegisterScheduleServiceServer(s *grpc.Server, srv ScheduleServiceServer) {
 	s.RegisterService(&_ScheduleService_serviceDesc, srv)
 }
 
-func _ScheduleService_ServerTest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ServerRequest)
+func _ScheduleService_GameIndex_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameIndexRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ScheduleServiceServer).ServerTest(ctx, in)
+		return srv.(ScheduleServiceServer).GameIndex(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/proto.ScheduleService/ServerTest",
+		FullMethod: "/proto.ScheduleService/GameIndex",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ScheduleServiceServer).ServerTest(ctx, req.(*ServerRequest))
+		return srv.(ScheduleServiceServer).GameIndex(ctx, req.(*GameIndexRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleService_ResourceIndex_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResourceIndexRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleServiceServer).ResourceIndex(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.ScheduleService/ResourceIndex",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleServiceServer).ResourceIndex(ctx, req.(*ResourceIndexRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleService_GlobalSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GlobalSearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleServiceServer).GlobalSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.ScheduleService/GlobalSearch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleServiceServer).GlobalSearch(ctx, req.(*GlobalSearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleService_GameSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameSearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleServiceServer).GameSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.ScheduleService/GameSearch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleServiceServer).GameSearch(ctx, req.(*GameSearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleService_NewsSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NewsSearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleServiceServer).NewsSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.ScheduleService/NewsSearch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleServiceServer).NewsSearch(ctx, req.(*NewsSearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleService_RaidersSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RaidersSearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleServiceServer).RaidersSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.ScheduleService/RaidersSearch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleServiceServer).RaidersSearch(ctx, req.(*RaidersSearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleService_VideoSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VideoSearchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleServiceServer).VideoSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.ScheduleService/VideoSearch",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleServiceServer).VideoSearch(ctx, req.(*VideoSearchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleService_GameNewsGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameNewsGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleServiceServer).GameNewsGet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.ScheduleService/GameNewsGet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleServiceServer).GameNewsGet(ctx, req.(*GameNewsGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleService_GameRaidersGetGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameRaidersGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleServiceServer).GameRaidersGetGet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.ScheduleService/GameRaidersGetGet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleServiceServer).GameRaidersGetGet(ctx, req.(*GameRaidersGetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleService_GameVideoGet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GameVideoGetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleServiceServer).GameVideoGet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.ScheduleService/GameVideoGet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleServiceServer).GameVideoGet(ctx, req.(*GameVideoGetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -200,8 +1308,44 @@ var _ScheduleService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*ScheduleServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ServerTest",
-			Handler:    _ScheduleService_ServerTest_Handler,
+			MethodName: "GameIndex",
+			Handler:    _ScheduleService_GameIndex_Handler,
+		},
+		{
+			MethodName: "ResourceIndex",
+			Handler:    _ScheduleService_ResourceIndex_Handler,
+		},
+		{
+			MethodName: "GlobalSearch",
+			Handler:    _ScheduleService_GlobalSearch_Handler,
+		},
+		{
+			MethodName: "GameSearch",
+			Handler:    _ScheduleService_GameSearch_Handler,
+		},
+		{
+			MethodName: "NewsSearch",
+			Handler:    _ScheduleService_NewsSearch_Handler,
+		},
+		{
+			MethodName: "RaidersSearch",
+			Handler:    _ScheduleService_RaidersSearch_Handler,
+		},
+		{
+			MethodName: "VideoSearch",
+			Handler:    _ScheduleService_VideoSearch_Handler,
+		},
+		{
+			MethodName: "GameNewsGet",
+			Handler:    _ScheduleService_GameNewsGet_Handler,
+		},
+		{
+			MethodName: "GameRaidersGetGet",
+			Handler:    _ScheduleService_GameRaidersGetGet_Handler,
+		},
+		{
+			MethodName: "GameVideoGet",
+			Handler:    _ScheduleService_GameVideoGet_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
