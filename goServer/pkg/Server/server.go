@@ -14,12 +14,6 @@ type Server struct {
 	pb.ScheduleServiceServer
 }
 
-func (s *Server) ServerTest(ctx context.Context, req *pb.ServerRequest) (*pb.ServerResponse, error) {
-	fmt.Println(req.Info)
-	result := &pb.ServerResponse{Result: req.Info}
-	return result, nil
-}
-
 func runGrpcGateway(ctx context.Context) error {
 	mux := runtime.NewServeMux()
 
@@ -79,4 +73,62 @@ func Run() <-chan error {
 	}()
 
 	return errCh
+}
+
+func (s *Server) GameIndex(ctx context.Context, req *pb.GameIndexRequest) (*pb.GameIndexResponse, error) {
+	if req.PageSize <= 0 || req.Page < 1 {
+		return nil, fmt.Errorf("invalid input value")
+	}
+	getResult, err := GetGameIndex(req.PageSize, req.Page)
+	result := &pb.GameIndexResponse{}
+	if err != nil {
+		return result, err
+	}
+	result.Result = getResult
+	return result, nil
+}
+
+func (s *Server) ResourceIndex(ctx context.Context, req *pb.ResourceIndexRequest) (*pb.ResourceIndexResponse, error) {
+	if req.PageSize <= 0 || req.Page < 1 {
+		return nil, fmt.Errorf("invalid input value")
+	}
+	getResult, err := GetResourceIndex(req.PageSize, req.Page)
+	result := &pb.ResourceIndexResponse{}
+	if err != nil {
+		return result, err
+	}
+	result.Result = getResult
+	return result, nil
+}
+
+func (s *Server) GlobalSearch(ctx context.Context, req *pb.GlobalSearchRequest) (*pb.GlobalSearchResponse, error) {
+	return nil, nil
+}
+
+func (s *Server) GameSearch(ctx context.Context, req *pb.GameSearchRequest) (*pb.GameSearchResponse, error) {
+	return nil, nil
+}
+
+func (s *Server) NewsSearch(ctx context.Context, req *pb.NewsSearchRequest) (*pb.NewsSearchResponse, error) {
+	return nil, nil
+}
+
+func (s *Server) RaidersSearch(ctx context.Context, req *pb.RaidersSearchRequest) (*pb.RaidersSearchResponse, error) {
+	return nil, nil
+}
+
+func (s *Server) VideoSearch(ctx context.Context, req *pb.VideoSearchRequest) (*pb.VideoSearchResponse, error) {
+	return nil, nil
+}
+
+func (s *Server) GameNewsGet(ctx context.Context, req *pb.GameNewsGetRequest) (*pb.GameNewsGetResponse, error) {
+	return nil, nil
+}
+
+func (s *Server) GameRaidersGetGet(ctx context.Context, req *pb.GameRaidersGetRequest) (*pb.GameRaidersGetResponse, error) {
+	return nil, nil
+}
+
+func (s *Server) GameVideoGet(ctx context.Context, req *pb.GameVideoGetRequest) (*pb.GameVideoGetResponse, error) {
+	return nil, nil
 }

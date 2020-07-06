@@ -4,6 +4,12 @@ package proto;
 import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
+// Result index.
+message Result {
+    string source = 1;
+    string highlight = 2;
+}
+
 // Game info for index.
 message GameIndexRequest {
     int32 pageSize = 1;
@@ -11,7 +17,7 @@ message GameIndexRequest {
 }
 
 message GameIndexResponse {
-    string result = 1;
+    repeated string result = 1;
 }
 
 // Resource info for index
@@ -21,17 +27,18 @@ message ResourceIndexRequest {
 }
 
 message ResourceIndexResponse {
-    string result = 1;
+    repeated string result = 1;
 }
 
 // Global search
 message GlobalSearchRequest {
     string keyword = 1;
+    int32 size = 2;
 }
 
 message GlobalSearchResponse {
-    string gameResult = 1;
-    string resourceResult = 2;
+    repeated string gameResult = 1;
+    repeated string resourceResult = 2;
 }
 
 // Game search
@@ -44,64 +51,71 @@ message Filter {
 message GameSearchRequest {
     repeated Filter filter = 1;
     string keyword = 2;
+    int32 size = 3;
 }
 
 message GameSearchResponse {
-    string result = 1;
+    repeated string result = 1;
 }
 
 // News search
 message NewsSearchRequest {
     string keyword = 1;
+    int32 size = 2;
 }
 
 message NewsSearchResponse {
-    string result = 1;
+    repeated string result = 1;
 }
 
 // Raiders search
 message RaidersSearchRequest {
     string keyword = 1;
+    int32 size = 2;
 }
 
 message RaidersSearchResponse {
-    string result = 1;
+    repeated string result = 1;
 }
 
 // Video search
 message VideoSearchRequest {
     string keyword = 1;
+    int32 size = 2;
 }
 
 message VideoSearchResponse {
-    string result = 1;
+    repeated string result = 1;
 }
 
 // Game news
 message GameNewsGetRequest {
     string gameName = 1;
+    int32 size = 2;
 }
 
 message GameNewsGetResponse {
-    string result = 1;
+    repeated string result = 1;
 }
 
 // Game raiders
 message GameRaidersGetRequest {
     string gameName = 1;
+    int32 size = 2;
 }
 
 message GameRaidersGetResponse {
-    string result = 1;
+    repeated string result = 1;
 }
 
 // Game video
 message GameVideoGetRequest {
     string gameName = 1;
+    int32 size = 2;
 }
 
 message GameVideoGetResponse {
-    string result = 1;
+    repeated string result = 1;
 }
 
 // Server

@@ -37,6 +37,42 @@ func Init() error {
 	return nil
 }
 
+func GetGameIndex(pageSize int32, page int32) ([]string, error) {
+	gameList := make([]string, 0)
+	searchResult, err := ES.Search().Index("game").Pretty(true).Sort("release_date", false).Size(int(pageSize)).From(int(pageSize*page - pageSize)).Do(context.Background())
+	if err != nil {
+		return nil, err
+	}
+	for _, v := range searchResult.Hits.Hits {
+		item := string(v.Source)
+		gameList = append(gameList, item)
+	}
+	return gameList, nil
+}
+
+func GetResourceIndex(pageSize int32, page int32) ([]string, error) {
+	resourceList := make([]string, 0)
+	searchResult, err := ES.Search().Index("game").Pretty(true).Sort("release_date", false).Size(int(pageSize)).From(int(pageSize*page - pageSize)).Do(context.Background())
+	if err != nil {
+		return nil, err
+	}
+	for _, v := range searchResult.Hits.Hits {
+		item := string(v.Source)
+		resourceList = append(resourceList, item)
+	}
+	return resourceList, nil
+}
+
+//func GetGlobalSearch(keyword string, size int32) ([]string, []string, error) {
+//	gameList := make([]string, 0)
+//	resourceList := make([]string, 0)
+//
+//	// game search
+//	fuzzyQuery := elastic.NewFuzzyQuery("game_name", keyword)
+//
+//
+//}
+
 func SelectGameInfo() error {
 	exists, err := ES.IndexExists("game").Do(context.Background())
 	if err != nil {
@@ -60,16 +96,5 @@ func GameNameTermQuery(gameName string) error {
 	}
 	itemInfo, _ := json.Marshal(searchResult.Hits.Hits[0].Source)
 	fmt.Println(string(itemInfo))
-
-	//if searchResult.TotalHits() > 0 {
-	//	for _, v := range searchResult.Each(reflect.TypeOf(Game{})) {
-	//		if t, ok := v.(Game); ok {
-	//			jInfo, _ := json.Marshal(t)
-	//			fmt.Println(string(jInfo))
-	//		}
-	//	}
-	//} else {
-	//	return fmt.Errorf("can not find related info")
-	//}
 	return nil
 }
