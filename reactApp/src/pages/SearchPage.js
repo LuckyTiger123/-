@@ -23,8 +23,8 @@ class SearchPage extends Component {
                 tmpDetailUrls.push(obj.detail_url);
                 tmpImgUrls.push((obj.imgs)[0]);
             }
+            this.setState({gameImgUrls: tmpImgUrls, gameDetailUrls: tmpDetailUrls});
         })
-        this.setState({gameImgUrls: tmpImgUrls, gameDetailUrls: tmpDetailUrls});
     }
 
     render() {
@@ -32,8 +32,8 @@ class SearchPage extends Component {
         for (var i = 0; i < 4; i++) {
             items.push(new Array());
             for (var j = 0; j < 4; j++) {
-                items[i].push([<Col span={12} style={{height: '200px'}}><a href={this.state.gameDetailUrls[i * 4 + j]}>
-                    <img src={this.state.gameImgUrls[i * 4 + j]} width='90%'></img></a></Col>]);
+                items[i].push(<Col span={12} style={{height: '200px'}}><a href={this.state.gameDetailUrls[i * 4 + j]}>
+                    <img src={this.state.gameImgUrls[i * 4 + j]} width='90%'></img></a></Col>);
             }
         }
         return (
@@ -47,7 +47,9 @@ class SearchPage extends Component {
                         <p style={{fontSize: '20px', color: 'white', fontFamily: 'KaiTi'}}>游戏推荐：</p>
                         <Carousel autoplay>
                         <div>
-                            {items[0]}
+                            <Row>
+                                {items[0]}
+                            </Row>
                             {/* <Row>
                             <Col span={12} style={{height: '200px'}}>
                                 <a href='https://www.3dmgame.com/games/quantumbreak/'>
@@ -74,7 +76,9 @@ class SearchPage extends Component {
                             </Row> */}
                         </div>
                         <div>
-                            {items[1]}
+                            <Row>
+                                {items[1]}
+                            </Row>
                             {/* <Row>
                             <Col span={12} style={{height: '200px'}}>
                                 <a href='https://www.3dmgame.com/games/quantumbreak/'>
@@ -101,7 +105,9 @@ class SearchPage extends Component {
                             </Row> */}
                         </div>
                         <div>
-                            {items[2]}
+                            <Row>
+                                {items[2]}
+                            </Row>
                             {/* <Row>
                             <Col span={12} style={{height: '200px'}}>
                                 <a href='https://www.3dmgame.com/games/quantumbreak/'>
@@ -128,7 +134,9 @@ class SearchPage extends Component {
                             </Row> */}
                         </div>
                         <div>
-                            {items[3]}
+                            <Row>
+                                {items[3]}
+                            </Row>
                             {/* <Row>
                             <Col span={12} style={{height: '200px'}}>
                                 <a href='https://www.3dmgame.com/games/quantumbreak/'>
