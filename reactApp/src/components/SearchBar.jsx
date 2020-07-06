@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Input, Select, Tag, Menu, Dropdown, Button } from 'antd';
-import $ from 'jquery';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -162,6 +161,7 @@ class SearchBar extends Component {
                     style={{width: '50%'}}
                     onChange={this.handleInputChange}
                     onSearch={this.handleSubmit}
+                    allowClear='true'
                 />
                 <SearchTags type={this.state.type} recvFunc={this.getTags} />
             </div>
