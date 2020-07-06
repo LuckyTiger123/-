@@ -303,7 +303,7 @@ func local_request_ScheduleService_GameNewsGet_0(ctx context.Context, marshaler 
 
 }
 
-func request_ScheduleService_GameRaidersGetGet_0(ctx context.Context, marshaler runtime.Marshaler, client ScheduleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ScheduleService_GameRaidersGet_0(ctx context.Context, marshaler runtime.Marshaler, client ScheduleServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GameRaidersGetRequest
 	var metadata runtime.ServerMetadata
 
@@ -315,12 +315,12 @@ func request_ScheduleService_GameRaidersGetGet_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.GameRaidersGetGet(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GameRaidersGet(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ScheduleService_GameRaidersGetGet_0(ctx context.Context, marshaler runtime.Marshaler, server ScheduleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ScheduleService_GameRaidersGet_0(ctx context.Context, marshaler runtime.Marshaler, server ScheduleServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GameRaidersGetRequest
 	var metadata runtime.ServerMetadata
 
@@ -332,7 +332,7 @@ func local_request_ScheduleService_GameRaidersGetGet_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.GameRaidersGetGet(ctx, &protoReq)
+	msg, err := server.GameRaidersGet(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -536,7 +536,7 @@ func RegisterScheduleServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_ScheduleService_GameRaidersGetGet_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ScheduleService_GameRaidersGet_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -545,14 +545,14 @@ func RegisterScheduleServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ScheduleService_GameRaidersGetGet_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ScheduleService_GameRaidersGet_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ScheduleService_GameRaidersGetGet_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ScheduleService_GameRaidersGet_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -777,7 +777,7 @@ func RegisterScheduleServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_ScheduleService_GameRaidersGetGet_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ScheduleService_GameRaidersGet_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -786,14 +786,14 @@ func RegisterScheduleServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ScheduleService_GameRaidersGetGet_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ScheduleService_GameRaidersGet_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ScheduleService_GameRaidersGetGet_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ScheduleService_GameRaidersGet_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -837,7 +837,7 @@ var (
 
 	pattern_ScheduleService_GameNewsGet_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"game", "news"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ScheduleService_GameRaidersGetGet_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"game", "raiders"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ScheduleService_GameRaidersGet_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"game", "raiders"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_ScheduleService_GameVideoGet_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"game", "video"}, "", runtime.AssumeColonVerbOpt(true)))
 )
@@ -859,7 +859,7 @@ var (
 
 	forward_ScheduleService_GameNewsGet_0 = runtime.ForwardResponseMessage
 
-	forward_ScheduleService_GameRaidersGetGet_0 = runtime.ForwardResponseMessage
+	forward_ScheduleService_GameRaidersGet_0 = runtime.ForwardResponseMessage
 
 	forward_ScheduleService_GameVideoGet_0 = runtime.ForwardResponseMessage
 )

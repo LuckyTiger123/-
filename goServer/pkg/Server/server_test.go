@@ -1,6 +1,7 @@
 package Server
 
 import (
+	"encoding/json"
 	"fmt"
 	"testing"
 )
@@ -23,8 +24,13 @@ import (
 
 func TestFunc(t *testing.T) {
 	Init()
-	_, b := GetGameIndex(4, 1)
-	if b != nil {
-		fmt.Println(b.Error())
+	a, b, c := GetGlobalSearch("战争机器4", 1)
+	if c != nil {
+		fmt.Println(c.Error())
+	}else {
+		info_a,_ := json.Marshal(a)
+		info_b,_ := json.Marshal(b)
+		fmt.Println(string(info_a))
+		fmt.Println(string(info_b))
 	}
 }
