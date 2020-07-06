@@ -102,33 +102,106 @@ func (s *Server) ResourceIndex(ctx context.Context, req *pb.ResourceIndexRequest
 }
 
 func (s *Server) GlobalSearch(ctx context.Context, req *pb.GlobalSearchRequest) (*pb.GlobalSearchResponse, error) {
-	return nil, nil
+	if req.Size_ < 1 {
+		return nil, fmt.Errorf("invalid input value")
+	}
+	gameResult, resourceResult, err := GetGlobalSearch(req.Keyword, req.Size_)
+	result := &pb.GlobalSearchResponse{}
+	if err != nil {
+		return result, err
+	}
+	result.GameResult = gameResult
+	result.ResourceResult = resourceResult
+	return result, nil
 }
 
 func (s *Server) GameSearch(ctx context.Context, req *pb.GameSearchRequest) (*pb.GameSearchResponse, error) {
-	return nil, nil
+	if req.Size_ < 1 {
+		return nil, fmt.Errorf("invalid input value")
+	}
+	gameResult, err := GetGameSearch(req.Keyword, req.Filter, req.Size_)
+	result := &pb.GameSearchResponse{}
+	if err != nil {
+		return result, err
+	}
+	result.Result = gameResult
+	return result, nil
 }
 
 func (s *Server) NewsSearch(ctx context.Context, req *pb.NewsSearchRequest) (*pb.NewsSearchResponse, error) {
-	return nil, nil
+	if req.Size_ < 1 {
+		return nil, fmt.Errorf("invalid input value")
+	}
+	resourceResult, err := GetNewsSearch(req.Keyword, req.Size_)
+	result := &pb.NewsSearchResponse{}
+	if err != nil {
+		return result, err
+	}
+	result.Result = resourceResult
+	return result, nil
 }
 
 func (s *Server) RaidersSearch(ctx context.Context, req *pb.RaidersSearchRequest) (*pb.RaidersSearchResponse, error) {
-	return nil, nil
+	if req.Size_ < 1 {
+		return nil, fmt.Errorf("invalid input value")
+	}
+	resourceResult, err := GetRaidersSearch(req.Keyword, req.Size_)
+	result := &pb.RaidersSearchResponse{}
+	if err != nil {
+		return result, err
+	}
+	result.Result = resourceResult
+	return result, nil
 }
 
 func (s *Server) VideoSearch(ctx context.Context, req *pb.VideoSearchRequest) (*pb.VideoSearchResponse, error) {
-	return nil, nil
+	if req.Size_ < 1 {
+		return nil, fmt.Errorf("invalid input value")
+	}
+	resourceResult, err := GetVideoSearch(req.Keyword, req.Size_)
+	result := &pb.VideoSearchResponse{}
+	if err != nil {
+		return result, err
+	}
+	result.Result = resourceResult
+	return result, nil
 }
 
 func (s *Server) GameNewsGet(ctx context.Context, req *pb.GameNewsGetRequest) (*pb.GameNewsGetResponse, error) {
-	return nil, nil
+	if req.Size_ < 1 {
+		return nil, fmt.Errorf("invalid input value")
+	}
+	resourceResult, err := GetGameNewsGet(req.GameName, req.Size_)
+	result := &pb.GameNewsGetResponse{}
+	if err != nil {
+		return result, err
+	}
+	result.Result = resourceResult
+	return result, nil
 }
 
-func (s *Server) GameRaidersGetGet(ctx context.Context, req *pb.GameRaidersGetRequest) (*pb.GameRaidersGetResponse, error) {
-	return nil, nil
+func (s *Server) GameRaidersGet(ctx context.Context, req *pb.GameRaidersGetRequest) (*pb.GameRaidersGetResponse, error) {
+	if req.Size_ < 1 {
+		return nil, fmt.Errorf("invalid input value")
+	}
+	resourceResult, err := GetGameRaidersGet(req.GameName, req.Size_)
+	result := &pb.GameRaidersGetResponse{}
+	if err != nil {
+		return result, err
+	}
+	result.Result = resourceResult
+	return result, nil
 }
 
 func (s *Server) GameVideoGet(ctx context.Context, req *pb.GameVideoGetRequest) (*pb.GameVideoGetResponse, error) {
-	return nil, nil
+	if req.Size_ < 1 {
+		return nil, fmt.Errorf("invalid input value")
+	}
+	resourceResult, err := GetGameVideoGet(req.GameName, req.Size_)
+	result := &pb.GameVideoGetResponse{}
+	if err != nil {
+		return result, err
+	}
+	result.Result = resourceResult
+	return result, nil
 }

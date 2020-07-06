@@ -4,13 +4,18 @@ package proto;
 import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
-// Result index.
-message Result {
-    string source = 1;
-    string highlight = 2;
+// Highlight structure
+message Highlight {
+    repeated string field = 1;
 }
 
-// Game info for index.
+// Result structure
+message Result {
+    string source = 1;
+    map<string, Highlight> highlight = 2;
+}
+
+// Game info for index
 message GameIndexRequest {
     int32 pageSize = 1;
     int32 page = 2;
@@ -37,8 +42,8 @@ message GlobalSearchRequest {
 }
 
 message GlobalSearchResponse {
-    repeated string gameResult = 1;
-    repeated string resourceResult = 2;
+    repeated Result gameResult = 1;
+    repeated Result resourceResult = 2;
 }
 
 // Game search
@@ -55,7 +60,7 @@ message GameSearchRequest {
 }
 
 message GameSearchResponse {
-    repeated string result = 1;
+    repeated Result result = 1;
 }
 
 // News search
@@ -65,7 +70,7 @@ message NewsSearchRequest {
 }
 
 message NewsSearchResponse {
-    repeated string result = 1;
+    repeated Result result = 1;
 }
 
 // Raiders search
@@ -75,7 +80,7 @@ message RaidersSearchRequest {
 }
 
 message RaidersSearchResponse {
-    repeated string result = 1;
+    repeated Result result = 1;
 }
 
 // Video search
@@ -85,7 +90,7 @@ message VideoSearchRequest {
 }
 
 message VideoSearchResponse {
-    repeated string result = 1;
+    repeated Result result = 1;
 }
 
 // Game news
@@ -176,7 +181,7 @@ service ScheduleService {
         };
     }
 
-    rpc GameRaidersGetGet (GameRaidersGetRequest) returns (GameRaidersGetResponse) {
+    rpc GameRaidersGet (GameRaidersGetRequest) returns (GameRaidersGetResponse) {
         option (google.api.http) = {
             post: "/game/raiders"
             body: "*"
