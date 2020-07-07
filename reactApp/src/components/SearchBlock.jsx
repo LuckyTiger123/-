@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Input, Select, Tag, Divider, Collapse } from 'antd';
-import { CaretRightOutlined} from '@ant-design/icons';
+import { Input, Select, Tag, Divider, Collapse, Button } from 'antd';
+import { CaretRightOutlined, SearchOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -9,10 +9,10 @@ const { CheckableTag } = Tag;
 const { Panel } = Collapse;
 
 const typeTagsData = ['游戏', '资讯', '攻略', '视频'];
-const gameTagsData1 = ['动作游戏', '角色扮演', '射击游戏', '赛车游戏', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '2剧情', '剧情', '剧情', '剧1情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情', '剧情'];
-const gameTagsData2 = ['开放世界', '生存恐怖', '剧情', '科幻'];
-const gameTagsData3 = ['多人', '单人', '第一人称', '第三人称'];
-const gameTagsData4 = ['2020', '2019', '2018', '2017'];
+const gameTagsData1 = ['动作游戏', '角色扮演', '射击游戏', '赛车游戏', '战争游戏', '模拟游戏', '体育游戏', '文字游戏', '即时战略游戏', '音乐游戏', '虚拟现实', '冒险游戏', '恋爱游戏'];
+const gameTagsData2 = ['开放世界', '生存恐怖', '剧情', '科幻', '校园', '沙盒', '教育', '历史', '养成'];
+const gameTagsData3 = ['多人', '单人', '第一人称', '第三人称', '网页游戏', '合作'];
+const gameTagsData4 = ['2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010以前'];
 
 class GameTags extends Component {
     constructor(props) {
@@ -74,81 +74,87 @@ class GameTags extends Component {
             const selectedTags4 = this.state.selectedTags4;
             var items = new Array();
             for (var i = 0; i < this.state.selectedTags1.length; i++) {
-                items.push(<Tag color='magenta' closable key={this.state.selectedTags1[i]} onClose={this.handleClose.bind(this, this.state.selectedTags1[i], 1)}>
+                items.push(<Tag color='magenta' closable key={this.state.selectedTags1[i]}  style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags1[i], 1)}>
                             {this.state.selectedTags1[i]}</Tag>);
             }
             for (var i = 0; i < this.state.selectedTags2.length; i++) {
-                items.push(<Tag color='red' closable key={this.state.selectedTags2[i]} onClose={this.handleClose.bind(this, this.state.selectedTags2[i], 2)}>
+                items.push(<Tag color='red' closable key={this.state.selectedTags2[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags2[i], 2)}>
                             {this.state.selectedTags2[i]}</Tag>);
             }
             for (var i = 0; i < this.state.selectedTags3.length; i++) {
-                items.push(<Tag color='volcano' closable key={this.state.selectedTags3[i]} onClose={this.handleClose.bind(this, this.state.selectedTags3[i], 3)}>
+                items.push(<Tag color='volcano' closable key={this.state.selectedTags3[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags3[i], 3)}>
                             {this.state.selectedTags3[i]}</Tag>);
             }
             for (var i = 0; i < this.state.selectedTags4.length; i++) {
-                items.push(<Tag color='orange' closable key={this.state.selectedTags4[i]} onClose={this.handleClose.bind(this, this.state.selectedTags4[i], 4)}>
+                items.push(<Tag color='orange' closable key={this.state.selectedTags4[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags4[i], 4)}>
                             {this.state.selectedTags4[i]}</Tag>);
             }
             return (
-                <div style={{width: '45%', margin: '0 auto'}}>
-                    <div style={{marginBottom: '1%'}}>
+                <div style={{width: '75%', margin: '0 auto'}}>
+                    <div style={{marginBottom: '1%', marginTop: '1%'}}>
                         {items}
                     </div>
                     <Collapse
-                        bordered={false}
-                        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+                        bordered='true'
+                        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} style={{color: 'white'}}/>}
                         className="site-collapse-custom-collapse"
                         expandIconPosition='right'
                         ghost='true'
+                        style={{backgroundColor: 'rgba(0, 0, 0, 0.15)'}}
                     >
-                        <Panel header={<span style={{color: 'rgb(238,79,166)'}}><b>游戏类型</b></span>} key="1" className="site-collapse-custom-panel">
+                        <Divider dashed='true'/>
+                        <Panel header={<span style={{color: 'white'}}><b>游戏类型</b></span>} key="1" className="site-collapse-custom-panel" extra={<span style={{color: 'white'}}>展开</span>}>
                             {gameTagsData1.map(tag => (
                                 <CheckableTag
                                     key={tag}
                                     checked={selectedTags1.indexOf(tag) > -1}
                                     onChange={checked => this.handleChange(tag, checked, 1)}
-                                    style={{float: 'left', width: '12.5%'}}
+                                    style={{float: 'left', width: '16%', color: 'white'}}
                                 >
                                     {tag}
                                 </CheckableTag>
                             ))}
                         </Panel>
-                        <Panel header={<span style={{color: 'rgb(245,34,45)'}}><b>游戏主题</b></span>} key="2" className="site-collapse-custom-panel">
+                        <Divider dashed='true'/>
+                        <Panel header={<span style={{color: 'white'}}><b>游戏主题</b></span>} key="2" className="site-collapse-custom-panel" extra={<span style={{color: 'white'}}>展开</span>}>
                             {gameTagsData2.map(tag => (
                                 <CheckableTag
                                     key={tag}
                                     checked={selectedTags2.indexOf(tag) > -1}
                                     onChange={checked => this.handleChange(tag, checked, 2)}
-                                    style={{float: 'left', width: '12.5%'}}
+                                    style={{float: 'left', width: '16%', color: 'white'}}
                                 >
                                     {tag}
                                 </CheckableTag>
                             ))}
                         </Panel>
-                        <Panel header={<span style={{color: 'rgb(250,87,32)'}}><b>游戏模式</b></span>} key="3" className="site-collapse-custom-panel">
+                        <Divider dashed='true'/>
+                        <Panel header={<span style={{color: 'white'}}><b>游戏模式</b></span>} key="3" className="site-collapse-custom-panel" extra={<span style={{color: 'white'}}>展开</span>}>
                             {gameTagsData3.map(tag => (
                                 <CheckableTag
                                     key={tag}
                                     checked={selectedTags3.indexOf(tag) > -1}
                                     onChange={checked => this.handleChange(tag, checked, 3)}
-                                    style={{float: 'left', width: '12.5%'}}
+                                    style={{float: 'left', width: '16%', color: 'white'}}
                                 >
                                     {tag}
                                 </CheckableTag>
                             ))}
                         </Panel>
-                        <Panel header={<span style={{color: 'rgb(250,140,22)'}}><b>发行时间</b></span>} key="4" className="site-collapse-custom-panel">
+                        <Divider dashed='true'/>
+                        <Panel header={<span style={{color: 'white'}}><b>发行时间</b></span>} key="4" className="site-collapse-custom-panel" extra={<span style={{color: 'white'}}>展开</span>}>
                             {gameTagsData4.map(tag => (
                                 <CheckableTag
                                     key={tag}
                                     checked={selectedTags4.indexOf(tag) > -1}
                                     onChange={checked => this.handleChange(tag, checked, 4)}
-                                    style={{float: 'left', width: '12.5%'}}
+                                    style={{float: 'left', width: '16%', color: 'white'}}
                                 >
                                     {tag}
                                 </CheckableTag>
                             ))}
                         </Panel>
+                        <Divider dashed='true'/>
                     </Collapse>,
                 </div>
             );
@@ -179,12 +185,13 @@ class TypeTags extends Component {
             const { selectedTags } = this.state;
             return (
                 <>
-                    <span style={{fontSize: '15px'}}><b>筛选结果：</b></span>
+                    <span style={{fontSize: '15px', color: 'white'}}><b>筛选结果：</b></span>
                     {typeTagsData.map(tag => (
                         <CheckableTag
                             key={tag}
                             checked={selectedTags.indexOf(tag) > -1}
                             onChange={checked => this.handleChange(tag, checked)}
+                            style={{color: 'white'}}
                         >
                             {tag}
                         </CheckableTag>
@@ -201,13 +208,13 @@ class SearchBlock extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: '',
-            type: 'games',
+            value: props.keyword,
+            type: props.searchType,
             typeTags: ['游戏', '资讯', '攻略', '视频'],
-            gameTags1: ['动作游戏'],
-            gameTags2: ['开放世界'],
-            gameTags3: ['多人'],
-            gameTags4: ['2020'],
+            gameTags1: (props.searchTags1) ? props.searchTags1 : [],
+            gameTags2: (props.searchTags2) ? props.searchTags2 : [],
+            gameTags3: (props.searchTags3) ? props.searchTags3 : [],
+            gameTags4: (props.searchDates) ? props.searchDates : [],
         }
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -257,17 +264,17 @@ class SearchBlock extends Component {
         return (
             <div style={{width: '100%'}}>
                 <div style={{textAlign:'center', display:'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <img src={require('../assets/logo1.png')} width='15%'></img>
+                    <img src={require('../assets/logo.png')} width='15%'></img>
                     <Search
-                        addonBefore={<Select defaultValue="all" className="select-before" onChange={this.handleSelectChange}>
+                        addonBefore={<Select defaultValue={this.state.type} className="select-before" onChange={this.handleSelectChange}>
                                         <Option value="all">搜全站</Option>
                                         <Option value="games">搜游戏</Option>
                                         <Option value="news">搜资讯</Option>
                                         <Option value="methods">搜攻略</Option>
                                         <Option value="videos">搜视频</Option>
                                     </Select>}
-                        value="鬼泣5"
-                        enterButton="Search"
+                        value={this.state.value}
+                        enterButton={<Button type='primary' icon={<SearchOutlined />}>Search</Button>}
                         size="large"
                         style={{width: '40%', marginLeft: '1%'}}
                         onChange={this.handleInputChange}

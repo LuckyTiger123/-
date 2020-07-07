@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Input, Select, Tag, Menu, Dropdown, Button } from 'antd';
+import { withRouter } from 'react-router-dom';
+import { SearchOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -63,7 +65,7 @@ class SearchTags extends Component {
         oldTags.push(e.key);
         this.setState({tags: oldTags});
         //console.log(this.state.tags);
-        this.props.recvFunc(this.state.tags);
+        this.props.recvFunc(oldTags);
     }
 
     handleClose = e => {
@@ -72,14 +74,14 @@ class SearchTags extends Component {
         oldTags.splice(oldTags.indexOf(e), 1);
         this.setState({tags: oldTags});
         //console.log(this.state.tags);
-        this.props.recvFunc(this.state.tags);
+        this.props.recvFunc(oldTags);
     }
 
     render() {
         if (this.props.type === 'games') {
             var items = new Array();
             for (var i = 0; i < this.state.tags.length; i++) {
-                items.push(<Tag color='volcano' closable key={this.state.tags[i]} onClose={this.handleClose.bind(this, this.state.tags[i])}>
+                items.push(<Tag color='volcano' closable key={this.state.tags[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.tags[i])}>
                             {this.state.tags[i].slice(0, this.state.tags[i].length - 3)}</Tag>);
             }
             return (
@@ -132,8 +134,25 @@ class SearchBar extends Component {
     }
 
     handleSubmit(event) {
-        console.log(this.state.value + ' ' + this.state.type);
-        
+        //console.log(this.state.tags);
+        var searchTags1 = [], searchTags2 = [], searchTags3 = [], searchDate = [];
+        for (var i = 0; i < this.state.tags.length; i++) {
+            if (this.state.tags[i][this.state.tags[i].length - 1] === '3')
+                searchDate.push(this.state.tags[i].slice(0, this.state.tags[i].length - 3));
+            else if (this.state.tags[i][this.state.tags[i].length - 1] === '2')
+                searchTags3.push(this.state.tags[i].slice(0, this.state.tags[i].length - 3));
+            else if (this.state.tags[i][this.state.tags[i].length - 1] === '1')
+                searchTags2.push(this.state.tags[i].slice(0, this.state.tags[i].length - 3));
+            else
+                searchTags1.push(this.state.tags[i].slice(0, this.state.tags[i].length - 3));
+        }
+        if (this.state.type === 'games') {
+            this.props.history.push({pathname: '/result', query: {searchType: 'games', searchSize: 100, 
+                                    searchTags1: searchTags1, searchTags2: searchTags2, searchTags3: searchTags3, 
+                                    searchDates: searchDate, keyword: this.state.value, lastPage: 'home'}});
+        } else {
+            this.props.history.push({pathname: '/result', query: {searchType: this.state.type, searchSize: 100, keyword: this.state.value, lastPage: 'home'}});
+        }
     }
 
     getTags(res) {
@@ -148,7 +167,7 @@ class SearchBar extends Component {
                     <img src={require('../assets/logo.png')} width='20%'></img>
                 </div>
                 <Search
-                    addonBefore={<Select defaultValue="all" className="select-before" onChange={this.handleSelectChange}>
+                    addonBefore={<Select defaultValue={this.state.type} className="select-before" onChange={this.handleSelectChange}>
                                     <Option value="all">搜全站</Option>
                                     <Option value="games">搜游戏</Option>
                                     <Option value="news">搜资讯</Option>
@@ -156,7 +175,7 @@ class SearchBar extends Component {
                                     <Option value="videos">搜视频</Option>
                                 </Select>}
                     placeholder="请输入关键词..."
-                    enterButton="Search"
+                    enterButton={<Button type='primary' icon={<SearchOutlined />}>Search</Button>}
                     size="large"
                     style={{width: '50%'}}
                     onChange={this.handleInputChange}
@@ -169,4 +188,4 @@ class SearchBar extends Component {
     }
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);
