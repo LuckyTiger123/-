@@ -122,10 +122,46 @@ func GetGlobalSearch(keyword string, size int32) ([]*pb.Result, []*pb.Result, er
 func GetGameSearch(keyword string, filter []*pb.Filter, size int32) ([]*pb.Result, error) {
 	gameList := make([]*pb.Result, 0)
 	boolQueryGame := elastic.NewBoolQuery()
+
+	queryList := make([]*elastic.BoolQuery, 0)
+	boolQueryType := elastic.NewBoolQuery()
+	queryList = append(queryList, boolQueryType)
+	boolQueryTheme := elastic.NewBoolQuery()
+	queryList = append(queryList, boolQueryTheme)
+	boolQueryMode := elastic.NewBoolQuery()
+	queryList = append(queryList, boolQueryMode)
+	boolQueryYear := elastic.NewBoolQuery()
+	queryList = append(queryList, boolQueryYear)
+	addList := make([]int32, 4)
 	for _, v := range filter {
-		item := elastic.NewMatchQuery(v.Type, v.Value)
-		boolQueryGame.Must(item)
+		switch v.Type {
+		case "type":
+			item := elastic.NewMatchQuery("tags", v.Value)
+			boolQueryType.Should(item)
+			addList[0] = 1
+		case "theme":
+			item := elastic.NewMatchQuery("tags", v.Value)
+			boolQueryTheme.Should(item)
+			addList[1] = 1
+		case "mode":
+			item := elastic.NewMatchQuery("tags", v.Value)
+			boolQueryMode.Should(item)
+			addList[2] = 1
+		case "year":
+			item := elastic.NewMatchQuery("release_date", v.Value)
+			boolQueryYear.Should(item)
+			addList[3] = 1
+		default:
+			continue
+		}
 	}
+
+	for k, v := range addList {
+		if v == 1 {
+			boolQueryGame.Must(queryList[k])
+		}
+	}
+
 	matchQueryGameName := elastic.NewMatchQuery("game_name", keyword)
 	boolQueryGame.Must(matchQueryGameName)
 

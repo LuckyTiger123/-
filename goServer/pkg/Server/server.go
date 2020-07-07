@@ -8,14 +8,28 @@ import (
 	"google.golang.org/grpc"
 	"net"
 	"net/http"
+	"strings"
 )
 
 type Server struct {
 	pb.ScheduleServiceServer
 }
 
+func SelfOutgoingHeaderMatcher(key string) (string, bool) {
+	fmt.Println(key)
+	switch key {
+	case strings.ToLower("Access-Control-Allow-Origin"):
+		return key, true
+	default:
+		return runtime.DefaultHeaderMatcher(key)
+	}
+}
+
 func runGrpcGateway(ctx context.Context) error {
-	mux := runtime.NewServeMux()
+	mux := runtime.NewServeMux(
+		runtime.WithIncomingHeaderMatcher(runtime.DefaultHeaderMatcher),
+		runtime.WithOutgoingHeaderMatcher(SelfOutgoingHeaderMatcher),
+	)
 
 	err := pb.RegisterScheduleServiceHandlerServer(ctx, mux, &Server{})
 	if err != nil {

@@ -1,8 +1,8 @@
 package Server
 
 import (
-	"encoding/json"
 	"fmt"
+	pb "goServer/proto"
 	"testing"
 )
 
@@ -24,13 +24,11 @@ import (
 
 func TestFunc(t *testing.T) {
 	Init()
-	a, b, c := GetGlobalSearch("战争机器4", 1)
-	if c != nil {
-		fmt.Println(c.Error())
-	}else {
-		info_a,_ := json.Marshal(a)
-		info_b,_ := json.Marshal(b)
-		fmt.Println(string(info_a))
-		fmt.Println(string(info_b))
+	filter := make([]*pb.Filter, 0)
+	result, err := GetGameSearch("战争机器", filter, 4)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println(result[0].Source)
 	}
 }
