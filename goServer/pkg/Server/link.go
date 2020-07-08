@@ -37,14 +37,16 @@ func Init() error {
 	return nil
 }
 
-func GetGameIndex(pageSize int32, page int32) ([]string, error) {
-	gameList := make([]string, 0)
+func GetGameIndex(pageSize int32, page int32) ([]*pb.GameResult, error) {
+	gameList := make([]*pb.GameResult, 0)
 	searchResult, err := ES.Search().Index("game").Pretty(true).Sort("release_date", false).Size(int(pageSize)).From(int(pageSize*page - pageSize)).Do(context.Background())
 	if err != nil {
 		return nil, err
 	}
 	for _, v := range searchResult.Hits.Hits {
-		item := string(v.Source)
+		item := &pb.GameResult{}
+		item.Source = string(v.Source)
+		item.Id = v.Id
 		gameList = append(gameList, item)
 	}
 	return gameList, nil
@@ -63,8 +65,8 @@ func GetResourceIndex(pageSize int32, page int32) ([]string, error) {
 	return resourceList, nil
 }
 
-func GetGlobalSearch(keyword string, size int32) ([]*pb.Result, []*pb.Result, error) {
-	gameList := make([]*pb.Result, 0)
+func GetGlobalSearch(keyword string, size int32) ([]*pb.GameResult, []*pb.Result, error) {
+	gameList := make([]*pb.GameResult, 0)
 	resourceList := make([]*pb.Result, 0)
 
 	// game search
@@ -77,9 +79,10 @@ func GetGlobalSearch(keyword string, size int32) ([]*pb.Result, []*pb.Result, er
 		return nil, nil, err
 	}
 	for _, v := range searchResultOfGame.Hits.Hits {
-		item := &pb.Result{}
+		item := &pb.GameResult{}
 		item.Highlight = make(map[string]*pb.Highlight, 0)
 		item.Source = string(v.Source)
+		item.Id = v.Id
 		for k, j := range v.Highlight {
 			item.Highlight[k] = &pb.Highlight{}
 			item.Highlight[k].Field = make([]string, 0)
@@ -119,8 +122,8 @@ func GetGlobalSearch(keyword string, size int32) ([]*pb.Result, []*pb.Result, er
 	return gameList, resourceList, nil
 }
 
-func GetGameSearch(keyword string, filter []*pb.Filter, size int32) ([]*pb.Result, error) {
-	gameList := make([]*pb.Result, 0)
+func GetGameSearch(keyword string, filter []*pb.Filter, size int32) ([]*pb.GameResult, error) {
+	gameList := make([]*pb.GameResult, 0)
 	boolQueryGame := elastic.NewBoolQuery()
 
 	queryList := make([]*elastic.BoolQuery, 0)
@@ -173,9 +176,10 @@ func GetGameSearch(keyword string, filter []*pb.Filter, size int32) ([]*pb.Resul
 		return nil, err
 	}
 	for _, v := range searchResultOfGame.Hits.Hits {
-		item := &pb.Result{}
+		item := &pb.GameResult{}
 		item.Highlight = make(map[string]*pb.Highlight, 0)
 		item.Source = string(v.Source)
+		item.Id = v.Id
 		for k, j := range v.Highlight {
 			item.Highlight[k] = &pb.Highlight{}
 			item.Highlight[k].Field = make([]string, 0)
@@ -226,7 +230,7 @@ func GetRaidersSearch(keyword string, size int32) ([]*pb.Result, error) {
 	matchQueryResourceTitle := elastic.NewMatchQuery("title", keyword)
 	matchQueryResourceInfo := elastic.NewMatchQuery("info", keyword)
 	matchQueryResourceContent := elastic.NewMatchQuery("content", keyword)
-	matchQueryResourceType := elastic.NewMatchQuery("type", int(1))
+	matchQueryResourceType := elastic.NewMatchQuery("type", int(2))
 	boolQueryOfResource.Should(matchQueryResourceTitle, matchQueryResourceInfo, matchQueryResourceContent)
 	boolQueryOfResource.Must(matchQueryResourceType)
 
@@ -260,7 +264,7 @@ func GetVideoSearch(keyword string, size int32) ([]*pb.Result, error) {
 	matchQueryResourceTitle := elastic.NewMatchQuery("title", keyword)
 	matchQueryResourceInfo := elastic.NewMatchQuery("info", keyword)
 	matchQueryResourceContent := elastic.NewMatchQuery("content", keyword)
-	matchQueryResourceType := elastic.NewMatchQuery("type", int(2))
+	matchQueryResourceType := elastic.NewMatchQuery("type", int(1))
 	boolQueryOfResource.Should(matchQueryResourceTitle, matchQueryResourceInfo, matchQueryResourceContent)
 	boolQueryOfResource.Must(matchQueryResourceType)
 
@@ -316,7 +320,7 @@ func GetGameRaidersGet(gameName string, size int32) ([]string, error) {
 	matchQueryResourceTitle := elastic.NewMatchQuery("title", gameName)
 	matchQueryResourceInfo := elastic.NewMatchQuery("info", gameName)
 	matchQueryResourceContent := elastic.NewMatchQuery("content", gameName)
-	matchQueryResourceType := elastic.NewMatchQuery("type", int(1))
+	matchQueryResourceType := elastic.NewMatchQuery("type", int(2))
 	boolQueryOfResource.Should(matchQueryResourceTitle, matchQueryResourceInfo, matchQueryResourceContent)
 	boolQueryOfResource.Must(matchQueryResourceType)
 
@@ -338,7 +342,7 @@ func GetGameVideoGet(gameName string, size int32) ([]string, error) {
 	matchQueryResourceTitle := elastic.NewMatchQuery("title", gameName)
 	matchQueryResourceInfo := elastic.NewMatchQuery("info", gameName)
 	matchQueryResourceContent := elastic.NewMatchQuery("content", gameName)
-	matchQueryResourceType := elastic.NewMatchQuery("type", int(2))
+	matchQueryResourceType := elastic.NewMatchQuery("type", int(1))
 	boolQueryOfResource.Should(matchQueryResourceTitle, matchQueryResourceInfo, matchQueryResourceContent)
 	boolQueryOfResource.Must(matchQueryResourceType)
 
