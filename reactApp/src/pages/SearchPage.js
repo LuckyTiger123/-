@@ -14,12 +14,13 @@ class SearchPage extends Component {
     }
 
     componentDidMount() {
-        axios.post('/game/index', {pageSize: 16, page: 1}).then(res => {
+        var page = Math.floor((Math.random() * 50) + 1);
+        axios.post('/game/index', {pageSize: 16, page: page}).then(res => {
             var rawStrs = res.data.result;
             var tmpImgUrls = [];
             var tmpDetailUrls = [];
             for (var i = 0; i < rawStrs.length; i++) {
-                const obj = JSON.parse(rawStrs[i]);
+                const obj = JSON.parse(rawStrs[i].source);
                 tmpDetailUrls.push(obj.detail_url);
                 tmpImgUrls.push((obj.imgs)[0]);
             }
@@ -34,13 +35,13 @@ class SearchPage extends Component {
         for (var i = 0; i < 4; i++) {
             items.push(new Array());
             for (var j = 0; j < 4; j++) {
-                items[i].push(<Col span={12} style={{height: '200px'}}><a href={this.state.gameDetailUrls[i * 4 + j]}>
+                items[i].push(<Col span={12} style={{height: '200px'}}><a href={this.state.gameDetailUrls[i * 4 + j]} target='_blank'>
                     <img src={this.state.gameImgUrls[i * 4 + j]} width='90%'></img></a></Col>);
             }
         }
         return (
             <div style={{height: '100%'}}>
-                <div style={{height: '100%', width: '100%', position: 'fixed', backgroundImage: 'url(' + require('../assets/bgd3.jpg') + ')',
+                <div style={{height: '100%', width: '100%', position: 'fixed', backgroundImage: 'url(' + require('../assets/bgd4.jpg') + ')',
                             backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
                     <header style={{fontSize: '18px', color: 'white', marginTop: '20px', marginLeft: '30px', fontFamily: 'KaiTi'}}><KeyOutlined />&nbsp;探寻游戏之美</header>
                     <div style={{height: '80%', width: '100%', display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center'}}>
@@ -71,7 +72,7 @@ class SearchPage extends Component {
                             </Carousel>
                         </div>
                     </div>
-                    <footer style={{marginTop: '30px', textAlign: 'center', color: 'white', fontSize: '15px', fontFamily: 'KaiTi'}}>Copyright © 浙江大学计算机科学与技术学院<br/>杨佳妮 方陶然 翁罗轩 胡欣雨 赵晨阳</footer>
+                    <footer style={{marginTop: '50px', textAlign: 'center', color: 'white', fontSize: '15px', fontFamily: 'KaiTi'}}>Copyright © 浙江大学计算机科学与技术学院<br/>杨佳妮 方陶然 翁罗轩 胡欣雨 赵晨阳</footer>
                 </div>
             </div>
         );

@@ -42,6 +42,8 @@ class GameTags extends Component {
             this.setState({ selectedTags4: nextSelectedTags });
         }
         this.props.recvFunc(nextSelectedTags, tagIndex);
+        // console.log(nextSelectedTags);
+        // console.log(this.state);
     }
 
     handleClose = (e, tagIndex) => {
@@ -52,18 +54,20 @@ class GameTags extends Component {
             this.setState({ selectedTags1: nextSelectedTags });
         } else if (tagIndex === 2) {
             nextSelectedTags = this.state.selectedTags2;
-            nextSelectedTags.splice(nextSelectedTags.indexOf(e), 2);
+            nextSelectedTags.splice(nextSelectedTags.indexOf(e), 1);
             this.setState({ selectedTags2: nextSelectedTags });
         } else if (tagIndex === 3) {
             nextSelectedTags = this.state.selectedTags3;
-            nextSelectedTags.splice(nextSelectedTags.indexOf(e), 3);
+            nextSelectedTags.splice(nextSelectedTags.indexOf(e), 1);
             this.setState({ selectedTags3: nextSelectedTags });
         } else {
             nextSelectedTags = this.state.selectedTags4;
-            nextSelectedTags.splice(nextSelectedTags.indexOf(e), 4);
+            nextSelectedTags.splice(nextSelectedTags.indexOf(e), 1);
             this.setState({ selectedTags4: nextSelectedTags });
         }
         this.props.recvFunc(nextSelectedTags, tagIndex);
+        // console.log(nextSelectedTags);
+        // console.log(this.state);
     }
 
     render() {
@@ -74,19 +78,19 @@ class GameTags extends Component {
             const selectedTags4 = this.state.selectedTags4;
             var items = new Array();
             for (var i = 0; i < this.state.selectedTags1.length; i++) {
-                items.push(<Tag color='magenta' closable key={this.state.selectedTags1[i]}  style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags1[i], 1)}>
+                items.push(<Tag color='blue' closable key={this.state.selectedTags1[i]}  style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags1[i], 1)}>
                             {this.state.selectedTags1[i]}</Tag>);
             }
             for (var i = 0; i < this.state.selectedTags2.length; i++) {
-                items.push(<Tag color='red' closable key={this.state.selectedTags2[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags2[i], 2)}>
+                items.push(<Tag color='geekblue' closable key={this.state.selectedTags2[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags2[i], 2)}>
                             {this.state.selectedTags2[i]}</Tag>);
             }
             for (var i = 0; i < this.state.selectedTags3.length; i++) {
-                items.push(<Tag color='volcano' closable key={this.state.selectedTags3[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags3[i], 3)}>
+                items.push(<Tag color='purple' closable key={this.state.selectedTags3[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags3[i], 3)}>
                             {this.state.selectedTags3[i]}</Tag>);
             }
             for (var i = 0; i < this.state.selectedTags4.length; i++) {
-                items.push(<Tag color='orange' closable key={this.state.selectedTags4[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags4[i], 4)}>
+                items.push(<Tag color='volcano' closable key={this.state.selectedTags4[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags4[i], 4)}>
                             {this.state.selectedTags4[i]}</Tag>);
             }
             return (
@@ -211,10 +215,10 @@ class SearchBlock extends Component {
             value: props.keyword,
             type: props.searchType,
             typeTags: ['游戏', '资讯', '攻略', '视频'],
-            gameTags1: (props.searchTags1) ? props.searchTags1 : [],
-            gameTags2: (props.searchTags2) ? props.searchTags2 : [],
-            gameTags3: (props.searchTags3) ? props.searchTags3 : [],
-            gameTags4: (props.searchDates) ? props.searchDates : [],
+            gameTags1: props.searchTags1,
+            gameTags2: props.searchTags2,
+            gameTags3: props.searchTags3,
+            gameTags4: props.searchDates,
         }
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -223,7 +227,15 @@ class SearchBlock extends Component {
         this.getGameTags = this.getGameTags.bind(this);
     }
 
-
+    // componentDidMount() {
+    //     this.state.value = this.props.keyword;
+    //     this.state.type = this.props.searchType;
+    //     this.state.gameTags1 = this.props.searchTags1;
+    //     this.state.gameTags2 = this.props.searchTags2;
+    //     this.state.gameTags3 = this.props.searchTags3;
+    //     this.state.gameTags4 = this.props.searchDates;
+    //     this.forceUpdate();
+    // }
 
     handleSelectChange(value) {
         this.setState({type: value});
@@ -239,28 +251,31 @@ class SearchBlock extends Component {
     }
 
     getTypeTags(res) {
-        console.log(res);
+        //console.log(res);
         this.setState({typeTags: res});
-        //console.log(this.state.typeTags);
+        this.props.recvTypeFunc(res);
     }
 
     getGameTags(res, resIndex) {
         if (resIndex === 1) {
-            this.setState({selectedTags1: res});
+            this.setState({gameTags1: res});
+            this.props.recvGameFunc(res, this.state.gameTags2, this.state.gameTags3, this.state.gameTags4);
         } else if (resIndex === 2) {
-            this.setState({selectedTags2: res});
+            this.setState({gameTags2: res});
+            this.props.recvGameFunc(this.state.gameTags1, res, this.state.gameTags3, this.state.gameTags4);
         } else if (resIndex === 3) {
-            this.setState({selectedTags3: res});
+            this.setState({gameTags3: res});
+            this.props.recvGameFunc(this.state.gameTags1, this.state.gameTags2, res, this.state.gameTags4);
         } else {
-            this.setState({selectedTags4: res});
+            this.setState({gameTags4: res});
+            this.props.recvGameFunc(this.state.gameTags1, this.state.gameTags2, this.state.gameTags3, res);
         }
-        console.log(this.state.gameTags1);
-        console.log(this.state.gameTags2);
-        console.log(this.state.gameTags3);
-        console.log(this.state.gameTags4);
+        // console.log(res);
+        // console.log(this.state);
     }
 
     render() {
+        console.log(this.state);
         return (
             <div style={{width: '100%'}}>
                 <div style={{textAlign:'center', display:'flex', justifyContent: 'center', alignItems: 'center'}}>

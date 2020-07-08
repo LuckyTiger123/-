@@ -25,10 +25,12 @@ class ResultCard extends Component {
     render() {
         if (this.state.cardType === 'game') {
             var tags = [];
-            for (var i = 0; i < this.state.gameTags.length; i++)
-                tags.push(<Tag color='magenta' style={{margin: 'auto 0', borderRadius: '10px'}}>{this.state.gameTags[i]}</Tag>);
+            var gameTags = this.state.gameTags.split(' ');
+            var length = (gameTags.length === 1) ? 1 : (gameTags.length - 1);
+            for (var i = 0; i < length; i++)
+                tags.push(<Tag color='blue'  key={gameTags[i]} style={{margin: 'auto 0', borderRadius: '10px', marginLeft: '1%'}}>{gameTags[i]}</Tag>);
             return (
-                <Card hoverable size="small" onClick={() => {window.location.href=this.state.detailUrl}} title={<span><RocketOutlined />&nbsp;<b>游戏</b></span>} style={{width: '93.3%', margin: '0 auto', marginTop: '1%'}}>
+                <Card hoverable size="small" onClick={() => {window.open(this.state.detailUrl, '_blank')}} title={<span><RocketOutlined />&nbsp;<b>游戏</b></span>} style={{width: '93.3%', margin: '0 auto', marginTop: '1%'}} key={this.state.gameName}>
                     <div style={{display: 'flex'}}>
                         <div style={{width: '30%'}}>
                             <img src={this.state.imgUrl} width='100%'></img>
@@ -36,7 +38,9 @@ class ResultCard extends Component {
                         <div style={{marginLeft: '1%', width: '70%'}}>
                             <div style={{display: 'flex'}}>
                                 <span style={{fontSize: '20px'}}><b>{this.state.gameName}</b></span>
-                                {tags}
+                                <div style={{float: 'left', marginTop: '1%'}} >
+                                    {tags}
+                                </div>
                             </div>
                             <div style={{display: 'flex', marginTop: '1%'}}>
                                 <span style={{width: '33%'}}><b>发行时间：</b>{this.state.date}</span>
@@ -62,7 +66,7 @@ class ResultCard extends Component {
             else
                 titleHtml = <span><VideoCameraOutlined />&nbsp;<b>视频</b></span>;
             return (
-                <Card hoverable size="small" onClick={() => {window.location.href=this.state.detailUrl}} title={titleHtml} style={{width: '93.3%', margin: '0 auto', marginTop: '1%'}}>
+                <Card hoverable size="small" onClick={() => {window.open(this.state.detailUrl, '_blank')}} title={titleHtml} style={{width: '93.3%', margin: '0 auto', marginTop: '1%'}} key={this.state.title}>
                     <div style={{display: 'flex'}}>
                         <div style={{width: '30%'}}>
                             <img src={this.state.imgUrl} width='100%'></img>

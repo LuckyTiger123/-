@@ -3,6 +3,7 @@ import 'antd/dist/antd.css';
 import { Input, Select, Tag, Menu, Dropdown, Button } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
+import '../myStyles.css';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -135,7 +136,10 @@ class SearchBar extends Component {
 
     handleSubmit(event) {
         //console.log(this.state.tags);
-        var searchTags1 = [], searchTags2 = [], searchTags3 = [], searchDate = [];
+        var searchTags1 = new Array();
+        var searchTags2 = new Array();
+        var searchTags3 = new Array();
+        var searchDate = new Array();
         for (var i = 0; i < this.state.tags.length; i++) {
             if (this.state.tags[i][this.state.tags[i].length - 1] === '3')
                 searchDate.push(this.state.tags[i].slice(0, this.state.tags[i].length - 3));
@@ -146,13 +150,9 @@ class SearchBar extends Component {
             else
                 searchTags1.push(this.state.tags[i].slice(0, this.state.tags[i].length - 3));
         }
-        if (this.state.type === 'games') {
-            this.props.history.push({pathname: '/result', query: {searchType: 'games', searchSize: 100, 
-                                    searchTags1: searchTags1, searchTags2: searchTags2, searchTags3: searchTags3, 
-                                    searchDates: searchDate, keyword: this.state.value, lastPage: 'home'}});
-        } else {
-            this.props.history.push({pathname: '/result', query: {searchType: this.state.type, searchSize: 100, keyword: this.state.value, lastPage: 'home'}});
-        }
+        this.props.history.push({pathname: '/result', query: {searchType: this.state.type, searchSize: 100, 
+                                searchTags1: searchTags1, searchTags2: searchTags2, searchTags3: searchTags3, 
+                                searchDates: searchDate, keyword: this.state.value, lastPage: 'home'}});
     }
 
     getTags(res) {
