@@ -1,0 +1,46 @@
+.game-info-detail {
+  margin: 20px;
+  font-size: 16px;
+}
+
+.game-info-detail .img-wrapper {
+  width: 1000px;
+  height: 400px;
+}
+
+.game-img {
+  width: 300px;
+  height: 390px;
+  margin: 5px 15px;
+}
+
+.detail-container {
+  display: flex;
+}
+
+.game-info-detail .game-detail {
+  margin-left: 30px;
+}
+
+.game-detail .game-desc {
+  font-size: 15px;
+}
+
+.game-info-detail .name,
+.release-date,
+.developer,
+.publisher,
+.game-tag {
+  height: 35px;
+  line-height: 35px;
+}
+
+.desc-title {
+  display: inline-block;
+  font-weight: 500;
+  width: 90px;
+}
+
+.game-tag-single {
+  border-radius: 10px;
+}

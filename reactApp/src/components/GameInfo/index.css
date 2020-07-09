@@ -1,0 +1,8 @@
+.game-info,
+.game-score,
+.game-resources {
+  width: 1000px;
+  margin: 25px auto;
+  border: solid 1px #fff;
+  box-shadow: 0 6px 20px 4px rgba(0, 0, 0, 0.1);
+}
