@@ -6,6 +6,8 @@ import { resourceTypeMap } from "../constant";
 import "./index.css";
 
 export const ResourceCard = ({ resource }) => {
+  const info = <span className="info">{resource.info}</span>
+
   return (
     <div className="resource-card">
       <div className="resource-card-content">
@@ -20,7 +22,7 @@ export const ResourceCard = ({ resource }) => {
             >
               {resourceTypeMap(resource.type).text}
             </Tag>
-            {resource.info}
+            {info}
           </div>
           <div className="resource-time">
             <div className="release-time"> 发布时间：{resource.time}</div>
