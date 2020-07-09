@@ -31,6 +31,7 @@ class ResultPage extends Component {
             searchTags2: (props.location.query && props.location.query.lastPage === 'home') ? props.location.query.searchTags2 : new Array(),
             searchTags3: (props.location.query && props.location.query.lastPage === 'home') ? props.location.query.searchTags3 : new Array(),
             searchTypeTags: ['游戏', '资讯', '攻略', '视频'],
+            gameIDs: new Array(),
             gameNames: new Array(),
             gameTags: new Array(),
             gameDates: new Array(),
@@ -38,7 +39,7 @@ class ResultPage extends Component {
             developers: new Array(),
             gameInfos: new Array(),
             gameImgUrls: new Array(),
-            gameDetailUrls: new Array(),
+            //gameDetailUrls: new Array(),
             resourceTypes: new Array(),
             titles: new Array(),
             sources: new Array(),
@@ -78,7 +79,7 @@ class ResultPage extends Component {
         var tmpDevelopers = [];
         var tmpInfos = [];
         var tmpImgUrls = [];
-        var tmpDetailUrls = [];
+        var tmpIDs = [];
         await axios.post('/game', {filter: filter, keyword: this.state.keyword, size: 100}).then(res => {
             if (res.data.result) {
                 var rawStrs = res.data.result;
@@ -95,11 +96,11 @@ class ResultPage extends Component {
                     tmpPublishers.push(obj.publisher);
                     tmpDevelopers.push(obj.developer);
                     tmpInfos.push(obj.info);
-                    tmpDetailUrls.push('http://localhost:3000/info/' + rawStrs[i].id);
+                    tmpIDs.push(rawStrs[i].id);
                     tmpImgUrls.push((obj.imgs)[0]);
                 }
                 this.setState({gameNames: tmpGameNames, gameTags: tmpGameTags, gameDates: tmpReleaseDates, publishers: tmpPublishers, developers: tmpDevelopers,
-                            gameInfos: tmpInfos, gameImgUrls: tmpImgUrls, gameDetailUrls: tmpDetailUrls});
+                            gameInfos: tmpInfos, gameImgUrls: tmpImgUrls, gameIDs: tmpIDs});
             }
         }).catch(error => {
             console.error(error);
@@ -108,7 +109,7 @@ class ResultPage extends Component {
         for (var i = 0; i < tmpGameNames.length; i++) {
             tmpCards.push(<ResultCard cardType='games' gameName={tmpGameNames[i]} gameTags={tmpGameTags[i]}
                     date={tmpReleaseDates[i]} publisher={tmpPublishers[i]} developer={tmpDevelopers[i]} 
-                    info={tmpInfos[i]} imgUrl={tmpImgUrls[i]} detailUrl={tmpDetailUrls[i]} key={tmpGameNames[i]} />)
+                    info={tmpInfos[i]} imgUrl={tmpImgUrls[i]} gameID={tmpIDs[i]} key={tmpGameNames[i]} />)
         }
         var tmpShowCards = [];
         var start = 0;
@@ -129,7 +130,7 @@ class ResultPage extends Component {
         var tmpDevelopers = [];
         var tmpGameInfos = [];
         var tmpGameImgUrls = [];
-        var tmpGameDetailUrls = [];
+        var tmpGameIDs = [];
 
         var tmpResourceTypes = [];
         var tmpTitles = [];
@@ -167,21 +168,21 @@ class ResultPage extends Component {
                         tmpPublishers.push(obj.publisher);
                         tmpDevelopers.push(obj.developer);
                         tmpGameInfos.push(obj.info);
-                        tmpGameDetailUrls.push('http://localhost:3000/info/' + rawGameStrs[i].id);
+                        tmpGameIDs.push(rawGameStrs[i].id);
                         tmpGameImgUrls.push((obj.imgs)[0]);
                     }
                     var rawResourceStrs = res.data.resourceResult;
                     for (var i = 0; i < rawResourceStrs.length; i++) {
                         const obj = JSON.parse(rawResourceStrs[i].source);
                         var highlightTitle, highlightInfo;
-                        if (rawResourceStrs[i].highlight.title) {
+                        if (typeof(rawResourceStrs[i].highlight.title) !== 'undefined') {
                             highlightTitle = rawResourceStrs[i].highlight.title.field[0];
                             highlightTitle = highlightTitle.replace(reg1, "<span style='color: red'>");
                             highlightTitle = highlightTitle.replace(reg2, "</span>");
                         } else {
                             highlightTitle = obj.title;
                         }
-                        if (rawResourceStrs[i].highlight.info) {
+                        if (typeof(rawResourceStrs[i].highlight.info) !== 'undefined') {
                             highlightInfo = rawResourceStrs[i].highlight.info.field[0];
                             highlightInfo = highlightInfo.replace(reg1, "<span style='color: red'>");
                             highlightInfo = highlightInfo.replace(reg2, "</span>");
@@ -202,21 +203,21 @@ class ResultPage extends Component {
                         tmpSources.push(obj.source);
                     }
                     this.setState({gameNames: tmpGameNames, gameTags: tmpGameTags, gameDates: tmpReleaseDates, publishers: tmpPublishers, developers: tmpDevelopers,
-                            gameInfos: tmpGameInfos, gameImgUrls: tmpGameImgUrls, gameDetailUrls: tmpGameDetailUrls, resourceTypes: tmpResourceTypes, titles: tmpTitles, resourceDates: tmpResourceDates, 
+                            gameInfos: tmpGameInfos, gameImgUrls: tmpGameImgUrls, gameIDs: tmpGameIDs, resourceTypes: tmpResourceTypes, titles: tmpTitles, resourceDates: tmpResourceDates, 
                             resourceInfos: tmpResourceInfos, resourceImgUrls: tmpResourceImgUrls, resourceDetailUrls: tmpResourceDetailUrls});
                 } else {
                     var rawStrs = res.data.result;
                     for (var i = 0; i < rawStrs.length; i++) {
                         const obj = JSON.parse(rawStrs[i].source);
                         var highlightTitle, highlightInfo;
-                        if (rawStrs[i].highlight.title) {
+                        if (typeof(rawStrs[i].highlight.title) !== 'undefined') {
                             highlightTitle = rawStrs[i].highlight.title.field[0];
                             highlightTitle = highlightTitle.replace(reg1, "<span style='color: red'>");
                             highlightTitle = highlightTitle.replace(reg2, "</span>");
                         } else {
                             highlightTitle = obj.title;
                         }
-                        if (rawStrs[i].highlight.info) {
+                        if (typeof(rawStrs[i].highlight.info) !== 'undefined') {
                             highlightInfo = rawStrs[i].highlight.info.field[0];
                             highlightInfo = highlightInfo.replace(reg1, "<span style='color: red'>");
                             highlightInfo = highlightInfo.replace(reg2, "</span>");
@@ -226,9 +227,9 @@ class ResultPage extends Component {
                         if (parseInt(obj.type) === 0)
                             tmpResourceTypes.push('news');
                         else if (parseInt(obj.type) === 1)
-                            tmpResourceTypes.push('video');
+                            tmpResourceTypes.push('videos');
                         else
-                            tmpResourceTypes.push('method');
+                            tmpResourceTypes.push('methods');
                         tmpTitles.push(highlightTitle);
                         tmpResourceDates.push(obj.time);
                         tmpResourceInfos.push(highlightInfo);
@@ -248,7 +249,7 @@ class ResultPage extends Component {
             for (var i = 0; i < tmpGameNames.length; i++) {
                 tmpCards.push(<ResultCard cardType='games' gameName={tmpGameNames[i]} gameTags={tmpGameTags[i]}
                         date={tmpReleaseDates[i]} publisher={tmpPublishers[i]} developer={tmpDevelopers[i]} 
-                        info={tmpGameInfos[i]} imgUrl={tmpGameImgUrls[i]} detailUrl={tmpGameDetailUrls[i]} key={tmpGameNames[i]} />)
+                        info={tmpGameInfos[i]} imgUrl={tmpGameImgUrls[i]} gameID={tmpGameIDs[i]} key={tmpGameNames[i]} />)
             }
             for (var i = 0; i < tmpTitles.length; i++) {
                 tmpCards.push(<ResultCard cardType={tmpResourceTypes[i]} title={tmpTitles[i]} date={tmpResourceDates[i]}
@@ -276,6 +277,7 @@ class ResultPage extends Component {
             } else {
                 await this.postResourceData(this.state.searchType);
             }
+            sessionStorage.setItem("gameIDs", JSON.stringify(this.state.gameIDs));
             sessionStorage.setItem("gameNames", JSON.stringify(this.state.gameNames));
             sessionStorage.setItem("gameTags", JSON.stringify(this.state.gameTags));
             sessionStorage.setItem("gameDates", JSON.stringify(this.state.gameDates));
@@ -283,7 +285,6 @@ class ResultPage extends Component {
             sessionStorage.setItem("developers", JSON.stringify(this.state.developers));
             sessionStorage.setItem("gameInfos", JSON.stringify(this.state.gameInfos));
             sessionStorage.setItem("gameImgUrls", JSON.stringify(this.state.gameImgUrls));
-            sessionStorage.setItem("gameDetailUrls", JSON.stringify(this.state.gameDetailUrls));
             sessionStorage.setItem("resourceTypes", JSON.stringify(this.state.resourceTypes));
             sessionStorage.setItem("titles", JSON.stringify(this.state.titles));
             sessionStorage.setItem("sources", JSON.stringify(this.state.sources));
@@ -309,6 +310,7 @@ class ResultPage extends Component {
             } else {
                 await this.postResourceData(this.state.searchType);
             }
+            sessionStorage.setItem("gameIDs", JSON.stringify(this.state.gameIDs));
             sessionStorage.setItem("gameNames", JSON.stringify(this.state.gameNames));
             sessionStorage.setItem("gameTags", JSON.stringify(this.state.gameTags));
             sessionStorage.setItem("gameDates", JSON.stringify(this.state.gameDates));
@@ -316,7 +318,6 @@ class ResultPage extends Component {
             sessionStorage.setItem("developers", JSON.stringify(this.state.developers));
             sessionStorage.setItem("gameInfos", JSON.stringify(this.state.gameInfos));
             sessionStorage.setItem("gameImgUrls", JSON.stringify(this.state.gameImgUrls));
-            sessionStorage.setItem("gameDetailUrls", JSON.stringify(this.state.gameDetailUrls));
             sessionStorage.setItem("resourceTypes", JSON.stringify(this.state.resourceTypes));
             sessionStorage.setItem("titles", JSON.stringify(this.state.titles));
             sessionStorage.setItem("sources", JSON.stringify(this.state.sources));
@@ -344,6 +345,7 @@ class ResultPage extends Component {
         }, () => {
             //console.log(this.state.searchTypeTags);
             this.setState({isLoading: true});
+            var tmpGameIDs = JSON.parse(sessionStorage.getItem("gameIDs"));
             var tmpGameNames = JSON.parse(sessionStorage.getItem("gameNames"));
             var tmpReleaseDates = JSON.parse(sessionStorage.getItem("gameDates"));
             var tmpGameTags = JSON.parse(sessionStorage.getItem("gameTags"));
@@ -351,7 +353,6 @@ class ResultPage extends Component {
             var tmpDevelopers = JSON.parse(sessionStorage.getItem("developers"));
             var tmpGameInfos = JSON.parse(sessionStorage.getItem("gameInfos"));
             var tmpGameImgUrls = JSON.parse(sessionStorage.getItem("gameImgUrls"));
-            var tmpGameDetailUrls = JSON.parse(sessionStorage.getItem("gameDetailUrls"));
             var tmpResourceTypes = JSON.parse(sessionStorage.getItem("resourceTypes"));
             var tmpTitles = JSON.parse(sessionStorage.getItem("titles"));
             var tmpResourceDates = JSON.parse(sessionStorage.getItem("resourceDates"));
@@ -376,7 +377,7 @@ class ResultPage extends Component {
                 for (var i = 0; i < tmpGameNames.length; i++) {
                     tmpCards.push(<ResultCard cardType='games' gameName={tmpGameNames[i]} gameTags={tmpGameTags[i]}
                             date={tmpReleaseDates[i]} publisher={tmpPublishers[i]} developer={tmpDevelopers[i]} 
-                            info={tmpGameInfos[i]} imgUrl={tmpGameImgUrls[i]} detailUrl={tmpGameDetailUrls[i]} key={tmpGameNames[i]} />)
+                            info={tmpGameInfos[i]} imgUrl={tmpGameImgUrls[i]} gameID={tmpGameIDs[i]} key={tmpGameNames[i]} />)
                 }
             for (var i = 0; i < tmpTitles.length; i++) {
                 if (tmp.indexOf(tmpResourceTypes[i]) !== -1)
@@ -400,7 +401,7 @@ class ResultPage extends Component {
             searchTags3: res3,
             searchDates: res4
         }, () => {
-            console.log(this.state);
+            //console.log(this.state);
             this.postGameData();
         })
     }
