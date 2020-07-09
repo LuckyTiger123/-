@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Input, Select, Tag, Divider, Collapse, Button } from 'antd';
+import { Input, Select, Tag, Divider, Collapse, Button, message } from 'antd';
 import { CaretRightOutlined, SearchOutlined } from '@ant-design/icons';
+import { withRouter } from 'react-router-dom';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -104,7 +105,7 @@ class GameTags extends Component {
                         className="site-collapse-custom-collapse"
                         expandIconPosition='right'
                         ghost='true'
-                        style={{backgroundColor: 'rgba(0, 0, 0, 0.15)'}}
+                        style={{backgroundColor: 'rgba(245, 245, 245, 0.4)'}}
                     >
                         <Divider dashed='true'/>
                         <Panel header={<span style={{color: 'white'}}><b>游戏类型</b></span>} key="1" className="site-collapse-custom-panel" extra={<span style={{color: 'white'}}>展开</span>}>
@@ -113,7 +114,7 @@ class GameTags extends Component {
                                     key={tag}
                                     checked={selectedTags1.indexOf(tag) > -1}
                                     onChange={checked => this.handleChange(tag, checked, 1)}
-                                    style={{float: 'left', width: '16%', color: 'white'}}
+                                    style={{float: 'left', width: '16%', color: 'white', fontSize: '15px', fontFamily: 'KaiTi'}}
                                 >
                                     {tag}
                                 </CheckableTag>
@@ -126,7 +127,7 @@ class GameTags extends Component {
                                     key={tag}
                                     checked={selectedTags2.indexOf(tag) > -1}
                                     onChange={checked => this.handleChange(tag, checked, 2)}
-                                    style={{float: 'left', width: '16%', color: 'white'}}
+                                    style={{float: 'left', width: '16%', color: 'white', fontSize: '15px', fontFamily: 'KaiTi'}}
                                 >
                                     {tag}
                                 </CheckableTag>
@@ -139,7 +140,7 @@ class GameTags extends Component {
                                     key={tag}
                                     checked={selectedTags3.indexOf(tag) > -1}
                                     onChange={checked => this.handleChange(tag, checked, 3)}
-                                    style={{float: 'left', width: '16%', color: 'white'}}
+                                    style={{float: 'left', width: '16%', color: 'white', fontSize: '15px', fontFamily: 'KaiTi'}}
                                 >
                                     {tag}
                                 </CheckableTag>
@@ -152,7 +153,7 @@ class GameTags extends Component {
                                     key={tag}
                                     checked={selectedTags4.indexOf(tag) > -1}
                                     onChange={checked => this.handleChange(tag, checked, 4)}
-                                    style={{float: 'left', width: '16%', color: 'white'}}
+                                    style={{float: 'left', width: '16%', color: 'white', fontSize: '15px', fontFamily: 'KaiTi'}}
                                 >
                                     {tag}
                                 </CheckableTag>
@@ -174,19 +175,20 @@ class TypeTags extends Component {
         this.state = {
             selectedTags: props.typeTags,
         }
-        //this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(tag, checked) {
-        const { selectedTags } = this.state;
+        const selectedTags = this.state.selectedTags;
         const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
         this.setState({ selectedTags: nextSelectedTags });
+        //console.log(nextSelectedTags);
         this.props.recvFunc(nextSelectedTags);
     }
 
     render() {
+        //console.log(this.state.selectedTags);
         if (this.props.type === 'all') {
-            const { selectedTags } = this.state;
+            const selectedTags = this.state.selectedTags;
             return (
                 <>
                     <span style={{fontSize: '15px', color: 'white'}}><b>筛选结果：</b></span>
@@ -214,7 +216,7 @@ class SearchBlock extends Component {
         this.state = {
             value: props.keyword,
             type: props.searchType,
-            typeTags: ['游戏', '资讯', '攻略', '视频'],
+            typeTags: props.searchTypeTags,
             gameTags1: props.searchTags1,
             gameTags2: props.searchTags2,
             gameTags3: props.searchTags3,
@@ -225,17 +227,8 @@ class SearchBlock extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.getTypeTags = this.getTypeTags.bind(this);
         this.getGameTags = this.getGameTags.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
-
-    // componentDidMount() {
-    //     this.state.value = this.props.keyword;
-    //     this.state.type = this.props.searchType;
-    //     this.state.gameTags1 = this.props.searchTags1;
-    //     this.state.gameTags2 = this.props.searchTags2;
-    //     this.state.gameTags3 = this.props.searchTags3;
-    //     this.state.gameTags4 = this.props.searchDates;
-    //     this.forceUpdate();
-    // }
 
     handleSelectChange(value) {
         this.setState({type: value});
@@ -246,13 +239,17 @@ class SearchBlock extends Component {
     }
 
     handleSubmit(event) {
-        console.log(this.state.value + ' ' + this.state.type);
-        
+        //console.log(this.state.value + ' ' + this.state.type);
+        if (this.state.value.length === 0) {
+            message.error("搜索框不能为空");
+            return;
+        }
+        this.props.reSearchFunc(this.state);
     }
 
     getTypeTags(res) {
-        //console.log(res);
         this.setState({typeTags: res});
+        //console.log(this.state.typeTags);
         this.props.recvTypeFunc(res);
     }
 
@@ -275,7 +272,7 @@ class SearchBlock extends Component {
     }
 
     render() {
-        console.log(this.state);
+        //console.log(this.state);
         return (
             <div style={{width: '100%'}}>
                 <div style={{textAlign:'center', display:'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -294,7 +291,6 @@ class SearchBlock extends Component {
                         style={{width: '40%', marginLeft: '1%'}}
                         onChange={this.handleInputChange}
                         onSearch={this.handleSubmit}
-                        allowClear='true'
                     />
                 </div>
                 <div style={{marginTop: '1%'}}>
@@ -306,4 +302,4 @@ class SearchBlock extends Component {
     }
 }
 
-export default SearchBlock;
+export default withRouter(SearchBlock);

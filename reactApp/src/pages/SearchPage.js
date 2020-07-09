@@ -21,7 +21,7 @@ class SearchPage extends Component {
             var tmpDetailUrls = [];
             for (var i = 0; i < rawStrs.length; i++) {
                 const obj = JSON.parse(rawStrs[i].source);
-                tmpDetailUrls.push(obj.detail_url);
+                tmpDetailUrls.push('http://localhost:3000/info/' + rawStrs[i].id);
                 tmpImgUrls.push((obj.imgs)[0]);
             }
             this.setState({gameImgUrls: tmpImgUrls, gameDetailUrls: tmpDetailUrls});

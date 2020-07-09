@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
-import { Input, Select, Tag, Menu, Dropdown, Button } from 'antd';
+import { Input, Select, Tag, Menu, Dropdown, Button, message } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 import '../myStyles.css';
@@ -82,7 +82,17 @@ class SearchTags extends Component {
         if (this.props.type === 'games') {
             var items = new Array();
             for (var i = 0; i < this.state.tags.length; i++) {
-                items.push(<Tag color='volcano' closable key={this.state.tags[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.tags[i])}>
+                if (this.state.tags[i][this.state.tags[i].length - 1] === '0')
+                    items.push(<Tag color='blue' closable key={this.state.tags[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.tags[i])}>
+                            {this.state.tags[i].slice(0, this.state.tags[i].length - 3)}</Tag>);
+                else if (this.state.tags[i][this.state.tags[i].length - 1] === '1')
+                    items.push(<Tag color='geekblue' closable key={this.state.tags[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.tags[i])}>
+                            {this.state.tags[i].slice(0, this.state.tags[i].length - 3)}</Tag>);
+                else if (this.state.tags[i][this.state.tags[i].length - 1] === '2')
+                    items.push(<Tag color='purple' closable key={this.state.tags[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.tags[i])}>
+                            {this.state.tags[i].slice(0, this.state.tags[i].length - 3)}</Tag>);
+                else
+                    items.push(<Tag color='volcano' closable key={this.state.tags[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.tags[i])}>
                             {this.state.tags[i].slice(0, this.state.tags[i].length - 3)}</Tag>);
             }
             return (
@@ -136,6 +146,10 @@ class SearchBar extends Component {
 
     handleSubmit(event) {
         //console.log(this.state.tags);
+        if (this.state.value.length === 0) {
+            message.error("搜索框不能为空");
+            return;
+        }
         var searchTags1 = new Array();
         var searchTags2 = new Array();
         var searchTags3 = new Array();
@@ -180,7 +194,6 @@ class SearchBar extends Component {
                     style={{width: '50%'}}
                     onChange={this.handleInputChange}
                     onSearch={this.handleSubmit}
-                    allowClear='true'
                 />
                 <SearchTags type={this.state.type} recvFunc={this.getTags} />
             </div>
