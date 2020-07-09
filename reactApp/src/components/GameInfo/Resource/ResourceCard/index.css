@@ -24,7 +24,7 @@
   cursor: pointer;
 }
 
-.resource-name:hover {
+.resource-name .info:hover {
   color: #c82848;
 }
 
