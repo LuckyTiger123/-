@@ -219,3 +219,16 @@ func (s *Server) GameVideoGet(ctx context.Context, req *pb.GameVideoGetRequest) 
 	result.Result = resourceResult
 	return result, nil
 }
+
+func (s *Server) GameInfo(ctx context.Context, req *pb.GameInfoRequest) (*pb.GameInfoResponse, error) {
+	if req.GameID == "" {
+		return nil, fmt.Errorf("invalid input value")
+	}
+	gameResult, err := GetGameInfo(req.GameID)
+	result := &pb.GameInfoResponse{}
+	if err != nil {
+		return result, err
+	}
+	result.Result = gameResult
+	return result, nil
+}

@@ -130,6 +130,15 @@ message GameVideoGetResponse {
     repeated string result = 1;
 }
 
+// Get game info
+message GameInfoRequest {
+    string gameID = 1;
+}
+
+message GameInfoResponse {
+    string result = 1;
+}
+
 // Server
 service ScheduleService {
     rpc GameIndex (GameIndexRequest) returns (GameIndexResponse) {
@@ -199,6 +208,12 @@ service ScheduleService {
         option (google.api.http) = {
             post: "/game/video"
             body: "*"
+        };
+    }
+
+    rpc GameInfo (GameInfoRequest) returns (GameInfoResponse) {
+        option (google.api.http) = {
+            get: "/game/info/{gameID}"
         };
     }
 }

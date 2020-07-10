@@ -357,3 +357,17 @@ func GetGameVideoGet(gameName string, size int32) ([]string, error) {
 
 	return resourceList, nil
 }
+
+func GetGameInfo(gameID string) (string, error) {
+	result := ""
+	idQuery := elastic.NewIdsQuery()
+	idQuery.Ids(gameID)
+	searchResult, err := ES.Search().Index("game").Pretty(true).Query(idQuery).Do(context.Background())
+	if err != nil {
+		return "", err
+	}
+	if len(searchResult.Hits.Hits) > 0 {
+		result = string(searchResult.Hits.Hits[0].Source)
+	}
+	return result, nil
+}

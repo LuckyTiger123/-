@@ -2,7 +2,6 @@ package Server
 
 import (
 	"fmt"
-	pb "goServer/proto"
 	"testing"
 )
 
@@ -24,11 +23,10 @@ import (
 
 func TestFunc(t *testing.T) {
 	Init()
-	filter := make([]*pb.Filter, 0)
-	result, err := GetGameSearch("战争机器", filter, 4)
+	result, err := GetGameInfo("4f6772c4a1ddf42195a747e9024db1cb")
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Println(result[0].Source)
+		fmt.Println(result)
 	}
 }
