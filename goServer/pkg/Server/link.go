@@ -72,38 +72,41 @@ func GetGlobalSearch(keyword string, size int32) ([]*pb.GameResult, []*pb.Result
 	resourceList := make([]*pb.Result, 0)
 
 	// game search
-	matchQueryGameName := elastic.NewMatchQuery("game_name", keyword)
-	highlightGameName := elastic.NewHighlight()
-	highlightGameName.Field("game_name")
+	filter := make([]*pb.Filter, 0)
+	gameList, err := GetGameSearch(keyword, filter, 3)
 
-	searchResultOfGame, err := ES.Search().Index("game_new").Pretty(true).Query(matchQueryGameName).Size(3).Highlight(highlightGameName).Do(context.Background())
-	if err != nil {
-		return nil, nil, err
-	}
-	for _, v := range searchResultOfGame.Hits.Hits {
-		item := &pb.GameResult{}
-		item.Highlight = make(map[string]*pb.Highlight, 0)
-		item.Source = string(v.Source)
-		item.Id = v.Id
-		for k, j := range v.Highlight {
-			item.Highlight[k] = &pb.Highlight{}
-			item.Highlight[k].Field = make([]string, 0)
-			item.Highlight[k].Field = j
-		}
-		gameList = append(gameList, item)
-	}
+	//matchQueryGameName := elastic.NewMatchQuery("game_name", keyword)
+	//highlightGameName := elastic.NewHighlight()
+	//highlightGameName.Field("game_name")
+	//
+	//searchResultOfGame, err := ES.Search().Index("game_new").Pretty(true).Query(matchQueryGameName).Size(3).Highlight(highlightGameName).Do(context.Background())
+	//if err != nil {
+	//	return nil, nil, err
+	//}
+	//for _, v := range searchResultOfGame.Hits.Hits {
+	//	item := &pb.GameResult{}
+	//	item.Highlight = make(map[string]*pb.Highlight, 0)
+	//	item.Source = string(v.Source)
+	//	item.Id = v.Id
+	//	for k, j := range v.Highlight {
+	//		item.Highlight[k] = &pb.Highlight{}
+	//		item.Highlight[k].Field = make([]string, 0)
+	//		item.Highlight[k].Field = j
+	//	}
+	//	gameList = append(gameList, item)
+	//}
 
 	// resource search
 	matchQueryResourceTitle := elastic.NewMatchQuery("title", keyword)
 	matchQueryResourceInfo := elastic.NewMatchQuery("info", keyword)
-	matchQueryResourceContent := elastic.NewMatchQuery("content", keyword)
+	//matchQueryResourceContent := elastic.NewMatchQuery("content", keyword)
 	boolQueryOfResource := elastic.NewBoolQuery()
-	boolQueryOfResource.Should(matchQueryResourceTitle, matchQueryResourceInfo, matchQueryResourceContent)
+	boolQueryOfResource.Should(matchQueryResourceTitle, matchQueryResourceInfo)
 
 	highlightResource := elastic.NewHighlight()
 	highlightResource.Field("title")
 	highlightResource.Field("info")
-	highlightResource.Field("content")
+	//highlightResource.Field("content")
 
 	searchResultOfResource, err := ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Do(context.Background())
 	if err != nil {
