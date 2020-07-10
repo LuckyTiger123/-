@@ -2,6 +2,8 @@
   background-image: url('../../assets/bgd4.jpg');
   background-repeat:no-repeat;
   background-size: cover;
+   background-attachment: fixed; 
+  height: 100%;
 }
 
 .game-info,
@@ -19,7 +21,7 @@
 .game-info-container {
   overflow-y: scroll;
   width: 1100px;
-  height: 800px;
+  min-height: 800px;
   margin: 0 auto;
   background-color: rgba(245,245,245, 0.4);
 }

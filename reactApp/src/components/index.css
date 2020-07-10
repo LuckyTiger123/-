@@ -1,0 +1,91 @@
+.ant-btn-primary {
+  background-color: rgb(11, 62, 91) !important;
+  border-color: rgb(11, 62, 91) !important;
+}
+
+.ant-tag-checkable-checked {
+  background-color: rgb(11, 62, 91) !important;
+  border-color: white !important;
+  border-radius: 10px !important;
+}
+
+.ant-spin {
+  color: white;
+}
+
+.ant-spin-dot-item {
+  background-color: white;
+}
+
+.ant-pagination-item-active a {
+  color: white;
+}
+
+.ant-pagination-item a {
+  color: white;
+}
+
+.ant-pagination-item-active {
+  font-weight: 500;
+  background: #1890ff;
+  border-color: white;
+}
+
+.ant-pagination-item {
+  font-weight: 500;
+  background: transparent;
+  border-color: white;
+}
+
+.ant-pagination-prev .ant-pagination-item-link {
+  background: transparent;
+}
+
+.ant-pagination-next .ant-pagination-item-link {
+  background: transparent;
+}
+
+.anticon-left {
+  color: white;
+}
+
+.anticon-right {
+  color: white;
+}
+
+.ant-pagination-jump-next
+  .ant-pagination-item-container
+  .ant-pagination-item-ellipsis {
+  color: white;
+}
+
+.ant-pagination-jump-next
+  .ant-pagination-item-container
+  .ant-pagination-item-link-icon {
+  color: white;
+}
+
+.ant-pagination-jump-prev
+  .ant-pagination-item-container
+  .ant-pagination-item-ellipsis {
+  color: white;
+}
+
+.ant-pagination-jump-prev
+  .ant-pagination-item-container
+  .ant-pagination-item-link-icon {
+  color: white;
+}
+
+.ant-pagination-options-quick-jumper {
+  color: white;
+}
+
+.ant-pagination-options-quick-jumper input {
+  background-color: transparent;
+  color: white;
+}
+
+.ant-result-info .ant-result-icon > .anticon {
+  color: rgb(11, 62, 91);
+}
