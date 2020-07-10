@@ -2,6 +2,7 @@ package Server
 
 import (
 	"fmt"
+	pb "goServer/proto"
 	"testing"
 )
 
@@ -23,10 +24,19 @@ import (
 
 func TestFunc(t *testing.T) {
 	Init()
-	result, err := GetGameInfo("4f6772c4a1ddf42195a747e9024db1cb")
+	filter := make([]*pb.Filter, 0)
+	//filter = append(filter,&pb.Filter{
+	//	Type: "type",
+	//	Value: "动作",
+	//})
+	result, err := GetGameSearch("育碧", filter, 10)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Println(result)
+		for _, v := range result {
+			fmt.Println(v.Source)
+		}
 	}
+	//reg := regexp.MustCompile(`[0-9,的]`)
+	//fmt.Println(reg.ReplaceAllString("鬼泣的第五5", ""))
 }
