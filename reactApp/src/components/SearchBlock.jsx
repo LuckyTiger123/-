@@ -10,10 +10,11 @@ const { CheckableTag } = Tag;
 const { Panel } = Collapse;
 
 const typeTagsData = ['游戏', '资讯', '攻略', '视频'];
-const gameTagsData1 = ['动作游戏', '角色扮演', '射击游戏', '赛车游戏', '战争游戏', '模拟游戏', '体育游戏', '文字游戏', '即时战略游戏', '音乐游戏', '虚拟现实', '冒险游戏', '恋爱游戏'];
-const gameTagsData2 = ['开放世界', '生存恐怖', '剧情', '科幻', '校园', '沙盒', '教育', '历史', '养成'];
-const gameTagsData3 = ['多人', '单人', '第一人称', '第三人称', '网页游戏', '合作'];
-const gameTagsData4 = ['2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010以前'];
+const gameTagsData1 = ['射击', '动作', '冒险', '赛车', '策略', '养成', '音乐', '格斗', '角色扮演', '动作角色', '即时战略', '桌面棋牌', '休闲益智', '体育运动', '模拟经营'];
+const gameTagsData2 = ['体育', '竞速', '解谜', '剧情', '恐怖', '科幻', '生存', '探索', '教育', '成人', '建造', '管理', '僵尸', '战争', '历史', '未来', '军事', '推理', '飞行', '心理', '自然', '电竞', '编程', '女性主角'];
+const gameTagsData3 = ['3D', '单人', '多人', '合作', '沙盒', '回合制', '第一人称', '第三人称', '开放世界', '本地多人', '玩家对战', '大型多人在线'];
+const gameTagsData4 = ['奇幻', '怀旧', '喜剧', '唯美', '暴力', '血腥', '惊悚', '快节奏', '蒸汽朋克', '重玩价值', '选择取向', '好评原生音轨'];
+const gameTagsData5 = ['2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010以前'];
 
 class GameTags extends Component {
     constructor(props) {
@@ -23,6 +24,7 @@ class GameTags extends Component {
             selectedTags2: props.gameTags2,
             selectedTags3: props.gameTags3,
             selectedTags4: props.gameTags4,
+            selectedTags5: props.gameTags5,
         }
     }
 
@@ -38,9 +40,12 @@ class GameTags extends Component {
         } else if (tagIndex === 3) {
             nextSelectedTags = checked ? [...this.state.selectedTags3, tag] : this.state.selectedTags3.filter(t => t !== tag);
             this.setState({ selectedTags3: nextSelectedTags });
-        } else {
+        } else if (tagIndex === 4) {
             nextSelectedTags = checked ? [...this.state.selectedTags4, tag] : this.state.selectedTags4.filter(t => t !== tag);
             this.setState({ selectedTags4: nextSelectedTags });
+        } else {
+            nextSelectedTags = checked ? [...this.state.selectedTags5, tag] : this.state.selectedTags5.filter(t => t !== tag);
+            this.setState({ selectedTags5: nextSelectedTags });
         }
         this.props.recvFunc(nextSelectedTags, tagIndex);
         // console.log(nextSelectedTags);
@@ -61,10 +66,14 @@ class GameTags extends Component {
             nextSelectedTags = this.state.selectedTags3;
             nextSelectedTags.splice(nextSelectedTags.indexOf(e), 1);
             this.setState({ selectedTags3: nextSelectedTags });
-        } else {
+        } else if (tagIndex === 4) {
             nextSelectedTags = this.state.selectedTags4;
             nextSelectedTags.splice(nextSelectedTags.indexOf(e), 1);
             this.setState({ selectedTags4: nextSelectedTags });
+        } else {
+            nextSelectedTags = this.state.selectedTags5;
+            nextSelectedTags.splice(nextSelectedTags.indexOf(e), 1);
+            this.setState({ selectedTags5: nextSelectedTags });
         }
         this.props.recvFunc(nextSelectedTags, tagIndex);
         // console.log(nextSelectedTags);
@@ -77,6 +86,7 @@ class GameTags extends Component {
             const selectedTags2 = this.state.selectedTags2;
             const selectedTags3 = this.state.selectedTags3;
             const selectedTags4 = this.state.selectedTags4;
+            const selectedTags5 = this.state.selectedTags5;
             var items = new Array();
             for (var i = 0; i < this.state.selectedTags1.length; i++) {
                 items.push(<Tag color='blue' closable key={this.state.selectedTags1[i]}  style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags1[i], 1)}>
@@ -91,8 +101,12 @@ class GameTags extends Component {
                             {this.state.selectedTags3[i]}</Tag>);
             }
             for (var i = 0; i < this.state.selectedTags4.length; i++) {
-                items.push(<Tag color='volcano' closable key={this.state.selectedTags4[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags4[i], 4)}>
+                items.push(<Tag color='cyan' closable key={this.state.selectedTags4[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags4[i], 4)}>
                             {this.state.selectedTags4[i]}</Tag>);
+            }
+            for (var i = 0; i < this.state.selectedTags5.length; i++) {
+                items.push(<Tag color='volcano' closable key={this.state.selectedTags5[i]} style={{borderRadius: '10px'}} onClose={this.handleClose.bind(this, this.state.selectedTags5[i], 5)}>
+                            {this.state.selectedTags5[i]}</Tag>);
             }
             return (
                 <div style={{width: '75%', margin: '0 auto'}}>
@@ -147,12 +161,25 @@ class GameTags extends Component {
                             ))}
                         </Panel>
                         <Divider dashed='true'/>
-                        <Panel header={<span style={{color: 'white'}}><b>发行时间</b></span>} key="4" className="site-collapse-custom-panel" extra={<span style={{color: 'white'}}>展开</span>}>
+                        <Panel header={<span style={{color: 'white'}}><b>游戏风格</b></span>} key="4" className="site-collapse-custom-panel" extra={<span style={{color: 'white'}}>展开</span>}>
                             {gameTagsData4.map(tag => (
                                 <CheckableTag
                                     key={tag}
                                     checked={selectedTags4.indexOf(tag) > -1}
                                     onChange={checked => this.handleChange(tag, checked, 4)}
+                                    style={{float: 'left', width: '16%', color: 'white', fontSize: '15px', fontFamily: 'KaiTi'}}
+                                >
+                                    {tag}
+                                </CheckableTag>
+                            ))}
+                        </Panel>
+                        <Divider dashed='true'/>
+                        <Panel header={<span style={{color: 'white'}}><b>发行时间</b></span>} key="5" className="site-collapse-custom-panel" extra={<span style={{color: 'white'}}>展开</span>}>
+                            {gameTagsData5.map(tag => (
+                                <CheckableTag
+                                    key={tag}
+                                    checked={selectedTags5.indexOf(tag) > -1}
+                                    onChange={checked => this.handleChange(tag, checked, 5)}
                                     style={{float: 'left', width: '16%', color: 'white', fontSize: '15px', fontFamily: 'KaiTi'}}
                                 >
                                     {tag}
@@ -220,7 +247,8 @@ class SearchBlock extends Component {
             gameTags1: props.searchTags1,
             gameTags2: props.searchTags2,
             gameTags3: props.searchTags3,
-            gameTags4: props.searchDates,
+            gameTags4: props.searchTags4,
+            gameTags5: props.searchDates,
         }
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -256,23 +284,26 @@ class SearchBlock extends Component {
     getGameTags(res, resIndex) {
         if (resIndex === 1) {
             this.setState({gameTags1: res});
-            this.props.recvGameFunc(res, this.state.gameTags2, this.state.gameTags3, this.state.gameTags4);
+            this.props.recvGameFunc(res, this.state.gameTags2, this.state.gameTags3, this.state.gameTags4, this.state.gameTags5);
         } else if (resIndex === 2) {
             this.setState({gameTags2: res});
-            this.props.recvGameFunc(this.state.gameTags1, res, this.state.gameTags3, this.state.gameTags4);
+            this.props.recvGameFunc(this.state.gameTags1, res, this.state.gameTags3, this.state.gameTags4, this.state.gameTags5);
         } else if (resIndex === 3) {
             this.setState({gameTags3: res});
-            this.props.recvGameFunc(this.state.gameTags1, this.state.gameTags2, res, this.state.gameTags4);
-        } else {
+            this.props.recvGameFunc(this.state.gameTags1, this.state.gameTags2, res, this.state.gameTags4, this.state.gameTags5);
+        } else if (resIndex === 4) {
             this.setState({gameTags4: res});
-            this.props.recvGameFunc(this.state.gameTags1, this.state.gameTags2, this.state.gameTags3, res);
+            this.props.recvGameFunc(this.state.gameTags1, this.state.gameTags2, this.state.gameTags3, res, this.state.gameTags5);
+        } else {
+            this.setState({gameTags5: res});
+            this.props.recvGameFunc(this.state.gameTags1, this.state.gameTags2, this.state.gameTags3, this.state.gameTags4, res);
         }
         // console.log(res);
         // console.log(this.state);
     }
 
     render() {
-        //console.log(this.state);
+        console.log(this.state);
         return (
             <div style={{width: '100%'}}>
                 <div style={{textAlign:'center', display:'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -295,7 +326,7 @@ class SearchBlock extends Component {
                 </div>
                 <div style={{marginTop: '1%'}}>
                     <TypeTags typeTags={this.state.typeTags} type={this.state.type} recvFunc={this.getTypeTags} />
-                    <GameTags gameTags1={this.state.gameTags1} gameTags2={this.state.gameTags2} gameTags3={this.state.gameTags3} gameTags4={this.state.gameTags4} type={this.state.type}  recvFunc={this.getGameTags} />
+                    <GameTags gameTags1={this.state.gameTags1} gameTags2={this.state.gameTags2} gameTags3={this.state.gameTags3} gameTags4={this.state.gameTags4} gameTags5={this.state.gameTags5} type={this.state.type} recvFunc={this.getGameTags} />
                 </div>
             </div>
         );

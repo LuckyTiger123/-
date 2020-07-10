@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SearchBar from '../components/SearchBar'
 import { Row, Col, Carousel } from 'antd';
+import { Link } from 'react-router-dom';
 import { KeyOutlined } from '@ant-design/icons'
 import axios from 'axios';
 
@@ -9,7 +10,7 @@ class SearchPage extends Component {
         super(props);
         this.state = {
             gameImgUrls: [],
-            gameDetailUrls: [],
+            gameIDs: [],
         }
     }
 
@@ -18,13 +19,13 @@ class SearchPage extends Component {
         axios.post('/game/index', {pageSize: 16, page: page}).then(res => {
             var rawStrs = res.data.result;
             var tmpImgUrls = [];
-            var tmpDetailUrls = [];
+            var tmpIDs = [];
             for (var i = 0; i < rawStrs.length; i++) {
                 const obj = JSON.parse(rawStrs[i].source);
-                tmpDetailUrls.push('http://localhost:3000/info/' + rawStrs[i].id);
+                tmpIDs.push(rawStrs[i].id);
                 tmpImgUrls.push((obj.imgs)[0]);
             }
-            this.setState({gameImgUrls: tmpImgUrls, gameDetailUrls: tmpDetailUrls});
+            this.setState({gameImgUrls: tmpImgUrls, gameIDs: tmpIDs});
         }).catch(error => {
             console.error(error);
         })
@@ -35,8 +36,8 @@ class SearchPage extends Component {
         for (var i = 0; i < 4; i++) {
             items.push(new Array());
             for (var j = 0; j < 4; j++) {
-                items[i].push(<Col span={12} style={{height: '200px'}}><a href={this.state.gameDetailUrls[i * 4 + j]} target='_blank'>
-                    <img src={this.state.gameImgUrls[i * 4 + j]} width='90%'></img></a></Col>);
+                items[i].push(<Col span={12} style={{height: '200px'}}><Link to={'/info/' + this.state.gameIDs[i * 4 + j]} target='_blank'>
+                    <img src={this.state.gameImgUrls[i * 4 + j]} width='90%'></img></Link></Col>);
             }
         }
         return (

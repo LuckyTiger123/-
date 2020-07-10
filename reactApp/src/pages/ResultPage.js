@@ -30,6 +30,7 @@ class ResultPage extends Component {
             searchTags1: (props.location.query && props.location.query.lastPage === 'home') ? props.location.query.searchTags1 : new Array(),
             searchTags2: (props.location.query && props.location.query.lastPage === 'home') ? props.location.query.searchTags2 : new Array(),
             searchTags3: (props.location.query && props.location.query.lastPage === 'home') ? props.location.query.searchTags3 : new Array(),
+            searchTags4: (props.location.query && props.location.query.lastPage === 'home') ? props.location.query.searchTags4 : new Array(),
             searchTypeTags: ['游戏', '资讯', '攻略', '视频'],
             gameIDs: new Array(),
             gameNames: new Array(),
@@ -70,6 +71,8 @@ class ResultPage extends Component {
             filter.push({type: "theme", value: this.state.searchTags2[i]});
         for (var i = 0; i < this.state.searchTags3.length; i++)
             filter.push({type: "mode", value: this.state.searchTags3[i]});
+        for (var i = 0; i < this.state.searchTags4.length; i++)
+            filter.push({type: "style", value: this.state.searchTags4[i]});
         for (var i = 0; i < this.state.searchDates.length; i++)
             filter.push({type: "year", value: this.state.searchDates[i]});
         var tmpGameNames = [];
@@ -277,21 +280,21 @@ class ResultPage extends Component {
             } else {
                 await this.postResourceData(this.state.searchType);
             }
-            sessionStorage.setItem("gameIDs", JSON.stringify(this.state.gameIDs));
-            sessionStorage.setItem("gameNames", JSON.stringify(this.state.gameNames));
-            sessionStorage.setItem("gameTags", JSON.stringify(this.state.gameTags));
-            sessionStorage.setItem("gameDates", JSON.stringify(this.state.gameDates));
-            sessionStorage.setItem("publishers", JSON.stringify(this.state.publishers));
-            sessionStorage.setItem("developers", JSON.stringify(this.state.developers));
-            sessionStorage.setItem("gameInfos", JSON.stringify(this.state.gameInfos));
-            sessionStorage.setItem("gameImgUrls", JSON.stringify(this.state.gameImgUrls));
-            sessionStorage.setItem("resourceTypes", JSON.stringify(this.state.resourceTypes));
-            sessionStorage.setItem("titles", JSON.stringify(this.state.titles));
-            sessionStorage.setItem("sources", JSON.stringify(this.state.sources));
-            sessionStorage.setItem("resourceDates", JSON.stringify(this.state.resourceDates));
-            sessionStorage.setItem("resourceInfos", JSON.stringify(this.state.resourceInfos));
-            sessionStorage.setItem("resourceImgUrls", JSON.stringify(this.state.resourceImgUrls));
-            sessionStorage.setItem("resourceDetailUrls", JSON.stringify(this.state.resourceDetailUrls));
+            // sessionStorage.setItem("gameIDs", JSON.stringify(this.state.gameIDs));
+            // sessionStorage.setItem("gameNames", JSON.stringify(this.state.gameNames));
+            // sessionStorage.setItem("gameTags", JSON.stringify(this.state.gameTags));
+            // sessionStorage.setItem("gameDates", JSON.stringify(this.state.gameDates));
+            // sessionStorage.setItem("publishers", JSON.stringify(this.state.publishers));
+            // sessionStorage.setItem("developers", JSON.stringify(this.state.developers));
+            // sessionStorage.setItem("gameInfos", JSON.stringify(this.state.gameInfos));
+            // sessionStorage.setItem("gameImgUrls", JSON.stringify(this.state.gameImgUrls));
+            // sessionStorage.setItem("resourceTypes", JSON.stringify(this.state.resourceTypes));
+            // sessionStorage.setItem("titles", JSON.stringify(this.state.titles));
+            // sessionStorage.setItem("sources", JSON.stringify(this.state.sources));
+            // sessionStorage.setItem("resourceDates", JSON.stringify(this.state.resourceDates));
+            // sessionStorage.setItem("resourceInfos", JSON.stringify(this.state.resourceInfos));
+            // sessionStorage.setItem("resourceImgUrls", JSON.stringify(this.state.resourceImgUrls));
+            // sessionStorage.setItem("resourceDetailUrls", JSON.stringify(this.state.resourceDetailUrls));
         }
     }
 
@@ -299,32 +302,34 @@ class ResultPage extends Component {
         this.setState({
             searchType: data.type,
             searchSize: 100,
+            searchTypeTags: ['游戏', '资讯', '攻略', '视频'],
             searchTags1: data.gameTags1,
             searchTags2: data.gameTags2,
             searchTags3: data.gameTags3,
-            searchDates: data.gameTags4,
+            searchTags4: data.gameTags4,
+            searchDates: data.gameTags5,
             keyword: data.value,
         }, async () => {
             if (this.state.searchType === 'games') {
-                await this.postGameData();
+                this.postGameData();
             } else {
-                await this.postResourceData(this.state.searchType);
+                this.postResourceData(this.state.searchType);
             }
-            sessionStorage.setItem("gameIDs", JSON.stringify(this.state.gameIDs));
-            sessionStorage.setItem("gameNames", JSON.stringify(this.state.gameNames));
-            sessionStorage.setItem("gameTags", JSON.stringify(this.state.gameTags));
-            sessionStorage.setItem("gameDates", JSON.stringify(this.state.gameDates));
-            sessionStorage.setItem("publishers", JSON.stringify(this.state.publishers));
-            sessionStorage.setItem("developers", JSON.stringify(this.state.developers));
-            sessionStorage.setItem("gameInfos", JSON.stringify(this.state.gameInfos));
-            sessionStorage.setItem("gameImgUrls", JSON.stringify(this.state.gameImgUrls));
-            sessionStorage.setItem("resourceTypes", JSON.stringify(this.state.resourceTypes));
-            sessionStorage.setItem("titles", JSON.stringify(this.state.titles));
-            sessionStorage.setItem("sources", JSON.stringify(this.state.sources));
-            sessionStorage.setItem("resourceDates", JSON.stringify(this.state.resourceDates));
-            sessionStorage.setItem("resourceInfos", JSON.stringify(this.state.resourceInfos));
-            sessionStorage.setItem("resourceImgUrls", JSON.stringify(this.state.resourceImgUrls));
-            sessionStorage.setItem("resourceDetailUrls", JSON.stringify(this.state.resourceDetailUrls));
+            // sessionStorage.setItem("gameIDs", JSON.stringify(this.state.gameIDs));
+            // sessionStorage.setItem("gameNames", JSON.stringify(this.state.gameNames));
+            // sessionStorage.setItem("gameTags", JSON.stringify(this.state.gameTags));
+            // sessionStorage.setItem("gameDates", JSON.stringify(this.state.gameDates));
+            // sessionStorage.setItem("publishers", JSON.stringify(this.state.publishers));
+            // sessionStorage.setItem("developers", JSON.stringify(this.state.developers));
+            // sessionStorage.setItem("gameInfos", JSON.stringify(this.state.gameInfos));
+            // sessionStorage.setItem("gameImgUrls", JSON.stringify(this.state.gameImgUrls));
+            // sessionStorage.setItem("resourceTypes", JSON.stringify(this.state.resourceTypes));
+            // sessionStorage.setItem("titles", JSON.stringify(this.state.titles));
+            // sessionStorage.setItem("sources", JSON.stringify(this.state.sources));
+            // sessionStorage.setItem("resourceDates", JSON.stringify(this.state.resourceDates));
+            // sessionStorage.setItem("resourceInfos", JSON.stringify(this.state.resourceInfos));
+            // sessionStorage.setItem("resourceImgUrls", JSON.stringify(this.state.resourceImgUrls));
+            // sessionStorage.setItem("resourceDetailUrls", JSON.stringify(this.state.resourceDetailUrls));
         })
     }
 
@@ -345,21 +350,21 @@ class ResultPage extends Component {
         }, () => {
             //console.log(this.state.searchTypeTags);
             this.setState({isLoading: true});
-            var tmpGameIDs = JSON.parse(sessionStorage.getItem("gameIDs"));
-            var tmpGameNames = JSON.parse(sessionStorage.getItem("gameNames"));
-            var tmpReleaseDates = JSON.parse(sessionStorage.getItem("gameDates"));
-            var tmpGameTags = JSON.parse(sessionStorage.getItem("gameTags"));
-            var tmpPublishers = JSON.parse(sessionStorage.getItem("publishers"));
-            var tmpDevelopers = JSON.parse(sessionStorage.getItem("developers"));
-            var tmpGameInfos = JSON.parse(sessionStorage.getItem("gameInfos"));
-            var tmpGameImgUrls = JSON.parse(sessionStorage.getItem("gameImgUrls"));
-            var tmpResourceTypes = JSON.parse(sessionStorage.getItem("resourceTypes"));
-            var tmpTitles = JSON.parse(sessionStorage.getItem("titles"));
-            var tmpResourceDates = JSON.parse(sessionStorage.getItem("resourceDates"));
-            var tmpSources = JSON.parse(sessionStorage.getItem("sources"));
-            var tmpResourceInfos = JSON.parse(sessionStorage.getItem("resourceInfos"));
-            var tmpResourceImgUrls = JSON.parse(sessionStorage.getItem("resourceImgUrls"));
-            var tmpResourceDetailUrls = JSON.parse(sessionStorage.getItem("resourceDetailUrls"));
+            // var tmpGameIDs = JSON.parse(sessionStorage.getItem("gameIDs"));
+            // var tmpGameNames = JSON.parse(sessionStorage.getItem("gameNames"));
+            // var tmpReleaseDates = JSON.parse(sessionStorage.getItem("gameDates"));
+            // var tmpGameTags = JSON.parse(sessionStorage.getItem("gameTags"));
+            // var tmpPublishers = JSON.parse(sessionStorage.getItem("publishers"));
+            // var tmpDevelopers = JSON.parse(sessionStorage.getItem("developers"));
+            // var tmpGameInfos = JSON.parse(sessionStorage.getItem("gameInfos"));
+            // var tmpGameImgUrls = JSON.parse(sessionStorage.getItem("gameImgUrls"));
+            // var tmpResourceTypes = JSON.parse(sessionStorage.getItem("resourceTypes"));
+            // var tmpTitles = JSON.parse(sessionStorage.getItem("titles"));
+            // var tmpResourceDates = JSON.parse(sessionStorage.getItem("resourceDates"));
+            // var tmpSources = JSON.parse(sessionStorage.getItem("sources"));
+            // var tmpResourceInfos = JSON.parse(sessionStorage.getItem("resourceInfos"));
+            // var tmpResourceImgUrls = JSON.parse(sessionStorage.getItem("resourceImgUrls"));
+            // var tmpResourceDetailUrls = JSON.parse(sessionStorage.getItem("resourceDetailUrls"));
             
             var tmp = res.slice();
             for (var i = 0; i < tmp.length; i++) {
@@ -374,15 +379,15 @@ class ResultPage extends Component {
             }
             var tmpCards = [];
             if (tmp.indexOf('games') !== -1)
-                for (var i = 0; i < tmpGameNames.length; i++) {
-                    tmpCards.push(<ResultCard cardType='games' gameName={tmpGameNames[i]} gameTags={tmpGameTags[i]}
-                            date={tmpReleaseDates[i]} publisher={tmpPublishers[i]} developer={tmpDevelopers[i]} 
-                            info={tmpGameInfos[i]} imgUrl={tmpGameImgUrls[i]} gameID={tmpGameIDs[i]} key={tmpGameNames[i]} />)
+                for (var i = 0; i < this.state.gameNames.length; i++) {
+                    tmpCards.push(<ResultCard cardType='games' gameName={this.state.gameNames[i]} gameTags={this.state.gameTags[i]}
+                            date={this.state.gameDates[i]} publisher={this.state.publishers[i]} developer={this.state.developers[i]} 
+                            info={this.state.gameInfos[i]} imgUrl={this.state.gameImgUrls[i]} gameID={this.state.gameIDs[i]} key={this.state.gameNames[i]} />)
                 }
-            for (var i = 0; i < tmpTitles.length; i++) {
-                if (tmp.indexOf(tmpResourceTypes[i]) !== -1)
-                    tmpCards.push(<ResultCard cardType={tmpResourceTypes[i]} title={tmpTitles[i]} date={tmpResourceDates[i]}
-                            source={tmpSources[i]} info={tmpResourceInfos[i]} imgUrl={tmpResourceImgUrls[i]} detailUrl={tmpResourceDetailUrls[i]} key={tmpTitles[i]} />);
+            for (var i = 0; i < this.state.titles.length; i++) {
+                if (tmp.indexOf(this.state.resourceTypes[i]) !== -1)
+                    tmpCards.push(<ResultCard cardType={this.state.resourceTypes[i]} title={this.state.titles[i]} date={this.state.resourceDates[i]}
+                            source={this.state.sources[i]} info={this.state.resourceInfos[i]} imgUrl={this.state.resourceImgUrls[i]} detailUrl={this.state.resourceDetailUrls[i]} key={this.state.titles[i]} />);
             }
             var tmpShowCards = [];
             var start = 0;
@@ -394,12 +399,13 @@ class ResultPage extends Component {
         })
     }
 
-    getGameTags(res1, res2, res3, res4) {
+    getGameTags(res1, res2, res3, res4, res5) {
         this.setState({
             searchTags1: res1,
             searchTags2: res2,
             searchTags3: res3,
-            searchDates: res4
+            searchTags4: res4,
+            searchDates: res5
         }, () => {
             //console.log(this.state);
             this.postGameData();
@@ -418,15 +424,17 @@ class ResultPage extends Component {
                     {/* 搜索区域，含标签 */}
                     <div style={{width: '100%', alignItems: 'center', textAlign: 'center', justifyContent: 'center'}}>
                         <SearchBlock  recvTypeFunc={this.getTypeTags} recvGameFunc={this.getGameTags}  reSearchFunc={this.reSearch} keyword={this.state.keyword} searchType={this.state.searchType} searchTypeTags={this.state.searchTypeTags}
-                                    searchTags1={this.state.searchTags1} searchTags2={this.state.searchTags2} searchTags3={this.state.searchTags3} searchDates={this.state.searchDates} />
+                                    searchTags1={this.state.searchTags1} searchTags2={this.state.searchTags2} searchTags3={this.state.searchTags3} searchTags4={this.state.searchTags4} searchDates={this.state.searchDates} />
                     </div>
                     {/* 结果展示区域，以卡片形式分页，每页5个 */}
                     <div style={{width: '75%', minHeight: document.body.clientHeight, margin: '0 auto', backgroundColor: 'rgb(245,245,245,0.4)'}}>
+                        <Pagination showSizeChanger={false} showQuickJumper={true} current={this.state.page} defaultCurrent={this.state.page} hideOnSinglePage={true} total={this.state.cards.length} onChange={this.handlePageChange}
+                                style={{width: '93.3%', margin: '0 auto', marginTop: '1%', paddingTop: '1%', textAlign: 'center'}}/>
                         <Loading isLoading={this.state.isLoading} />
                         <EmptyResult isEmpty={isEmptyShow} />
                         {this.state.showCards}
-                        <Pagination showSizeChanger={false} showQuickJumper={true}  current={this.state.page} hideOnSinglePage={true} total={this.state.cards.length} onChange={this.handlePageChange}
-                            style={{width: '93.3%', margin: '0 auto', marginTop: '1%', textAlign: 'center'}}/>
+                        <Pagination showSizeChanger={false} showQuickJumper={true} current={this.state.page} defaultCurrent={this.state.page} hideOnSinglePage={true} total={this.state.cards.length} onChange={this.handlePageChange}
+                            style={{width: '93.3%', margin: '0 auto', marginTop: '1%', paddingBottom: '1%', textAlign: 'center'}}/>
                     </div>
                 </div>
             </div>

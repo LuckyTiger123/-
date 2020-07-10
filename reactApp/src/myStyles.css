@@ -5,6 +5,8 @@
 
 .ant-tag-checkable-checked {
     background-color: rgb(11,62,91);
+    border-color: white;
+    border-radius: 10px;
 }
 
 .ant-spin {
@@ -31,16 +33,16 @@
 
 .ant-pagination-item {
     font-weight: 500;
-    background: rgb(11,62,91);
+    background: transparent;
     border-color: white;
 }
 
 .ant-pagination-prev .ant-pagination-item-link {
-    background: rgb(11,62,91);
+    background: transparent;
 }
 
 .ant-pagination-next .ant-pagination-item-link {
-    background: rgb(11,62,91);
+    background: transparent;
 }
 
 .anticon-left {
@@ -74,4 +76,8 @@
 .ant-pagination-options-quick-jumper input {
     background-color: transparent;
     color: white;
+}
+
+.ant-result-info .ant-result-icon > .anticon {
+    color: rgb(11,62,91);
 }
