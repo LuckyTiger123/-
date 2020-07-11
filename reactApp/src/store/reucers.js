@@ -3,6 +3,7 @@ import {
   REMOVE_FILTER,
   TOGGLE_SEARCH_TYPE,
   CHANGE_KEY_WORD,
+  CLEAR_FILTER,
 } from "./actions";
 
 const initState = {
@@ -39,6 +40,13 @@ export default function (state = initState, action) {
       return {
         ...state,
         keyWord: action.data.value,
+      };
+    }
+    case CLEAR_FILTER: {
+      return {
+        filters: [],
+        type: "all",
+        keyWord: "",
       };
     }
     default:

@@ -9,7 +9,7 @@ function App() {
     <Router>
       <Route path="/home" component={SearchPageContainer} />
       <Route path="/result" component={ResultPageContainer} />
-      <Route path="/info" component={GameInfo} />
+      <Route path="/info/:id" component={GameInfo} />
     </Router>
   );
 }

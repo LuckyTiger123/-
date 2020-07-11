@@ -8,6 +8,7 @@ import {
   removeFilter,
   toggleSearchType,
   changeKeyword,
+  clearFilter,
 } from "../store/actions";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -33,6 +34,9 @@ const mapDispatchToProps = (dispatch) => {
     handleChangeKeyword: (val) => {
       dispatch(changeKeyword(val));
     },
+    handleClearFilter: () => {
+      dispatch(clearFilter());
+    },
   };
 };
 
@@ -45,7 +49,8 @@ class SearchPage extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.props.handleClearFilter();
     var page = Math.floor(Math.random() * 20 + 1);
     axios
       .post("/game/index", { pageSize: 16, page: page })
@@ -56,10 +61,11 @@ class SearchPage extends Component {
         for (var i = 0; i < rawStrs.length; i++) {
           const obj = JSON.parse(rawStrs[i].source);
           tmpIDs.push(rawStrs[i].id);
-          if (typeof(obj.imgs) === 'string') tmpImgUrls.push(obj.imgs);
+          if (typeof obj.imgs === "string") tmpImgUrls.push(obj.imgs);
           else tmpImgUrls.push(obj.imgs[0]);
         }
         this.setState({ gameImgUrls: tmpImgUrls, gameIDs: tmpIDs });
+        console.log(this.state);
       })
       .catch((error) => {
         console.error(error);

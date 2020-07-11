@@ -27,7 +27,9 @@ class GameTags extends Component {
         closable
         key={filter.value}
         style={{ borderRadius: "10px" }}
-        onClose={() => this.handleGameTagChange(false, filter.type, filter.value)}
+        onClose={() =>
+          this.handleGameTagChange(false, filter.type, filter.value)
+        }
       >
         {filter.value}
       </Tag>
@@ -276,17 +278,16 @@ class SortBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortType: (props.isSort === true) ? 1 : 0,
+      sortType: props.isSort === true ? 1 : 0,
     };
   }
 
   handleSortChange(tag, checked) {
     if (checked) {
-      this.setState({sortType: parseInt(tag)});
+      this.setState({ sortType: parseInt(tag) });
       this.props.recvFunc(parseInt(tag));
-    }
-    else {
-      this.setState({sortType: 1 - parseInt(tag)});
+    } else {
+      this.setState({ sortType: 1 - parseInt(tag) });
       this.props.recvFunc(1 - parseInt(tag));
     }
   }
@@ -296,17 +297,17 @@ class SortBar extends Component {
       <>
         <span style={{ fontSize: "15px", color: "white" }}>
           <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;排序结果：</b>
-          <CheckableTag 
-            style={{ color: "white" }} 
-            key='relevance' 
+          <CheckableTag
+            style={{ color: "white" }}
+            key="relevance"
             onChange={(checked) => this.handleSortChange(0, checked)}
             checked={this.state.sortType === 0}
           >
             相关度从高到低
           </CheckableTag>
-          <CheckableTag 
-            style={{ color: "white" }} 
-            key='time' 
+          <CheckableTag
+            style={{ color: "white" }}
+            key="time"
             onChange={(checked) => this.handleSortChange(1, checked)}
             checked={this.state.sortType === 1}
           >
@@ -376,6 +377,7 @@ class SearchBlock extends Component {
           <Search
             addonBefore={
               <Select
+                value={this.props.type}
                 defaultValue={this.props.type}
                 className="select-before"
                 onChange={(value) =>
@@ -407,7 +409,13 @@ class SearchBlock extends Component {
             type={this.props.type}
             recvFunc={this.getTypeTags}
           />
-          {this.props.type !== "games" && <SortBar type={this.props.type} isSort={this.state.isSort} recvFunc={this.getSortType} />}
+          {this.props.type !== "games" && (
+            <SortBar
+              type={this.props.type}
+              isSort={this.state.isSort}
+              recvFunc={this.getSortType}
+            />
+          )}
           {this.props.type === "games" && <GameTags {...this.props} />}
         </div>
       </div>

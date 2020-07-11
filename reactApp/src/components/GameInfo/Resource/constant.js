@@ -2,18 +2,22 @@ export const resourceTypes = [
   {
     value: 0,
     text: "游戏资讯",
+    api: "/news",
   },
   {
     value: 1,
     text: "相关视频",
+    api: "/video",
   },
   {
     value: 2,
     text: "游戏攻略",
+    api: "/raiders",
   },
   {
-    value: 3,
+    value: "analytics",
     text: "数据分析",
+    api: "/",
   },
 ];
 

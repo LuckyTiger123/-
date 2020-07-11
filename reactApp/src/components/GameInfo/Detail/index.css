@@ -4,17 +4,25 @@
 }
 
 .game-info-detail .img-wrapper {
-  width: 1000px;
-  height: 400px;
+  cursor: pointer;
 }
 
 .game-img {
   width: 300px;
-  height: 390px;
-  margin: 5px 15px;
+  height: 200px;
+  margin: 5px 20px 5px 0;
 }
 
-.detail-container {
+.game-name {
+  color: #c82848;
+  font-weight: 500;
+}
+
+.game-name:hover {
+  color: #c82848;
+}
+
+.detail-wrapper {
   display: flex;
 }
 
@@ -41,6 +49,30 @@
   width: 90px;
 }
 
+.game-tag {
+  display: flex;
+}
+
+.game-tag-container {
+  width: 480px;
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+
+.game-tag-container::-webkit-scrollbar {
+  display: none;
+}
+
 .game-tag-single {
   border-radius: 10px;
+}
+
+.game-desc {
+  width: 900px;
+  height: 160px;
+  overflow-y: scroll;
+}
+
+.game-desc::-webkit-scrollbar {
+  display: none;
 }

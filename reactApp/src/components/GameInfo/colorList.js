@@ -1,15 +1,15 @@
 const colorList = [
-  "magenta",
-  "red",
-  "volcano",
-  "orange",
-  "gold",
-  "lime",
-  "green",
-  "cyan",
-  "blue",
-  "greenblue",
   "purple",
+  "geekblue",
+  "blue",
+  "cyan",
+  "green",
+  "lime",
+  "gold",
+  "orange",
+  "volcano",
+  "red",
+  "magenta",
 ];
 
 const colorNum = colorList.length;

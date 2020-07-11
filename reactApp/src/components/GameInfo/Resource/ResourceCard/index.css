@@ -11,33 +11,61 @@
 .resource-card-content .resource-img-wrapper {
   margin-top: 10px;
   height: 120px;
-  width: 120px;
-  background-color: burlywood;
+}
+
+.resource-img {
+  width: 170px;
+  height: 120px;
 }
 
 .resource-info-wrapper {
   margin: 10px 0 10px 20px;
 }
 
-.resource-name .info {
+.resource-name {
+  display: flex;
+}
+
+.resource-name a {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.resource-name .resource-title {
   font-size: 16px;
   cursor: pointer;
 }
 
-.resource-name .info:hover {
+.resource-tag-single {
+  height: 22px;
+  justify-content: center;
+  border-radius: 10px;
+  margin-top: 2px;
+}
+
+.resource-title span {
+  color: #c82848;
+}
+
+.resource-info span {
+  color: #c82848;
+}
+
+.resource-name .resource-title:hover {
   color: #c82848;
 }
 
 .resource-time {
-  color: #a9a9a9;
+  color: #a0a0a0;
   display: flex;
 }
 
 .resource-time .release-time {
   width: 160px;
+  margin-right: 10px;
 }
 
 .resource-content {
   margin-top: 5px;
-  font-size: 15px;
+  font-size: 14px;
+  overflow: hidden;
 }

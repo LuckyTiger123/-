@@ -6,13 +6,29 @@ import { resourceTypeMap } from "../constant";
 import "./index.css";
 
 export const ResourceCard = ({ resource }) => {
-  const info = <span className="info">{resource.info}</span>
+  const title = (
+    <div
+      className="resource-title"
+      dangerouslySetInnerHTML={{ __html: resource.title }}
+    />
+  );
+
+  const info = (
+    <div
+      className="resource-info"
+      dangerouslySetInnerHTML={{ __html: resource.info }}
+    />
+  );
 
   return (
     <div className="resource-card">
       <div className="resource-card-content">
         <div className="resource-img-wrapper">
-          <img className="resource-name" />
+          <img
+            className="resource-img"
+            src={resource.img_url}
+            alt="图片加载失败"
+          />
         </div>
         <div className="resource-info-wrapper">
           <div className="resource-name">
@@ -22,13 +38,13 @@ export const ResourceCard = ({ resource }) => {
             >
               {resourceTypeMap(resource.type).text}
             </Tag>
-            {info}
+            <a href={resource.url}>{title}</a>
           </div>
           <div className="resource-time">
             <div className="release-time"> 发布时间：{resource.time}</div>
             <div> 来源：{resource.source}</div>
           </div>
-          <div className="resource-content">{resource.content}</div>
+          <div className="resource-content">{info}</div>
         </div>
       </div>
     </div>

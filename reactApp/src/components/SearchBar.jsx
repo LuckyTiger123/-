@@ -128,6 +128,7 @@ class SearchBar extends Component {
         <Search
           addonBefore={
             <Select
+              value={this.props.type}
               defaultValue={this.props.type}
               className="select-before"
               onChange={this.handleSelectChange}

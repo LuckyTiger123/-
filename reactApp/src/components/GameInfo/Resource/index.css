@@ -14,6 +14,19 @@
   cursor: pointer;
 }
 
+.loading-content {
+  text-align: center;
+  margin: 100px auto;
+  width: 60;
+}
+
+.loading-desc {
+  text-align: center;
+  color: #fff;
+  margin-top: 10px;
+  font-size: 19px;
+}
+
 .resource-header-text:hover {
   background-color: #e3e3e3;
 }
@@ -31,12 +44,29 @@
 
 .resource-list {
   margin: 10px 24px 20px 24px;
-  height: 750px;
+  height: 720px;
 }
 
 .resource-list .empty-content {
   display: inline-block;
   margin: 180px 420px;
-  font-size: 15px;
-  color: #a9a9a9;
+  font-size: 19px;
+  width: 200px;
+}
+
+.empty-content .anticon-frown {
+  margin-right: 8px;
+}
+
+.resource-pagination {
+  margin: 0 0 25px 0;
+  display: inline-block;
+}
+
+.resource-pagination-container {
+  text-align: center;
+}
+
+.resource-pagination-container .ant-pagination-item-active {
+  border-color: #f5f5f5;
 }

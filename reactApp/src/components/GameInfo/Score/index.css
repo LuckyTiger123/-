@@ -1,5 +1,5 @@
 .game-info-score {
-  margin: 15px 20px 20px 20px;
+  margin: 20px;
 }
 
 .media-score {
@@ -9,7 +9,7 @@
 
 .media-score-single {
   border-radius: 8px;
-  width: 100px;
+  width: 115px;
   margin-right: 10px;
   cursor: pointer;
   background-color: #f5f5f5;
@@ -48,4 +48,14 @@
 
 .game-info-score .ant-divider-horizontal {
   margin: 10px 0;
+}
+
+.no-score-desc {
+  font-size: 19px;
+  font-weight: normal;
+  margin: 20px auto;
+}
+
+.no-score-desc .anticon-frown {
+  margin-right: 8px;
 }
