@@ -291,7 +291,7 @@ class ResultPage extends Component {
               tmpResourceDates.push(obj.time);
               tmpResourceInfos.push(highlightInfo);
               tmpResourceImgUrls.push(obj.img_url);
-              tmpResourceDetailUrls.push(obj.url);
+              tmpResourceDetailUrls.push((obj.url.substr(0, 3) === 'www') ? 'http://' + obj.url.substr(4) : obj.url);
               tmpSources.push(obj.source);
             }
             this.setState({
@@ -332,11 +332,12 @@ class ResultPage extends Component {
               if (parseInt(obj.type) === 0) tmpResourceTypes.push("news");
               else if (parseInt(obj.type) === 1) tmpResourceTypes.push("videos");
               else tmpResourceTypes.push("methods");
+              console.log(obj.img_url);
               tmpTitles.push(highlightTitle);
               tmpResourceDates.push(obj.time);
               tmpResourceInfos.push(highlightInfo);
               tmpResourceImgUrls.push(obj.img_url);
-              tmpResourceDetailUrls.push(obj.url);
+              tmpResourceDetailUrls.push((obj.url.substr(0, 3) === 'www') ? 'http://' + obj.url.substr(4) : obj.url);
               tmpSources.push(obj.source);
             }
             this.setState({
