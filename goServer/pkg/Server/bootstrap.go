@@ -8,6 +8,11 @@ func Bootstrap() error {
 		fmt.Println(err.Error())
 	}
 
+	err = WordListInit()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
 	err = <-Run()
 	if err != nil {
 		fmt.Println(err.Error())

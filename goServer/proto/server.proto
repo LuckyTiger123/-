@@ -46,6 +46,7 @@ message ResourceIndexResponse {
 message GlobalSearchRequest {
     string keyword = 1;
     int32 size = 2;
+    bool sort = 3;
 }
 
 message GlobalSearchResponse {
@@ -74,6 +75,7 @@ message GameSearchResponse {
 message NewsSearchRequest {
     string keyword = 1;
     int32 size = 2;
+    bool sort = 3;
 }
 
 message NewsSearchResponse {
@@ -84,6 +86,7 @@ message NewsSearchResponse {
 message RaidersSearchRequest {
     string keyword = 1;
     int32 size = 2;
+    bool sort = 3;
 }
 
 message RaidersSearchResponse {
@@ -94,6 +97,7 @@ message RaidersSearchResponse {
 message VideoSearchRequest {
     string keyword = 1;
     int32 size = 2;
+    bool sort = 3;
 }
 
 message VideoSearchResponse {
