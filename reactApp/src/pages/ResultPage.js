@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import SearchBlock from "../components/SearchBlock";
 import ResultCard from "../components/ResultCard";
-import { FrownOutlined } from "@ant-design/icons";
-import { Pagination, Spin, Result } from "antd";
+import { FrownOutlined, ToTopOutlined } from "@ant-design/icons";
+import { Pagination, Spin, Result, BackTop } from "antd";
 import { connect } from "react-redux";
 import {
   addFilter,
@@ -12,6 +12,18 @@ import {
 } from "../store/actions";
 import axios from "axios";
 import { autobind } from "core-decorators";
+import "../index.css";
+
+const style = {
+  height: 40,
+  width: 60,
+  lineHeight: '40px',
+  borderRadius: 4,
+  backgroundColor: 'transparent',
+  color: 'white',
+  textAlign: 'center',
+  fontSize: 20,
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -72,7 +84,6 @@ class ResultPage extends Component {
       developers: new Array(),
       gameInfos: new Array(),
       gameImgUrls: new Array(),
-      //gameDetailUrls: new Array(),
       resourceTypes: new Array(),
       titles: new Array(),
       sources: new Array(),
@@ -85,6 +96,7 @@ class ResultPage extends Component {
       showCards: new Array(),
       page: 1,
       pageSize: 10,
+      isSort: false,
     };
   }
 
@@ -110,23 +122,39 @@ class ResultPage extends Component {
           const rawStrs = res.data.result;
           rawStrs.forEach((data) => {
             const obj = JSON.parse(data.source);
-            console.log(obj);
-            var highlightName = data.highlight.game_name.field[0];
+            var highlightName, highlightDeveloper, highlightPublisher;
             var reg1 = new RegExp("<em>", "g");
             var reg2 = new RegExp("</em>", "g");
-            highlightName = highlightName.replace(
-              reg1,
-              "<span style='color: red'>"
-            );
-            highlightName = highlightName.replace(reg2, "</span>");
+            if (typeof data.highlight.game_name !== "undefined") {
+              highlightName = data.highlight.game_name.field[0];
+              highlightName = highlightName.replace(reg1, "<span style='color: red'>");
+              highlightName = highlightName.replace(reg2, "</span>");
+            } else {
+              highlightName = obj.game_name;
+            }
+            if (typeof data.highlight.developer !== "undefined") {
+              highlightDeveloper = data.highlight.developer.field[0];
+              highlightDeveloper = highlightDeveloper.replace(reg1, "<span style='color: red'>");
+              highlightDeveloper = highlightDeveloper.replace(reg2, "</span>");
+            } else {
+              highlightDeveloper = obj.developer;
+            }
+            if (typeof data.highlight.publisher !== "undefined") {
+              highlightPublisher = data.highlight.publisher.field[0];
+              highlightPublisher = highlightPublisher.replace(reg1, "<span style='color: red'>");
+              highlightPublisher = highlightPublisher.replace(reg2, "</span>");
+            } else {
+              highlightPublisher = obj.publisher;
+            }
             tmpGameNames.push(highlightName);
             tmpGameTags.push(obj.tags);
             tmpReleaseDates.push(obj.release_date);
-            tmpPublishers.push(obj.publisher);
-            tmpDevelopers.push(obj.developer);
+            tmpPublishers.push(highlightDeveloper);
+            tmpDevelopers.push(highlightPublisher);
             tmpInfos.push(obj.info);
             tmpIDs.push(data.id);
-            tmpImgUrls.push(obj.imgs[0]);
+            if(typeof(obj.imgs) === 'string') tmpImgUrls.push(obj.imgs);
+            else tmpImgUrls.push(obj.imgs[0]);
           });
           this.setState({
             gameNames: tmpGameNames,
@@ -169,7 +197,7 @@ class ResultPage extends Component {
   }
 
   @autobind
-  async postResourceData(type) {
+  async postResourceData(type, isSort) {
     this.setState({ isLoading: true });
 
     var tmpGameNames = [];
@@ -199,27 +227,44 @@ class ResultPage extends Component {
     var reg2 = new RegExp("</em>", "g");
 
     await axios
-      .post(api, { keyword: this.props.keyWord, size: 100 })
+      .post(api, { keyword: this.props.keyWord, size: 100, sort: isSort })
       .then((res) => {
         if (res.data) {
           if (type === "all") {
             var rawGameStrs = res.data.gameResult;
             for (var i = 0; i < rawGameStrs.length; i++) {
               const obj = JSON.parse(rawGameStrs[i].source);
-              var highlightName = rawGameStrs[i].highlight.game_name.field[0];
-              highlightName = highlightName.replace(
-                reg1,
-                "<span style='color: red'>"
-              );
-              highlightName = highlightName.replace(reg2, "</span>");
+              var highlightName, highlightDeveloper, highlightPublisher;
+              if (typeof rawGameStrs[i].highlight.game_name !== "undefined") {
+                highlightName = rawGameStrs[i].highlight.game_name.field[0];
+                highlightName = highlightName.replace(reg1, "<span style='color: red'>");
+                highlightName = highlightName.replace(reg2, "</span>");
+              } else {
+                highlightName = obj.game_name;
+              }
+              if (typeof rawGameStrs[i].highlight.developer !== "undefined") {
+                highlightDeveloper = rawGameStrs[i].highlight.developer.field[0];
+                highlightDeveloper = highlightDeveloper.replace(reg1, "<span style='color: red'>");
+                highlightDeveloper = highlightDeveloper.replace(reg2, "</span>");
+              } else {
+                highlightDeveloper = obj.developer;
+              }
+              if (typeof rawGameStrs[i].highlight.publisher !== "undefined") {
+                highlightPublisher = rawGameStrs[i].highlight.publisher.field[0];
+                highlightPublisher = highlightPublisher.replace(reg1, "<span style='color: red'>");
+                highlightPublisher = highlightPublisher.replace(reg2, "</span>");
+              } else {
+                highlightPublisher = obj.publisher;
+              }
               tmpGameNames.push(highlightName);
               tmpGameTags.push(obj.tags);
               tmpReleaseDates.push(obj.release_date);
-              tmpPublishers.push(obj.publisher);
-              tmpDevelopers.push(obj.developer);
+              tmpPublishers.push(highlightPublisher);
+              tmpDevelopers.push(highlightDeveloper);
               tmpGameInfos.push(obj.info);
               tmpGameIDs.push(rawGameStrs[i].id);
-              tmpGameImgUrls.push(obj.imgs[0]);
+              if(typeof(obj.imgs) === 'string') tmpGameImgUrls.push(obj.imgs);
+              else tmpGameImgUrls.push(obj.imgs[0]);
             }
             var rawResourceStrs = res.data.resourceResult;
             for (var i = 0; i < rawResourceStrs.length; i++) {
@@ -227,27 +272,20 @@ class ResultPage extends Component {
               var highlightTitle, highlightInfo;
               if (typeof rawResourceStrs[i].highlight.title !== "undefined") {
                 highlightTitle = rawResourceStrs[i].highlight.title.field[0];
-                highlightTitle = highlightTitle.replace(
-                  reg1,
-                  "<span style='color: red'>"
-                );
+                highlightTitle = highlightTitle.replace(reg1, "<span style='color: red'>");
                 highlightTitle = highlightTitle.replace(reg2, "</span>");
               } else {
                 highlightTitle = obj.title;
               }
               if (typeof rawResourceStrs[i].highlight.info !== "undefined") {
                 highlightInfo = rawResourceStrs[i].highlight.info.field[0];
-                highlightInfo = highlightInfo.replace(
-                  reg1,
-                  "<span style='color: red'>"
-                );
+                highlightInfo = highlightInfo.replace(reg1, "<span style='color: red'>");
                 highlightInfo = highlightInfo.replace(reg2, "</span>");
               } else {
                 highlightInfo = obj.info;
               }
               if (parseInt(obj.type) === 0) tmpResourceTypes.push("news");
-              else if (parseInt(obj.type) === 1)
-                tmpResourceTypes.push("videos");
+              else if (parseInt(obj.type) === 1) tmpResourceTypes.push("videos");
               else tmpResourceTypes.push("methods");
               tmpTitles.push(highlightTitle);
               tmpResourceDates.push(obj.time);
@@ -279,27 +317,20 @@ class ResultPage extends Component {
               var highlightTitle, highlightInfo;
               if (typeof rawStrs[i].highlight.title !== "undefined") {
                 highlightTitle = rawStrs[i].highlight.title.field[0];
-                highlightTitle = highlightTitle.replace(
-                  reg1,
-                  "<span style='color: red'>"
-                );
+                highlightTitle = highlightTitle.replace(reg1, "<span style='color: red'>");
                 highlightTitle = highlightTitle.replace(reg2, "</span>");
               } else {
                 highlightTitle = obj.title;
               }
               if (typeof rawStrs[i].highlight.info !== "undefined") {
                 highlightInfo = rawStrs[i].highlight.info.field[0];
-                highlightInfo = highlightInfo.replace(
-                  reg1,
-                  "<span style='color: red'>"
-                );
+                highlightInfo = highlightInfo.replace(reg1, "<span style='color: red'>");
                 highlightInfo = highlightInfo.replace(reg2, "</span>");
               } else {
                 highlightInfo = obj.info;
               }
               if (parseInt(obj.type) === 0) tmpResourceTypes.push("news");
-              else if (parseInt(obj.type) === 1)
-                tmpResourceTypes.push("videos");
+              else if (parseInt(obj.type) === 1) tmpResourceTypes.push("videos");
               else tmpResourceTypes.push("methods");
               tmpTitles.push(highlightTitle);
               tmpResourceDates.push(obj.time);
@@ -382,7 +413,7 @@ class ResultPage extends Component {
     if (this.props.type === "games") {
       await this.postGameData();
     } else {
-      await this.postResourceData(this.props.type);
+      await this.postResourceData(this.props.type, false);
     }
   }
 
@@ -391,10 +422,7 @@ class ResultPage extends Component {
     this.setState({ page: page, pageSize: pageSize });
     var tmpShowCards = [];
     var start = (page - 1) * pageSize;
-    var end =
-      start + pageSize < this.state.cards.length
-        ? start + pageSize
-        : this.state.cards.length;
+    var end = (start + pageSize < this.state.cards.length) ? (start + pageSize) : this.state.cards.length;
     for (var i = start; i < end; i++) tmpShowCards.push(this.state.cards[i]);
     this.setState({ showCards: tmpShowCards });
   }
@@ -407,7 +435,6 @@ class ResultPage extends Component {
       },
       () => {
         this.setState({ isLoading: true });
-
         var tmp = res.slice();
         for (var i = 0; i < tmp.length; i++) {
           if (tmp[i] === "游戏") tmp[i] = "games";
@@ -459,17 +486,24 @@ class ResultPage extends Component {
   }
 
   @autobind
+  getSortType(isSort) {
+    this.setState({isSort: Boolean(isSort)});
+    if (isSort) this.postResourceData(this.props.type, true);
+    else this.postResourceData(this.props.type, false);
+  }
+  
+  @autobind
   handleSearch() {
+    this.setState({searchTypeTags: ["游戏", "资讯", "攻略", "视频"], isSort: false});
     if (this.props.type === "games") {
       this.postGameData();
     } else {
-      this.postResourceData(this.props.type);
+      this.postResourceData(this.props.type, false);
     }
   }
 
   render() {
-    var isEmptyShow =
-      this.state.showCards.length === 0 && !this.state.isLoading ? true : false;
+    var isEmptyShow = (this.state.showCards.length === 0 && !this.state.isLoading) ? true : false;
     return (
       <div style={{ height: "100%" }}>
         <div
@@ -494,22 +528,26 @@ class ResultPage extends Component {
           >
             <SearchBlock
               {...this.props}
+              isSort={this.state.isSort}
               searchTypeTags={this.state.searchTypeTags}
               handleSearch={this.handleSearch}
               recvTypeFunc={this.getTypeTags}
+              recvSortFunc={this.getSortType}
               handleTagChange={this.postGameData}
             />
           </div>
-          {/* 结果展示区域，以卡片形式分页，每页5个 */}
+          {/* 结果展示区域，以卡片形式分页，每页10个 */}
           <div
             style={{
-              width: "75%",
+              width: "70%",
               minHeight: document.body.clientHeight,
               margin: "0 auto",
               backgroundColor: "rgb(245,245,245,0.4)",
             }}
           >
+            {this.state.cards.length < 10 && <br />}
             <Pagination
+              hideOnSinglePage={false}
               showSizeChanger={false}
               showQuickJumper={true}
               current={this.state.page}
@@ -529,6 +567,7 @@ class ResultPage extends Component {
             <EmptyResult isEmpty={isEmptyShow} />
             {this.state.showCards}
             <Pagination
+              hideOnSinglePage={false}
               showSizeChanger={false}
               showQuickJumper={true}
               current={this.state.page}
@@ -544,8 +583,12 @@ class ResultPage extends Component {
                 textAlign: "center",
               }}
             />
+            {this.state.cards.length < 10 && <br />}
           </div>
         </div>
+        <BackTop>
+          <div style={style}><ToTopOutlined />&nbsp;Top</div>
+        </BackTop>
       </div>
     );
   }

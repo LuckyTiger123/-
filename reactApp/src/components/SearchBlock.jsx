@@ -11,6 +11,7 @@ import {
   mapFilterToColor,
 } from "../common/config";
 import { autobind } from "core-decorators";
+import "../index.css";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -26,7 +27,7 @@ class GameTags extends Component {
         closable
         key={filter.value}
         style={{ borderRadius: "10px" }}
-        onClose={() => this.props.handleRemoveFilter({ value: filter.value })}
+        onClose={() => this.handleGameTagChange(false, filter.type, filter.value)}
       >
         {filter.value}
       </Tag>
@@ -52,7 +53,7 @@ class GameTags extends Component {
 
   render() {
     return (
-      <div style={{ width: "75%", margin: "0 auto" }}>
+      <div style={{ width: "70%", margin: "0 auto" }}>
         <div style={{ marginBottom: "1%", marginTop: "1%" }}>
           {this.renderTags()}
         </div>
@@ -271,17 +272,65 @@ class TypeTags extends Component {
   }
 }
 
+class SortBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sortType: (props.isSort === true) ? 1 : 0,
+    };
+  }
+
+  handleSortChange(tag, checked) {
+    if (checked) {
+      this.setState({sortType: parseInt(tag)});
+      this.props.recvFunc(parseInt(tag));
+    }
+    else {
+      this.setState({sortType: 1 - parseInt(tag)});
+      this.props.recvFunc(1 - parseInt(tag));
+    }
+  }
+
+  render() {
+    return (
+      <>
+        <span style={{ fontSize: "15px", color: "white" }}>
+          <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;排序结果：</b>
+          <CheckableTag 
+            style={{ color: "white" }} 
+            key='relevance' 
+            onChange={(checked) => this.handleSortChange(0, checked)}
+            checked={this.state.sortType === 0}
+          >
+            相关度从高到低
+          </CheckableTag>
+          <CheckableTag 
+            style={{ color: "white" }} 
+            key='time' 
+            onChange={(checked) => this.handleSortChange(1, checked)}
+            checked={this.state.sortType === 1}
+          >
+            时间从新到旧
+          </CheckableTag>
+        </span>
+      </>
+    );
+  }
+}
+
 class SearchBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
       typeTags: props.searchTypeTags,
       value: props.keyWord,
+      isSort: props.isSort,
     };
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getTypeTags = this.getTypeTags.bind(this);
+    this.getSortType = this.getSortType.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -305,6 +354,11 @@ class SearchBlock extends Component {
   getTypeTags(res) {
     this.setState({ typeTags: res });
     this.props.recvTypeFunc(res);
+  }
+
+  getSortType(isSort) {
+    this.setState({ isSort: Boolean(isSort) });
+    this.props.recvSortFunc(Boolean(isSort));
   }
 
   render() {
@@ -353,6 +407,7 @@ class SearchBlock extends Component {
             type={this.props.type}
             recvFunc={this.getTypeTags}
           />
+          {this.props.type !== "games" && <SortBar type={this.props.type} isSort={this.state.isSort} recvFunc={this.getSortType} />}
           {this.props.type === "games" && <GameTags {...this.props} />}
         </div>
       </div>

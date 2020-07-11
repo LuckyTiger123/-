@@ -31,7 +31,7 @@ class ResultCard extends Component {
             var gameTags = this.state.gameTags.split(' ');
             var length = (gameTags.length === 1) ? 1 : (gameTags.length - 1);
             for (var i = 0; i < length; i++)
-                tags.push(<Tag color='blue'  key={gameTags[i]} style={{margin: 'auto 0', borderRadius: '10px', marginLeft: '1%'}}>{gameTags[i]}</Tag>);
+                tags.push(<Tag color='blue'  key={gameTags[i]} style={{margin: 'auto 0', borderRadius: '10px'}}>{gameTags[i]}</Tag>);
             return (
                 <Link to={'/info/' + this.state.gameID} target='_blank'>
                     <Card hoverable size="small" title={<span><RocketOutlined />&nbsp;<b>游戏</b></span>} style={{width: '93.3%', margin: '0 auto', marginTop: '1%', backgroundColor: 'rgba(245,245,245,0.75)'}} key={this.state.gameName}>
@@ -42,14 +42,14 @@ class ResultCard extends Component {
                             <div style={{marginLeft: '1%', width: '70%'}}>
                                 <div style={{display: 'flex'}}>
                                     <span style={{fontSize: '20px'}}><b dangerouslySetInnerHTML={{__html: this.state.gameName}}></b></span>
-                                    <div style={{float: 'left', marginTop: '1%'}} >
+                                    <div style={{float: 'left', marginTop: '1%', marginLeft: '1%'}} >
                                         {tags}
                                     </div>
                                 </div>
                                 <div style={{display: 'flex', marginTop: '1%'}}>
                                     <span style={{width: '33%'}}><b>发行时间：</b>{this.state.date}</span>
-                                    <span style={{width: '33%'}}><b>发行商：</b>{this.state.publisher}</span>
-                                    <span style={{width: '33%'}}><b>开发商：</b>{this.state.developer}</span>
+                                    <span style={{width: '33%'}} dangerouslySetInnerHTML={{__html: "<b>发行商：</b>" + this.state.publisher}}></span>
+                                    <span style={{width: '33%'}} dangerouslySetInnerHTML={{__html: "<b>开发商：</b>" + this.state.developer}}></span>
                                 </div>
                                 <div style={{marginTop: '1%'}}>
                                     <p>

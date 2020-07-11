@@ -10,7 +10,7 @@ import {
 } from "../common/config";
 import { autobind } from "core-decorators";
 
-import "./index.css";
+import "../index.css";
 
 const { Search } = Input;
 const { Option } = Select;

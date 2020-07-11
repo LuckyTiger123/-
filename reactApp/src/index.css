@@ -10,82 +10,81 @@
 }
 
 .ant-spin {
-  color: white;
+  color: white !important;
 }
 
 .ant-spin-dot-item {
-  background-color: white;
+  background-color: white !important;
 }
 
 .ant-pagination-item-active a {
-  color: white;
+  color: #1890ff !important;
 }
 
 .ant-pagination-item a {
-  color: white;
+  color: white !important;
 }
 
 .ant-pagination-item-active {
   font-weight: 500;
-  background: #1890ff;
-  border-color: white;
+  border-color: #1890ff;
 }
 
 .ant-pagination-item {
   font-weight: 500;
-  background: transparent;
+  background: transparent !important;
   border-color: white;
 }
 
 .ant-pagination-prev .ant-pagination-item-link {
-  background: transparent;
+  background: transparent !important;
 }
 
 .ant-pagination-next .ant-pagination-item-link {
-  background: transparent;
+  background: transparent !important;
 }
 
 .anticon-left {
-  color: white;
+  color: white !important;
 }
 
 .anticon-right {
-  color: white;
+  color: white !important;
 }
 
 .ant-pagination-jump-next
   .ant-pagination-item-container
   .ant-pagination-item-ellipsis {
-  color: white;
+  color: white !important;
 }
 
 .ant-pagination-jump-next
   .ant-pagination-item-container
   .ant-pagination-item-link-icon {
-  color: white;
+  color: white !important;
 }
 
 .ant-pagination-jump-prev
   .ant-pagination-item-container
   .ant-pagination-item-ellipsis {
-  color: white;
+  color: white !important;
 }
 
 .ant-pagination-jump-prev
   .ant-pagination-item-container
   .ant-pagination-item-link-icon {
-  color: white;
+  color: white !important;
 }
 
 .ant-pagination-options-quick-jumper {
-  color: white;
+  color: white !important;
 }
 
 .ant-pagination-options-quick-jumper input {
-  background-color: transparent;
-  color: white;
+  background-color: transparent !important;
+  color: white !important;
 }
 
 .ant-result-info .ant-result-icon > .anticon {
-  color: rgb(11, 62, 91);
+  color: rgb(11, 62, 91) !important;
 }
