@@ -59,7 +59,9 @@ func GetGameIndex(pageSize int32, page int32) ([]*pb.GameResult, error) {
 
 func GetResourceIndex(pageSize int32, page int32) ([]string, error) {
 	resourceList := make([]string, 0)
-	searchResult, err := ES.Search().Index("resource_new").Pretty(true).Sort("time", false).Size(int(pageSize)).From(int(pageSize*page - pageSize)).Do(context.Background())
+	fetchItem := elastic.NewFetchSourceContext(true)
+	fetchItem.Exclude("content")
+	searchResult, err := ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Sort("time", false).Size(int(pageSize)).From(int(pageSize*page - pageSize)).Do(context.Background())
 	if err != nil {
 		return nil, err
 	}
@@ -111,11 +113,13 @@ func GetGlobalSearch(keyword string, size int32, sort bool) ([]*pb.GameResult, [
 	highlightResource.Field("title")
 	highlightResource.Field("info")
 	//highlightResource.Field("content")
+	fetchItem := elastic.NewFetchSourceContext(true)
+	fetchItem.Exclude("content")
 	var searchResultOfResource *elastic.SearchResult
 	if sort == true {
-		searchResultOfResource, err = ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Sort("time", false).Do(context.Background())
+		searchResultOfResource, err = ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Sort("time", false).Do(context.Background())
 	} else {
-		searchResultOfResource, err = ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Do(context.Background())
+		searchResultOfResource, err = ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Do(context.Background())
 	}
 	if err != nil {
 		return nil, nil, err
@@ -217,10 +221,17 @@ func GetGameSearch(keyword string, filter []*pb.Filter, size int32) ([]*pb.GameR
 
 	matchQueryGameName := elastic.NewMatchQuery("game_name", keyword)
 	matchQueryGameName.Operator("and")
-	boolQueryGame.Must(matchQueryGameName)
+	matchDeveloper := elastic.NewMatchQuery("developer", keyword)
+	matchDeveloper.Operator("and")
+	matchPublisher := elastic.NewMatchQuery("publisher", keyword)
+	matchPublisher.Operator("and")
+	boolQueryGame.Should(matchQueryGameName, matchDeveloper, matchPublisher)
+	boolQueryGame.MinimumNumberShouldMatch(1)
 
 	highlightGameName := elastic.NewHighlight()
 	highlightGameName.Field("game_name")
+	highlightGameName.Field("developer")
+	highlightGameName.Field("publisher")
 
 	searchResultOfGame, err := ES.Search().Index("game_new").Pretty(true).Query(boolQueryGame).Size(int(size)).Highlight(highlightGameName).Do(context.Background())
 	if err != nil {
@@ -300,12 +311,15 @@ func GetNewsSearch(keyword string, size int32, sort bool) ([]*pb.Result, error) 
 	highlightResource.Field("title")
 	highlightResource.Field("info")
 	//highlightResource.Field("content")
+	fetchItem := elastic.NewFetchSourceContext(true)
+	fetchItem.Exclude("content")
+
 	var searchResultOfResource *elastic.SearchResult
 	var err error
 	if sort == true {
-		searchResultOfResource, err = ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Sort("time", false).Do(context.Background())
+		searchResultOfResource, err = ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Sort("time", false).Do(context.Background())
 	} else {
-		searchResultOfResource, err = ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Do(context.Background())
+		searchResultOfResource, err = ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Do(context.Background())
 	}
 	if err != nil {
 		return nil, err
@@ -343,13 +357,15 @@ func GetRaidersSearch(keyword string, size int32, sort bool) ([]*pb.Result, erro
 	highlightResource.Field("title")
 	highlightResource.Field("info")
 	//highlightResource.Field("content")
+	fetchItem := elastic.NewFetchSourceContext(true)
+	fetchItem.Exclude("content")
 
 	var searchResultOfResource *elastic.SearchResult
 	var err error
 	if sort == true {
-		searchResultOfResource, err = ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Sort("time", false).Do(context.Background())
+		searchResultOfResource, err = ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Sort("time", false).Do(context.Background())
 	} else {
-		searchResultOfResource, err = ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Do(context.Background())
+		searchResultOfResource, err = ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Do(context.Background())
 	}
 	if err != nil {
 		return nil, err
@@ -387,13 +403,15 @@ func GetVideoSearch(keyword string, size int32, sort bool) ([]*pb.Result, error)
 	highlightResource.Field("title")
 	highlightResource.Field("info")
 	//highlightResource.Field("content")
+	fetchItem := elastic.NewFetchSourceContext(true)
+	fetchItem.Exclude("content")
 
 	var searchResultOfResource *elastic.SearchResult
 	var err error
 	if sort == true {
-		searchResultOfResource, err = ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Sort("time", false).Do(context.Background())
+		searchResultOfResource, err = ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Sort("time", false).Do(context.Background())
 	} else {
-		searchResultOfResource, err = ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Do(context.Background())
+		searchResultOfResource, err = ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Query(boolQueryOfResource).Size(int(size)).Highlight(highlightResource).Do(context.Background())
 	}
 	if err != nil {
 		return nil, err
@@ -422,8 +440,10 @@ func GetGameNewsGet(gameName string, size int32) ([]string, error) {
 	matchQueryResourceType := elastic.NewMatchQuery("type", int(0))
 	boolQueryOfResource.Should(matchQueryResourceTitle, matchQueryResourceInfo, matchQueryResourceContent)
 	boolQueryOfResource.Must(matchQueryResourceType)
+	fetchItem := elastic.NewFetchSourceContext(true)
+	fetchItem.Exclude("content")
 
-	searchResultOfResource, err := ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Do(context.Background())
+	searchResultOfResource, err := ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Query(boolQueryOfResource).Size(int(size)).Do(context.Background())
 	if err != nil {
 		return nil, err
 	}
@@ -444,8 +464,10 @@ func GetGameRaidersGet(gameName string, size int32) ([]string, error) {
 	matchQueryResourceType := elastic.NewMatchQuery("type", int(2))
 	boolQueryOfResource.Should(matchQueryResourceTitle, matchQueryResourceInfo, matchQueryResourceContent)
 	boolQueryOfResource.Must(matchQueryResourceType)
+	fetchItem := elastic.NewFetchSourceContext(true)
+	fetchItem.Exclude("content")
 
-	searchResultOfResource, err := ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Do(context.Background())
+	searchResultOfResource, err := ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Query(boolQueryOfResource).Size(int(size)).Do(context.Background())
 	if err != nil {
 		return nil, err
 	}
@@ -466,8 +488,10 @@ func GetGameVideoGet(gameName string, size int32) ([]string, error) {
 	matchQueryResourceType := elastic.NewMatchQuery("type", int(1))
 	boolQueryOfResource.Should(matchQueryResourceTitle, matchQueryResourceInfo, matchQueryResourceContent)
 	boolQueryOfResource.Must(matchQueryResourceType)
+	fetchItem := elastic.NewFetchSourceContext(true)
+	fetchItem.Exclude("content")
 
-	searchResultOfResource, err := ES.Search().Index("resource_new").Pretty(true).Query(boolQueryOfResource).Size(int(size)).Do(context.Background())
+	searchResultOfResource, err := ES.Search().Index("resource_new").FetchSourceContext(fetchItem).Pretty(true).Query(boolQueryOfResource).Size(int(size)).Do(context.Background())
 	if err != nil {
 		return nil, err
 	}

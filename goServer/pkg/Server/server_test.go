@@ -1,34 +1,44 @@
 package Server
 
 import (
+	"context"
 	"fmt"
+	pb "goServer/proto"
+	"google.golang.org/grpc"
 	"testing"
+	"time"
 )
 
-//func TestServer(t *testing.T) {
-//	conn, err := grpc.Dial("0.0.0.0:8099", grpc.WithInsecure())
-//	if err != nil {
-//		fmt.Println(err.Error())
-//	}
-//	c := pb.NewScheduleServiceClient(conn)
-//	r, err := c.ServerTest(context.Background(), &pb.ServerRequest{
-//		Info: "Server Test",
-//	})
-//	if err != nil {
-//		fmt.Println(err.Error())
-//	} else {
-//		fmt.Println(r.Result)
-//	}
-//}
+func TestServer(t *testing.T) {
+	t1 := time.Now()
+	conn, err := grpc.Dial("39.98.125.235:8099", grpc.WithInsecure())
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	c := pb.NewScheduleServiceClient(conn)
+	r, err := c.GameSearch(context.Background(), &pb.GameSearchRequest{
+		Keyword: "之",
+		Filter:  make([]*pb.Filter, 0),
+		Size_:   100,
+	})
+	fmt.Println(time.Since(t1))
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		for _, v := range r.Result {
+			fmt.Println(v.Source)
+		}
+	}
+}
 
 func TestFunc(t *testing.T) {
 	Init()
-	//filter := make([]*pb.Filter, 0)
+	filter := make([]*pb.Filter, 0)
 	//filter = append(filter,&pb.Filter{
 	//	Type: "type",
 	//	Value: "动作",
 	//})
-	result, err := GetGameIndex(10,1)
+	result, err := GetGameSearch("rockstar", filter, 10)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
@@ -43,8 +53,28 @@ func TestFunc(t *testing.T) {
 func TestWord(t *testing.T) {
 	WordListInit()
 	result := WordChange("老滚5")
-	keyword:="gta"
+	keyword := "gta"
 	keyword += " " + WordChange(keyword)
 	fmt.Println(keyword)
 	fmt.Println(result)
+}
+
+func TestTime(t *testing.T) {
+	Init()
+	t1 := time.Now()
+	//filter = append(filter,&pb.Filter{
+	//	Type: "type",
+	//	Value: "动作",
+	//})
+	result, err := GetResourceIndex(10, 1)
+	fmt.Println(time.Since(t1))
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		for _, v := range result {
+			fmt.Println(v)
+		}
+	}
+	//reg := regexp.MustCompile(`[0-9,的]`)
+	//fmt.Println(reg.ReplaceAllString("鬼泣的第五5", ""))
 }
