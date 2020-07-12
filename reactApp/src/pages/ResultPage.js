@@ -120,42 +120,43 @@ class ResultPage extends Component {
       .then((res) => {
         if (res.data.result) {
           const rawStrs = res.data.result;
-          rawStrs.forEach((data) => {
-            const obj = JSON.parse(data.source);
-            var highlightName, highlightDeveloper, highlightPublisher;
-            var reg1 = new RegExp("<em>", "g");
-            var reg2 = new RegExp("</em>", "g");
-            if (typeof data.highlight.game_name !== "undefined") {
-              highlightName = data.highlight.game_name.field[0];
-              highlightName = highlightName.replace(reg1, "<span style='color: red'>");
-              highlightName = highlightName.replace(reg2, "</span>");
-            } else {
-              highlightName = obj.game_name;
-            }
-            if (typeof data.highlight.developer !== "undefined") {
-              highlightDeveloper = data.highlight.developer.field[0];
-              highlightDeveloper = highlightDeveloper.replace(reg1, "<span style='color: red'>");
-              highlightDeveloper = highlightDeveloper.replace(reg2, "</span>");
-            } else {
-              highlightDeveloper = obj.developer;
-            }
-            if (typeof data.highlight.publisher !== "undefined") {
-              highlightPublisher = data.highlight.publisher.field[0];
-              highlightPublisher = highlightPublisher.replace(reg1, "<span style='color: red'>");
-              highlightPublisher = highlightPublisher.replace(reg2, "</span>");
-            } else {
-              highlightPublisher = obj.publisher;
-            }
-            tmpGameNames.push(highlightName);
-            tmpGameTags.push(obj.tags);
-            tmpReleaseDates.push(obj.release_date);
-            tmpPublishers.push(highlightDeveloper);
-            tmpDevelopers.push(highlightPublisher);
-            tmpInfos.push(obj.info);
-            tmpIDs.push(data.id);
-            if(typeof(obj.imgs) === 'string') tmpImgUrls.push(obj.imgs);
-            else tmpImgUrls.push(obj.imgs[0]);
-          });
+          if (typeof rawStrs !== 'undefined')
+            rawStrs.forEach((data) => {
+              const obj = JSON.parse(data.source);
+              var highlightName, highlightDeveloper, highlightPublisher;
+              var reg1 = new RegExp("<em>", "g");
+              var reg2 = new RegExp("</em>", "g");
+              if (typeof data.highlight.game_name !== "undefined") {
+                highlightName = data.highlight.game_name.field[0];
+                highlightName = highlightName.replace(reg1, "<span style='color: red'>");
+                highlightName = highlightName.replace(reg2, "</span>");
+              } else {
+                highlightName = obj.game_name;
+              }
+              if (typeof data.highlight.developer !== "undefined") {
+                highlightDeveloper = data.highlight.developer.field[0];
+                highlightDeveloper = highlightDeveloper.replace(reg1, "<span style='color: red'>");
+                highlightDeveloper = highlightDeveloper.replace(reg2, "</span>");
+              } else {
+                highlightDeveloper = obj.developer;
+              }
+              if (typeof data.highlight.publisher !== "undefined") {
+                highlightPublisher = data.highlight.publisher.field[0];
+                highlightPublisher = highlightPublisher.replace(reg1, "<span style='color: red'>");
+                highlightPublisher = highlightPublisher.replace(reg2, "</span>");
+              } else {
+                highlightPublisher = obj.publisher;
+              }
+              tmpGameNames.push(highlightName);
+              tmpGameTags.push(obj.tags);
+              tmpReleaseDates.push(obj.release_date);
+              tmpPublishers.push(highlightDeveloper);
+              tmpDevelopers.push(highlightPublisher);
+              tmpInfos.push(obj.info);
+              tmpIDs.push(data.id);
+              if(typeof(obj.imgs) === 'string') tmpImgUrls.push(obj.imgs);
+              else tmpImgUrls.push(obj.imgs[0]);
+            });
           this.setState({
             gameNames: tmpGameNames,
             gameTags: tmpGameTags,
@@ -232,68 +233,70 @@ class ResultPage extends Component {
         if (res.data) {
           if (type === "all") {
             var rawGameStrs = res.data.gameResult;
-            for (var i = 0; i < rawGameStrs.length; i++) {
-              const obj = JSON.parse(rawGameStrs[i].source);
-              var highlightName, highlightDeveloper, highlightPublisher;
-              if (typeof rawGameStrs[i].highlight.game_name !== "undefined") {
-                highlightName = rawGameStrs[i].highlight.game_name.field[0];
-                highlightName = highlightName.replace(reg1, "<span style='color: red'>");
-                highlightName = highlightName.replace(reg2, "</span>");
-              } else {
-                highlightName = obj.game_name;
+            if (typeof rawGameStrs !== 'undefined')
+              for (var i = 0; i < rawGameStrs.length; i++) {
+                const obj = JSON.parse(rawGameStrs[i].source);
+                var highlightName, highlightDeveloper, highlightPublisher;
+                if (typeof rawGameStrs[i].highlight.game_name !== "undefined") {
+                  highlightName = rawGameStrs[i].highlight.game_name.field[0];
+                  highlightName = highlightName.replace(reg1, "<span style='color: red'>");
+                  highlightName = highlightName.replace(reg2, "</span>");
+                } else {
+                  highlightName = obj.game_name;
+                }
+                if (typeof rawGameStrs[i].highlight.developer !== "undefined") {
+                  highlightDeveloper = rawGameStrs[i].highlight.developer.field[0];
+                  highlightDeveloper = highlightDeveloper.replace(reg1, "<span style='color: red'>");
+                  highlightDeveloper = highlightDeveloper.replace(reg2, "</span>");
+                } else {
+                  highlightDeveloper = obj.developer;
+                }
+                if (typeof rawGameStrs[i].highlight.publisher !== "undefined") {
+                  highlightPublisher = rawGameStrs[i].highlight.publisher.field[0];
+                  highlightPublisher = highlightPublisher.replace(reg1, "<span style='color: red'>");
+                  highlightPublisher = highlightPublisher.replace(reg2, "</span>");
+                } else {
+                  highlightPublisher = obj.publisher;
+                }
+                tmpGameNames.push(highlightName);
+                tmpGameTags.push(obj.tags);
+                tmpReleaseDates.push(obj.release_date);
+                tmpPublishers.push(highlightPublisher);
+                tmpDevelopers.push(highlightDeveloper);
+                tmpGameInfos.push(obj.info);
+                tmpGameIDs.push(rawGameStrs[i].id);
+                if(typeof(obj.imgs) === 'string') tmpGameImgUrls.push(obj.imgs);
+                else tmpGameImgUrls.push(obj.imgs[0]);
               }
-              if (typeof rawGameStrs[i].highlight.developer !== "undefined") {
-                highlightDeveloper = rawGameStrs[i].highlight.developer.field[0];
-                highlightDeveloper = highlightDeveloper.replace(reg1, "<span style='color: red'>");
-                highlightDeveloper = highlightDeveloper.replace(reg2, "</span>");
-              } else {
-                highlightDeveloper = obj.developer;
-              }
-              if (typeof rawGameStrs[i].highlight.publisher !== "undefined") {
-                highlightPublisher = rawGameStrs[i].highlight.publisher.field[0];
-                highlightPublisher = highlightPublisher.replace(reg1, "<span style='color: red'>");
-                highlightPublisher = highlightPublisher.replace(reg2, "</span>");
-              } else {
-                highlightPublisher = obj.publisher;
-              }
-              tmpGameNames.push(highlightName);
-              tmpGameTags.push(obj.tags);
-              tmpReleaseDates.push(obj.release_date);
-              tmpPublishers.push(highlightPublisher);
-              tmpDevelopers.push(highlightDeveloper);
-              tmpGameInfos.push(obj.info);
-              tmpGameIDs.push(rawGameStrs[i].id);
-              if(typeof(obj.imgs) === 'string') tmpGameImgUrls.push(obj.imgs);
-              else tmpGameImgUrls.push(obj.imgs[0]);
-            }
             var rawResourceStrs = res.data.resourceResult;
-            for (var i = 0; i < rawResourceStrs.length; i++) {
-              const obj = JSON.parse(rawResourceStrs[i].source);
-              var highlightTitle, highlightInfo;
-              if (typeof rawResourceStrs[i].highlight.title !== "undefined") {
-                highlightTitle = rawResourceStrs[i].highlight.title.field[0];
-                highlightTitle = highlightTitle.replace(reg1, "<span style='color: red'>");
-                highlightTitle = highlightTitle.replace(reg2, "</span>");
-              } else {
-                highlightTitle = obj.title;
+            if (typeof rawResourceStrs !== 'undefined')
+              for (var i = 0; i < rawResourceStrs.length; i++) {
+                const obj = JSON.parse(rawResourceStrs[i].source);
+                var highlightTitle, highlightInfo;
+                if (typeof rawResourceStrs[i].highlight.title !== "undefined") {
+                  highlightTitle = rawResourceStrs[i].highlight.title.field[0];
+                  highlightTitle = highlightTitle.replace(reg1, "<span style='color: red'>");
+                  highlightTitle = highlightTitle.replace(reg2, "</span>");
+                } else {
+                  highlightTitle = obj.title;
+                }
+                if (typeof rawResourceStrs[i].highlight.info !== "undefined") {
+                  highlightInfo = rawResourceStrs[i].highlight.info.field[0];
+                  highlightInfo = highlightInfo.replace(reg1, "<span style='color: red'>");
+                  highlightInfo = highlightInfo.replace(reg2, "</span>");
+                } else {
+                  highlightInfo = obj.info;
+                }
+                if (parseInt(obj.type) === 0) tmpResourceTypes.push("news");
+                else if (parseInt(obj.type) === 1) tmpResourceTypes.push("videos");
+                else tmpResourceTypes.push("methods");
+                tmpTitles.push(highlightTitle);
+                tmpResourceDates.push(obj.time);
+                tmpResourceInfos.push(highlightInfo);
+                tmpResourceImgUrls.push(obj.img_url);
+                tmpResourceDetailUrls.push((obj.url.substr(0, 3) === 'www') ? 'http://' + obj.url.substr(4) : obj.url);
+                tmpSources.push(obj.source);
               }
-              if (typeof rawResourceStrs[i].highlight.info !== "undefined") {
-                highlightInfo = rawResourceStrs[i].highlight.info.field[0];
-                highlightInfo = highlightInfo.replace(reg1, "<span style='color: red'>");
-                highlightInfo = highlightInfo.replace(reg2, "</span>");
-              } else {
-                highlightInfo = obj.info;
-              }
-              if (parseInt(obj.type) === 0) tmpResourceTypes.push("news");
-              else if (parseInt(obj.type) === 1) tmpResourceTypes.push("videos");
-              else tmpResourceTypes.push("methods");
-              tmpTitles.push(highlightTitle);
-              tmpResourceDates.push(obj.time);
-              tmpResourceInfos.push(highlightInfo);
-              tmpResourceImgUrls.push(obj.img_url);
-              tmpResourceDetailUrls.push((obj.url.substr(0, 3) === 'www') ? 'http://' + obj.url.substr(4) : obj.url);
-              tmpSources.push(obj.source);
-            }
             this.setState({
               gameNames: tmpGameNames,
               gameTags: tmpGameTags,
@@ -312,34 +315,35 @@ class ResultPage extends Component {
             });
           } else {
             var rawStrs = res.data.result;
-            for (var i = 0; i < rawStrs.length; i++) {
-              const obj = JSON.parse(rawStrs[i].source);
-              var highlightTitle, highlightInfo;
-              if (typeof rawStrs[i].highlight.title !== "undefined") {
-                highlightTitle = rawStrs[i].highlight.title.field[0];
-                highlightTitle = highlightTitle.replace(reg1, "<span style='color: red'>");
-                highlightTitle = highlightTitle.replace(reg2, "</span>");
-              } else {
-                highlightTitle = obj.title;
+            if (typeof rawStrs !== 'undefined')
+              for (var i = 0; i < rawStrs.length; i++) {
+                const obj = JSON.parse(rawStrs[i].source);
+                var highlightTitle, highlightInfo;
+                if (typeof rawStrs[i].highlight.title !== "undefined") {
+                  highlightTitle = rawStrs[i].highlight.title.field[0];
+                  highlightTitle = highlightTitle.replace(reg1, "<span style='color: red'>");
+                  highlightTitle = highlightTitle.replace(reg2, "</span>");
+                } else {
+                  highlightTitle = obj.title;
+                }
+                if (typeof rawStrs[i].highlight.info !== "undefined") {
+                  highlightInfo = rawStrs[i].highlight.info.field[0];
+                  highlightInfo = highlightInfo.replace(reg1, "<span style='color: red'>");
+                  highlightInfo = highlightInfo.replace(reg2, "</span>");
+                } else {
+                  highlightInfo = obj.info;
+                }
+                if (parseInt(obj.type) === 0) tmpResourceTypes.push("news");
+                else if (parseInt(obj.type) === 1) tmpResourceTypes.push("videos");
+                else tmpResourceTypes.push("methods");
+                console.log(obj.img_url);
+                tmpTitles.push(highlightTitle);
+                tmpResourceDates.push(obj.time);
+                tmpResourceInfos.push(highlightInfo);
+                tmpResourceImgUrls.push(obj.img_url);
+                tmpResourceDetailUrls.push((obj.url.substr(0, 3) === 'www') ? 'http://' + obj.url.substr(4) : obj.url);
+                tmpSources.push(obj.source);
               }
-              if (typeof rawStrs[i].highlight.info !== "undefined") {
-                highlightInfo = rawStrs[i].highlight.info.field[0];
-                highlightInfo = highlightInfo.replace(reg1, "<span style='color: red'>");
-                highlightInfo = highlightInfo.replace(reg2, "</span>");
-              } else {
-                highlightInfo = obj.info;
-              }
-              if (parseInt(obj.type) === 0) tmpResourceTypes.push("news");
-              else if (parseInt(obj.type) === 1) tmpResourceTypes.push("videos");
-              else tmpResourceTypes.push("methods");
-              console.log(obj.img_url);
-              tmpTitles.push(highlightTitle);
-              tmpResourceDates.push(obj.time);
-              tmpResourceInfos.push(highlightInfo);
-              tmpResourceImgUrls.push(obj.img_url);
-              tmpResourceDetailUrls.push((obj.url.substr(0, 3) === 'www') ? 'http://' + obj.url.substr(4) : obj.url);
-              tmpSources.push(obj.source);
-            }
             this.setState({
               resourceTypes: tmpResourceTypes,
               titles: tmpTitles,
@@ -546,7 +550,7 @@ class ResultPage extends Component {
               backgroundColor: "rgb(245,245,245,0.4)",
             }}
           >
-            {this.state.cards.length < 10 && <br />}
+            {this.state.cards.length <= 10 && <br />}
             <Pagination
               hideOnSinglePage={false}
               showSizeChanger={false}
@@ -584,7 +588,7 @@ class ResultPage extends Component {
                 textAlign: "center",
               }}
             />
-            {this.state.cards.length < 10 && <br />}
+            {this.state.cards.length <= 10 && <br />}
           </div>
         </div>
         <BackTop>
