@@ -32,6 +32,8 @@
 
 .resource-name .resource-title {
   font-size: 16px;
+  height: 25px;
+  overflow: hidden;
   cursor: pointer;
 }
 
@@ -68,4 +70,10 @@
   margin-top: 5px;
   font-size: 14px;
   overflow: hidden;
+}
+
+.resource-info {
+  height: 65px;
+  overflow: hidden;
+  text-overflow:ellipsis;
 }

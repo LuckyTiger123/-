@@ -10,7 +10,7 @@ import "./index.css";
 
 const TYPE_ANALYTICS = resourceTypes[3].value
 
-export const Resource = ({ resources, handleTypeSwitch, isLoading, baiduIndex }) => {
+export const Resource = ({ resources, handleTypeSwitch, isLoading, baiduIndex, words }) => {
   const [activeResourceType, setActiveResourceType] = useState(
     resourceTypes[0].value
   );
@@ -90,7 +90,7 @@ export const Resource = ({ resources, handleTypeSwitch, isLoading, baiduIndex })
             <>
               {renderHeader()}
               {activeResourceType === TYPE_ANALYTICS ?
-                <Analytics baiduIndex={baiduIndex} /> :
+                <Analytics baiduIndex={baiduIndex} words={words} /> :
                 <div>
                   <div className="resource-list">
                     {resources.length !== 0 ? (

@@ -54,13 +54,10 @@
 }
 
 .game-tag-container {
+  height: 50px;
   width: 480px;
   white-space: nowrap;
   overflow-x: scroll;
-}
-
-.game-tag-container::-webkit-scrollbar {
-  display: none;
 }
 
 .game-tag-single {

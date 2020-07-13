@@ -10,6 +10,9 @@ export const Score = ({ scores }) => {
     total: score.score.split("/")[1],
     media_name: score.media_name,
   }));
+  if (gameScores.length > 9) {
+    gameScores.splice(9);
+  }
 
   return (
     <div className="game-info-score">
@@ -24,11 +27,11 @@ export const Score = ({ scores }) => {
             </div>
           ))
         ) : (
-          <div className="no-score-desc">
-            <FrownOutlined />
+            <div className="no-score-desc">
+              <FrownOutlined />
             暂无评分
-          </div>
-        )}
+            </div>
+          )}
       </div>
     </div>
   );
