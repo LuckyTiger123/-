@@ -1,6 +1,9 @@
 package Server
 
-import "strings"
+import (
+	"regexp"
+	"strings"
+)
 
 var WordList map[string]string
 
@@ -22,6 +25,7 @@ func WordListInit() error {
 	WordList["大表哥"] = "荒野大镖客"
 	WordList["神海"] = "神秘海域"
 	WordList["动森"] = "动物森友会"
+	WordList["远哭"] = "孤岛惊魂"
 	return nil
 }
 
@@ -30,5 +34,11 @@ func WordChange(in string) string {
 	for k, v := range WordList {
 		out = strings.Replace(out, k, v, -1)
 	}
+	return out
+}
+
+func GetGameSearchWord(in string) string {
+	reg := regexp.MustCompile(`（.+）`)
+	out := reg.ReplaceAllString(in, "")
 	return out
 }

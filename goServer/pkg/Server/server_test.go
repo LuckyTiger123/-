@@ -16,9 +16,8 @@ func TestServer(t *testing.T) {
 		fmt.Println(err.Error())
 	}
 	c := pb.NewScheduleServiceClient(conn)
-	r, err := c.GameSearch(context.Background(), &pb.GameSearchRequest{
-		Keyword: "之",
-		Filter:  make([]*pb.Filter, 0),
+	r, err := c.NewsSearch(context.Background(), &pb.NewsSearchRequest{
+		Keyword: "任天堂",
 		Size_:   100,
 	})
 	fmt.Println(time.Since(t1))
@@ -51,12 +50,7 @@ func TestFunc(t *testing.T) {
 }
 
 func TestWord(t *testing.T) {
-	WordListInit()
-	result := WordChange("老滚5")
-	keyword := "gta"
-	keyword += " " + WordChange(keyword)
-	fmt.Println(keyword)
-	fmt.Println(result)
+	fmt.Println(GetGameSearchWord("鬼泣5"))
 }
 
 func TestTime(t *testing.T) {
