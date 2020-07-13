@@ -5,20 +5,23 @@ const repleaceTags = (str) => {
 export const processRawData = (data) => {
   const newData = [];
   data.forEach((item) => {
-    let resourceContent = JSON.parse(item.source);
-    const highlightTitle = item.highlight.title
-      ? item.highlight.title.field
-      : null;
-    const highlightInfo = item.highlight.info
-      ? item.highlight.info.field
-      : null;
+    let resourceContent = JSON.parse(item);
 
-    const newTitle = highlightTitle
-      ? highlightTitle.reduce((prev, cur) => prev + repleaceTags(cur), "")
-      : resourceContent.title;
-    const newInfo = highlightInfo
-      ? highlightInfo.reduce((prev, cur) => prev + repleaceTags(cur), "")
-      : resourceContent.info;
+    // let resourceContent = JSON.parse(item.source);
+    // const highlightTitle = item.highlight.title
+    //   ? item.highlight.title.field
+    //   : null;
+    // const highlightInfo = item.highlight.info
+    //   ? item.highlight.info.field
+    //   : null;
+
+    // const newTitle = highlightTitle
+    //   ? highlightTitle.reduce((prev, cur) => prev + repleaceTags(cur), "")
+    //   : resourceContent.title;
+    // const newInfo = highlightInfo
+    //   ? highlightInfo.reduce((prev, cur) => prev + repleaceTags(cur), "")
+    //   : resourceContent.info;
+
     const newUrl =
       resourceContent.url.indexOf("http") === -1
         ? "http://" + resourceContent.url
@@ -26,8 +29,8 @@ export const processRawData = (data) => {
 
     newData.push({
       ...resourceContent,
-      title: newTitle,
-      info: newInfo,
+      // title: newTitle,
+      // info: newInfo,
       url: newUrl,
     });
   });

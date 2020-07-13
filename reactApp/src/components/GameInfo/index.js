@@ -28,7 +28,7 @@ export const GameInfo = (props) => {
     const { api } = resourceTypeMap(type);
     setIsLoading(true);
     const res = await axios.post(api, {
-      keyword: name,
+      gameName: name,
       size: 100,
     });
     const data = res.data.result || [];

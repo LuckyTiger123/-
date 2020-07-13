@@ -18,7 +18,7 @@ export const Resource = ({ resources, handleTypeSwitch, isLoading, baiduIndex })
 
   const changeType = (type) => {
     if (type === activeResourceType) return;
-    if (type == TYPE_ANALYTICS) {
+    if (type === TYPE_ANALYTICS) {
       setActiveResourceType(type);
       return;
     }
