@@ -7,11 +7,10 @@ import 'echarts/lib/chart/line';
 
 import "./index.css"
 
-
 export const Analytics = ({ baiduIndex }) => {
   const [showType, setShowType] = useState(0);
 
-  useEffect(() => {
+  const initChart = () => {
     const charts = echarts.init(document.getElementById("analytics-chart"));
     charts.setOption({
       xAxis: {
@@ -33,7 +32,13 @@ export const Analytics = ({ baiduIndex }) => {
         symbol: "none",
       }],
     });
-  }, [])
+  }
+
+  useEffect(() => {
+    if (showType === 0) {
+      initChart();
+    }
+  }, [showType])
 
   const noneBaiduIndexDesc = () => (
     < div className="empty-content" >
