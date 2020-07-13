@@ -17,7 +17,6 @@ export const resourceTypes = [
   {
     value: "analytics",
     text: "数据分析",
-    api: "/",
   },
 ];
 

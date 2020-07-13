@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ResourceCard } from "./ResourceCard";
+import { Analytics } from "./Analytics"
 import { resourceTypes } from "./constant";
 import { Spin } from "antd";
 import { FrownOutlined } from "@ant-design/icons";
@@ -7,7 +8,9 @@ import { Pagination } from "antd";
 
 import "./index.css";
 
-export const Resource = ({ resources, handleTypeSwitch, isLoading }) => {
+const TYPE_ANALYTICS = resourceTypes[3].value
+
+export const Resource = ({ resources, handleTypeSwitch, isLoading, baiduIndex }) => {
   const [activeResourceType, setActiveResourceType] = useState(
     resourceTypes[0].value
   );
@@ -15,6 +18,10 @@ export const Resource = ({ resources, handleTypeSwitch, isLoading }) => {
 
   const changeType = (type) => {
     if (type === activeResourceType) return;
+    if (type == TYPE_ANALYTICS) {
+      setActiveResourceType(type);
+      return;
+    }
     setActiveResourceType(type);
     handleTypeSwitch(type);
     setCurrentPage(1);
@@ -80,27 +87,30 @@ export const Resource = ({ resources, handleTypeSwitch, isLoading }) => {
         {isLoading ? (
           renderLoading()
         ) : (
-          <>
-            {renderHeader()}
-            <div className="resource-list">
-              {resources.length !== 0 ? (
-                <>
-                  {resources
-                    .slice((currentPage - 1) * 5, currentPage * 5)
-                    .map((resource, index) => (
-                      <ResourceCard key={index} resource={resource} />
-                    ))}
-                </>
-              ) : (
-                <div className="empty-content">
-                  <FrownOutlined />
-                  暂无相关的内容
-                </div>
-              )}
-            </div>
-            {renderPagination()}
-          </>
-        )}
+            <>
+              {renderHeader()}
+              {activeResourceType === TYPE_ANALYTICS ?
+                <Analytics baiduIndex={baiduIndex} /> :
+                <div>
+                  <div className="resource-list">
+                    {resources.length !== 0 ? (
+                      <>
+                        {resources
+                          .slice((currentPage - 1) * 5, currentPage * 5)
+                          .map((resource, index) => (
+                            <ResourceCard key={index} resource={resource} />
+                          ))}
+                      </>
+                    ) : (
+                        <div className="empty-content">
+                          <FrownOutlined />暂无相关的内容
+                        </div>
+                      )}
+                  </div>
+                  {renderPagination()}
+                </div>}
+            </>
+          )}
       </>
     );
   };

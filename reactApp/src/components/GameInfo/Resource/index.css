@@ -47,7 +47,7 @@
   height: 720px;
 }
 
-.resource-list .empty-content {
+.empty-content {
   display: inline-block;
   margin: 180px 420px;
   font-size: 19px;

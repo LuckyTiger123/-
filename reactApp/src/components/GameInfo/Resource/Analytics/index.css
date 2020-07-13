@@ -1,0 +1,44 @@
+.analytics-info {
+  height: 700px;
+}
+
+.analytics-chart {
+  margin: 0 auto;
+}
+
+.analytics-chart-info {
+  display: flex;
+  height: 20px;
+  line-height: 20px;
+  font-size: 16px;
+  color: #a9a9a9;
+  margin: 15px 0 0 80px;
+}
+
+.analytics-desc {
+  margin-right: 20px;
+}
+
+.button-container {
+  width: 118px;
+  margin: 0 auto;
+}
+
+.button-container .ant-btn {
+  font-size: 15px;
+}
+
+.button-container .ant-btn:hover {
+  color: #f5f5f5;
+  border-color: #f5f5f5;
+}
+
+.button-container .ant-btn:active {
+  color: #f5f5f5;
+  border-color: #f5f5f5;
+}
+
+.button-container .ant-btn:focus {
+  color: #f5f5f5;
+  border-color: #f5f5f5;
+}

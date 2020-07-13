@@ -38,7 +38,7 @@ export const ResourceCard = ({ resource }) => {
             >
               {resourceTypeMap(resource.type).text}
             </Tag>
-            <a href={resource.url}>{title}</a>
+            <a href={resource.url} target="_blank">{title}</a>
           </div>
           <div className="resource-time">
             <div className="release-time"> 发布时间：{resource.time}</div>

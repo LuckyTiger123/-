@@ -60,6 +60,7 @@ export const GameInfo = (props) => {
               resources={resources}
               handleTypeSwitch={handleTypeSwitch}
               isLoading={isLoading}
+              baiduIndex={gameInfo.baiduIndex || []}
             />
           </div>
         </div>
