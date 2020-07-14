@@ -17,8 +17,8 @@ func TestServer(t *testing.T) {
 		fmt.Println(err.Error())
 	}
 	c := pb.NewScheduleServiceClient(conn)
-	r, err := c.NewsSearch(context.Background(), &pb.NewsSearchRequest{
-		Keyword: "任天堂",
+	r, err := c.GameNewsGet(context.Background(), &pb.GameNewsGetRequest{
+		GameName: "无双大蛇3",
 		Size_:   100,
 	})
 	fmt.Println(time.Since(t1))
@@ -26,7 +26,7 @@ func TestServer(t *testing.T) {
 		fmt.Println(err.Error())
 	} else {
 		for _, v := range r.Result {
-			fmt.Println(v.Source)
+			fmt.Println(v)
 		}
 	}
 }
