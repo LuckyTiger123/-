@@ -61,7 +61,7 @@ func TestTime(t *testing.T) {
 	//	Type: "type",
 	//	Value: "动作",
 	//})
-	result, err := GetResourceIndex(10, 1)
+	result, err := GetGameNewsGet("无双大蛇3", 10)
 	fmt.Println(time.Since(t1))
 	if err != nil {
 		fmt.Println(err.Error())
