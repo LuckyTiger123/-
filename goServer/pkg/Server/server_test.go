@@ -3,6 +3,7 @@ package Server
 import (
 	"context"
 	"fmt"
+	"github.com/olivere/elastic/v7"
 	pb "goServer/proto"
 	"google.golang.org/grpc"
 	"testing"
@@ -71,4 +72,12 @@ func TestTime(t *testing.T) {
 	}
 	//reg := regexp.MustCompile(`[0-9,的]`)
 	//fmt.Println(reg.ReplaceAllString("鬼泣的第五5", ""))
+}
+
+func TestTime2(t *testing.T) {
+	Init()
+	query := elastic.NewTermQuery("type", 1)
+	t1 := time.Now()
+	ES.Search().Index("resource_new").Query(query).Do(context.Background())
+	fmt.Println(time.Since(t1))
 }
