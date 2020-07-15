@@ -1,93 +1,188 @@
-# 项目实训
+# README
 
-## git基础说明
+本项目分为三大部分进行开发，爬虫，前端以及后端。爬虫代码一个文件夹[./爬虫代码]，后端文件夹[./goServer]，前端文件夹[./reactApp]
 
-### git 创建分支
+## 爬虫代码
 
-``` shell
-git checkout -b (mybranch)
-# -b 表示切换到这个分支
+```
+├─数据处理代码
+│      baiduIndex.py  //爬取百度指数，更新数据
+│      json2es.py     //将爬虫存储的json文件导入ElasticSearch
+│      wordcloud.py   //使用jieba分词，输出游戏相关词频
+│
+└─网页爬取代码
+    └─3dmcrawl
+        ├─.idea
+        │  │  .gitignore
+        │  │  encodings.xml
+        │  │  helloworld.iml
+        │  │  jsonSchemas.xml
+        │  │  misc.xml
+        │  │  modules.xml
+        │  │  vcs.xml
+        │  │  workspace.xml
+        │  │
+        │  └─inspectionProfiles
+        │          profiles_settings.xml
+        │          Project_Default.xml
+        │
+        ├─mySpider
+        │  │  scrapy.cfg
+        │  │
+        │  └─mySpider
+        │      │  items.py
+        │      │  middlewares.py
+        │      │  pipelines.py   //自定义的管道文件，可直接将数据插入ElasticSearch，也可以将数据存储为json。
+        │      │  settings.py
+        │      │  __init__.py
+        │      │
+        │      ├─spiders
+        │      │  │  a3dmgonglue.py  //爬取3dm攻略的主要爬虫代码
+        │      │  │  bilibili.py    //爬取B站视频信息的主要爬虫代码
+        │      │  │  gamecores.py   //爬取机核网文章的主要代码
+        │      │  │  itcast.py      //爬取3dm游戏的主要代码
+        │      │  │  youxiagonglue.py  //爬取游侠网攻略的主要代码
+        │      │  │  youxianew.py   //爬取游侠网资讯的主要代码
+        │      │  │  __init__.py
+        │      │  │  steamgame.py   //爬取steam的游戏的主要爬虫代码
+        │      │  │
+        │
+        └─seleniumCrawl
+            └─seleniumpro
+                │  scrapy.cfg
+                │
+                └─seleniumpro
+                    │  items.py
+                    │  middlewares.py
+                    │  pipelines.py    //自定义的管道文件，可直接将数据插入ElasticSearch，也可以将数据存储为json。
+                    │  settings.py
+                    │  __init__.py
+                    │
+                    ├─spiders
+                    │  │  items3.json
+                    │  │  main.py
+                    │  │  __init__.py
+                    │  │
+                    │  └─__pycache__
+                    │          main.cpython-37.pyc
+                    │          __init__.cpython-37.pyc
+                    │
+                    └─__pycache__
+                            items.cpython-37.pyc
+                            middlewares.cpython-37.pyc
+                            pipelines.cpython-37.pyc
+                            settings.cpython-37.pyc
+                            __init__.cpython-37.pyc
+
 ```
 
+## 后端代码
 
-
-### git 上传提交
-
-保存到暂存区
-
-``` shell
-git add (你想提交的文件到暂存区)
+```
+goServer
+├── .idea					//Goland项目配置
+│   ├── .gitignore
+│   ├── goServer.iml
+│   ├── misc.xml
+│   ├── modules.xml
+│   ├── vcs.xml
+│   └── workspace.xml
+├── build
+│   └── gen-proto.sh		//从protobuf生成Golang的脚本文件
+├── cmd
+│   └── Server					//执行文件主入口
+│       └── main.go
+├── go.mod						//go mod依赖项
+├── go.sum
+├── pkg								//具体功能代码
+│   └── Server
+│       ├── bootstrap.go
+│       ├── link.go
+│       ├── server.go
+│       ├── server_test.go
+│       └── wordMap.go
+└── proto							//protobuf代码与生成的golang文件
+    ├── server.pb.go
+    ├── server.pb.gw.go
+    └── server.proto
 ```
 
-提交
+## 前端代码
 
-``` shell
-git commit -sv
 ```
-
-进入编辑文本框
-
-``` shell
-# (你的分支)：(分支改动)
-# (详细改动)
-
-# example.
-master:add readme.md
-Add readme.md and describe how to use git roughly.
+├── config                                   // webpack相关配置文件
+│   ├── env.js
+│   ├── getHttpsConfig.js
+│   ├── jest
+│   │   ├── cssTransform.js
+│   │   └── fileTransform.js
+│   ├── modules.js
+│   ├── paths.js
+│   ├── pnpTs.js
+│   ├── webpack.config.js
+│   └── webpackDevServer.config.js
+├── package-lock.json
+├── package.json														 // 项目依赖
+├── public                                   // 静态文件目录
+│   ├── game.png
+│   ├── index.html
+│   ├── manifest.json
+│   └── robots.txt
+├── scripts
+│   ├── build.js
+│   ├── start.js
+│   └── test.js
+└── src                                      // 前端项目主要代码
+    ├── App.js                             
+    ├── assets                               // 静态文件目录
+    │   ├── bgd4.jpg
+    │   ├── logo.png
+    │   ├── logo1.png
+    │   └── logo2.png
+    ├── common                               // 项目中通用的配置信息
+    │   └── config.js
+    ├── components                           // 组件目录
+    │   ├── GameInfo                         // 游戏详情页面组件
+    │   │   ├── Detail                       // 游戏基本信息展示组件
+    │   │   │   ├── index.css
+    │   │   │   └── index.js
+    │   │   ├── Resource                     // 游戏资源展示组件
+    │   │   │   ├── Analytics                // 游戏数据分析展示组件
+    │   │   │   │   ├── dates.js
+    │   │   │   │   ├── index.css
+    │   │   │   │   └── index.js
+    │   │   │   ├── ResourceCard             // 资源展示卡片组件
+    │   │   │   │   ├── index.css
+    │   │   │   │   └── index.js
+    │   │   │   ├── constant.js                     
+    │   │   │   ├── index.css
+    │   │   │   └── index.js
+    │   │   ├── Score                        // 游戏评分组件
+    │   │   │   ├── index.css
+    │   │   │   └── index.js
+    │   │   ├── colorList.js
+    │   │   ├── index.css
+    │   │   ├── index.js
+    │   │   └── test.js
+    │   ├── ResultCard.jsx                   // 搜索页面展示卡片组件 
+    │   ├── SearchBar.jsx                    // 首页搜索筛选组件
+    │   ├── SearchBlock.jsx                  // 结果页搜索筛选组件
+    │   └── layout                           // 布局相关
+    │       └── Footer.js                  
+    ├── index.css
+    ├── index.js                             // 项目入口
+    ├── pages
+    │   ├── ResultPage.js                    // 结果显示页面
+    │   └── SearchPage.js                    // 搜索页，即首页
+    ├── serviceWorker.js
+    ├── setupProxy.js
+    ├── setupTests.js
+    ├── store                                // redux相关配置
+    │   ├── actions.js
+    │   ├── index.js
+    │   └── reucers.js
+    └── utils                                // 工具函数
+        ├── formatDate.js                    
+        └── index.js
 ```
-
-按esc之后输入“:wq”，即可完成提交。
-
-
-
-当然，如果你觉得麻烦，可以用简单的提交方式
-
-```bash
-git commit -m "(具体的注释)"
-```
-
-
-
-### git进行更新与合并
-
-- git pull
-
-  git pull 会把关联的远程分支进行下载，同时在这个分支上进行git rebase
-
-- git merge
-
-  用merge来合并需要本地有另外一个待合并的分支，可以使用git checkout 或者 git fetch获得相应分支，然后使用git merge来进行合并
-
-- git rebase(建议使用)
-
-  与merge有点像，但可以保证分支更加干净，rebase后的分支push时冲突的可能性会变小
-
-  
-
-  以拉取master分支为例：
-
-  ```bash
-  git pull origin master -r
-  ```
-
-### tips
-
-- 不是所有的文件都需要commit的，你只需要add和commit你想修改的文件
-
-- .gitignore下输入文件的路径，这个文件的修改会被忽略
-
-- 只有在你暂存区干净的时候才可以进行pull或者checkout到别的分支，如果你有本地改动，又想切换成其他分支，可以使用
-
-  ``` shell
-  # 本地修改进入入栈，可使本地变更干净
-  git stash
-  # 从栈中取回
-  git stash pop
-  ```
-
-  当然也可以使用git diff > (输出文件)，然后checkout最后apply的方法，这个想用自己搜索
-
-  想要回滚使用revert而不应该使用reset，否则你push上去的代码会缺失原本存在的commit
-
-  
 
