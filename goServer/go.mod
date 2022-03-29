@@ -3,7 +3,7 @@ module goServer
 go 1.14
 
 require (
-	github.com/gogo/protobuf v1.3.1
+	github.com/gogo/protobuf v1.3.2
 	github.com/golang/protobuf v1.4.2
 	github.com/grpc-ecosystem/grpc-gateway v1.14.6
 	github.com/olivere/elastic/v7 v7.0.17
